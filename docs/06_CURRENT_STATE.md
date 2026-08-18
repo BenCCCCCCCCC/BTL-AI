@@ -2,28 +2,28 @@
 
 ## Current phase
 
-Pre-production: repository and product-definition baseline.
+Pre-production — AI interaction contract / validation design.
 
 ## Completed
 
-- Initial repository structure and baseline documentation established.
+- Repository bootstrap and baseline documentation completed, committed to `main`, and published to a private GitHub repository.
 - Confirmed product direction and architecture invariants recorded.
 
 ## In progress
 
-- Translate the confirmed direction into a small, testable vertical-slice validation plan.
+- Define Validation Increment 01: the structured semantic interpretation contract between free-text player input and deterministic game rules.
 
 ## Next
 
-- Define the first validation increment for the core loop and deterministic state boundary.
-- Decide the backend/API architecture and validate the proposed Dify integration before runtime implementation.
+- Define Validation Increment 01: the structured semantic interpretation contract between free-text player input and deterministic game rules.
 
 ## Blocked / unresolved
 
 - Backend/API architecture is undecided.
 - Dify implementation/integration is unvalidated.
+- Unity is unimplemented.
 - Detailed vertical-slice story canon, NPCs, factions, schemas, and rule formulas are intentionally undefined.
 
 ## Current milestone success condition
 
-The pre-production baseline clearly defines the 20–30 minute vertical-slice direction, preserves authoritative deterministic state ownership, and identifies the next validation decisions without inventing content or architecture.
+Validation Increment 01 defines a structured semantic interpretation contract and a deterministic authority boundary before any Dify or Unity implementation begins.

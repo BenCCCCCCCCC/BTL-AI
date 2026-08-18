@@ -6,7 +6,7 @@
 
 ## Current milestone
 
-Establish the pre-production baseline and define the first small validation increment. No Unity project or runtime AI integration exists yet.
+Validation Increment 01 — AI Interaction Contract. The repository baseline is committed to `main` and backed up to a private GitHub repository. No Unity project or runtime AI integration exists yet.
 
 ## Important architecture rules
 
@@ -20,11 +20,12 @@ Establish the pre-production baseline and define the first small validation incr
 
 - Initial repository structure created.
 - Project definition, decision log, current-state note, and working agreement recorded.
+- Repository baseline committed to `main` and published to a private GitHub repository.
 - Confirmed priorities captured: P0 semantic dialogue parsing, grounded NPC dialogue, and AI headline analysis; P1 memory/contradiction/QA/evaluation; P2 world reactions/voice.
 
 ## Immediate next task
 
-Define and validate the smallest prototype increment for the core investigative loop and the deterministic boundary that converts interpreted player intent into system-controlled outcomes. Do not create a Unity project or implement Dify/runtime AI until explicitly authorised and the relevant approach is validated.
+Define the semantic parser input/output contract and deterministic authority boundary before implementing Dify or Unity.
 
 ## Files to read
 
