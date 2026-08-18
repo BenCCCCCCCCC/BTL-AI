@@ -27,3 +27,14 @@ Pre-production — AI interaction contract / validation design.
 ## Current milestone success condition
 
 Validation Increment 01 defines a structured semantic interpretation contract and a deterministic authority boundary before any Dify or Unity implementation begins.
+
+
+## Active repository branch
+
+Current working branch:
+
+`design/validation-increment-01`
+
+During Validation Increment 01, repository reads that require the newest working state should use this branch rather than assuming `main` is current.
+
+`main` remains the last stable integrated baseline until this validation increment is reviewed and merged.
