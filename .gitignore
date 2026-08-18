@@ -1,0 +1,48 @@
+# Operating systems and editors
+.DS_Store
+Thumbs.db
+Desktop.ini
+$RECYCLE.BIN/
+.vs/
+.vscode/
+.idea/
+*.suo
+*.user
+*.userprefs
+*.sln.docstates
+
+# Secrets and local environment
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+secrets/
+
+# Logs and temporary output
+*.log
+logs/
+tmp/
+temp/
+
+# Generated AI evaluation artifacts
+ai/eval/output/
+ai/eval/results/
+ai/eval/reports/
+
+# Unity-generated files and caches (do not ignore Assets/, Packages/, or ProjectSettings/)
+[Ll]ibrary/
+[Tt]emp/
+[Oo]bj/
+[Bb]uild/
+[Bb]uilds/
+[Ll]ogs/
+[Uu]ser[Ss]ettings/
+[Mm]emoryCaptures/
+[Rr]ecordings/
+sysinfo.txt
+*.stacktrace
+
+# Unity tooling artifacts
+ExportedObj/
+consistencyCheck/
