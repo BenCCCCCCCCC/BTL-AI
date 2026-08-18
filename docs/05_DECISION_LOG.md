@@ -81,3 +81,34 @@ Only confirmed decisions belong here. Unresolved choices are recorded in `06_CUR
 **Decision:** Limit the initial product target to a polished 20–30 minute vertical slice rather than the full 14-day content.  
 **Rationale:** Keeps the project focused on proving its core design and AI orchestration goals.  
 **Consequences:** Scope decisions must be evaluated against vertical-slice value and polish.
+
+## DEC-011
+
+**Status:** Confirmed  
+**Date:** 2026-08-18  
+**Decision:** Evaluate player-written headlines primarily through an evidence-based journalism model rather than an omniscient truth-based model. Publication evaluation considers whether a claim was sufficiently supported by the evidence and information available to the player at publication time, separately from whether the claim is canonically true.
+
+**Rationale:** The player is acting as a journalist under uncertainty rather than solving a hidden-answer quiz. This makes investigation, evidence gathering, attribution, and publication responsibility part of the same gameplay loop.
+
+**Consequences:**  
+- Canonical truth and journalistic evidence support are separate concepts.
+- A claim may be canonically true but insufficiently supported when published.
+- A claim may be reasonably supported when published but later proven factually wrong.
+- The LLM does not determine evidence sufficiency or canonical truth.
+- Evidence support evaluation must remain deterministic.
+
+
+## DEC-012
+
+**Status:** Confirmed  
+**Date:** 2026-08-18  
+**Decision:** Use neutral, behaviour-based pre-publication warnings for high-risk headlines rather than explicitly revealing hidden evidence-support judgments. Players retain the option to edit the headline or publish anyway.
+
+**Rationale:** Players should understand when they are making a strong journalistic claim without turning the interface into an automatic correctness checker or revealing hidden information.
+
+**Consequences:**  
+- Warnings describe the nature of the player's language, such as making a direct allegation or presenting responsibility as fact.
+- Warnings must not state that the player's evidence is sufficient or insufficient.
+- Warnings must not reveal canonical truth.
+- Valid risky reporting remains an intentional gameplay choice.
+- Publication may proceed after the warning if the player chooses Publish Anyway.
