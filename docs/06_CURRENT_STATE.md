@@ -2,7 +2,7 @@
 
 ## Current phase
 
-Pre-production — Validation Increment 01: AI Interaction Contract validation.
+Pre-production — Validation Increment 01 complete; AI Interaction Contract v0.1 frozen.
 
 ## Completed
 
@@ -20,23 +20,19 @@ Pre-production — Validation Increment 01: AI Interaction Contract validation.
 - Initial Evaluation Test Categories defined.
 - Evidence-based headline evaluation direction confirmed.
 - Neutral behaviour-based pre-publish warning direction confirmed.
+- 01A Dialogue & Grounded NPC Response specialist validation and targeted regression completed (`659be28db16bea586136ac00a053f1f01452df96`).
+- 01B Headline Analysis specialist validation and targeted regression completed (`477086429c6beee7fae4da439383708803cf16f4`).
+- Master decisions reconciled into the frozen AI Interaction Contract v0.1.
 
 ## In progress
 
-AI Interaction Contract v0.1 is currently a **Draft — Freeze Candidate**.
+Final Contract reconciliation / freeze is complete. Validation Increment 01 is complete; the specialist threads are paused unless a narrowly scoped regression is requested. No runtime implementation work is authorised by this status.
 
-The next validation work will pressure-test the shared contract through two parallel design threads:
-
-1. `01A | Dialogue & Grounded NPC Response Validation`
-2. `01B | Headline Analysis Validation`
-
-The purpose of these threads is to identify structural problems in the contract before implementation.
-
-## Current contract direction
+## Frozen contract direction
 
 ### Dialogue
 
-Current proposed semantic interpretation contains only gameplay-relevant information:
+The frozen semantic interpretation contains only gameplay-relevant information:
 
 - semantic status;
 - resolution reason where applicable;
@@ -44,7 +40,7 @@ Current proposed semantic interpretation contains only gameplay-relevant informa
 - authored target;
 - authored value where required;
 - polarity where required;
-- limited gameplay-relevant tactics;
+- an order-insensitive unique set of all gameplay-relevant tactics;
 - explicit canonical evidence references.
 
 The LLM does not determine success, truth, deception, state changes, narrative branches, evidence validity, or NPC reactions.
@@ -53,7 +49,7 @@ The LLM does not determine success, truth, deception, state changes, narrative b
 
 NPC response generation occurs only after deterministic rule resolution.
 
-The LLM receives a bounded NPC Response Plan and generates surface language.
+The deterministic pipeline is Response Plan → LLM Surface Candidate → NPC Output Validation Gate → Display; failed candidates retry once, then use a semantically faithful deterministic/template fallback.
 
 Canonical NPC decisions, clue release, deception, relationship changes, and state changes are deterministic.
 
@@ -61,12 +57,12 @@ Canonical NPC decisions, clue release, deception, relationship changes, and stat
 
 Player-written headlines are represented through authored Claim Atoms rather than generic sentiment or misinformation scores.
 
-Current proposed claim semantics include:
+Frozen Claim Atom semantics include:
 
 - authored claim target;
 - authored value where required;
 - polarity;
-- claim posture;
+- commitment mode plus optional source attribution;
 - explicit source attribution where relevant.
 
 Headline evaluation uses the evidence available to the player at publication time rather than treating canonical truth as the primary correctness score.
@@ -88,41 +84,15 @@ Current hard safety candidates include:
 - Unauthorized canonical state mutation = 0
 - Invalid canonical ID accepted = 0
 - Unauthorized NPC fact disclosure = 0
+- Unauthorized NPC action / commitment expressed = 0
+- Response-plan-invalid NPC output displayed = 0
 - LLM-generated state or branch decisions accepted = 0
 - Semantically unresolved headline entering publication resolution = 0
 - AI/system failure creating irreversible gameplay consequence = 0
 
 ## Next
 
-Run the two parallel validation threads.
-
-### 01A
-
-Pressure-test:
-
-- dialogue semantic schema;
-- conditional field rules;
-- threats, accusations, indirect probing and bluffing;
-- ambiguity and unsupported input;
-- grounded NPC response plans;
-- NPC deception;
-- information leakage and hallucination;
-- dialogue evaluation cases.
-
-### 01B
-
-Pressure-test:
-
-- headline Claim Atom model;
-- multi-claim extraction;
-- attribution and claim posture;
-- evidence-support separation;
-- headline atomic semantic resolution;
-- neutral pre-publish warning behaviour;
-- rhetorical edge cases;
-- headline evaluation cases.
-
-Cross-cutting contract changes must return to the master `01 | AI Interaction Contract` thread before becoming confirmed.
+Keep the frozen contract and its validation fixtures as the baseline. Any subsequent work must be a separately authorised, narrowly scoped regression or later design increment; Dify, Unity, backend runtime, prompts, and gameplay implementation remain out of scope.
 
 ## Blocked / unresolved
 
@@ -140,7 +110,7 @@ Cross-cutting contract changes must return to the master `01 | AI Interaction Co
 
 ## Current milestone success condition
 
-Validation Increment 01 succeeds when:
+Validation Increment 01 succeeded because:
 
 - the semantic interpretation contract survives dialogue and headline pressure testing;
 - deterministic authority boundaries are explicit and auditable;
@@ -148,4 +118,4 @@ Validation Increment 01 succeeds when:
 - the initial evaluation dataset can reproduce expected interpretations and failure cases;
 - no structural contract issue remains that would require redesign during implementation.
 
-Only after this should AI Interaction Contract v0.1 be frozen and implementation validation in Dify be considered.
+The contract is frozen. A future, separately approved implementation-validation increment may consider Dify only after its design and integration are validated; no such work is currently authorised.

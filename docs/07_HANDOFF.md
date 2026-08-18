@@ -19,7 +19,7 @@ The project has two parallel portfolio goals:
 
 Status:
 
-**Draft — Freeze Candidate / Validation in progress**
+**Complete — AI Interaction Contract v0.1 Frozen**
 
 Milestone 0 — Repository Bootstrap is complete.
 
@@ -59,7 +59,7 @@ These three functions are being designed as separate narrow AI contracts rather 
 
 ## What changed during Validation Increment 01
 
-An integrated **AI Interaction Contract v0.1 Draft** has been designed.
+An integrated **AI Interaction Contract v0.1** has been validated and frozen.
 
 The contract currently defines:
 
@@ -74,9 +74,12 @@ The contract currently defines:
 - initial evaluation test categories;
 - hard safety-gate candidates.
 
-The contract is not yet frozen.
+Both specialist threads and their targeted regressions are complete:
 
-It must first be pressure-tested in two specialised validation threads.
+- `01A | Dialogue & Grounded NPC Response Validation` — complete at `659be28db16bea586136ac00a053f1f01452df96`.
+- `01B | Headline Analysis Validation` — complete at `477086429c6beee7fae4da439383708803cf16f4`.
+
+They are paused unless a narrowly scoped regression is requested. This milestone does not authorise runtime implementation.
 
 ---
 
@@ -115,7 +118,7 @@ Current proposed semantic concepts:
 - optional authored target;
 - optional authored value;
 - optional polarity;
-- limited gameplay-relevant tactics;
+- an order-insensitive unique set of all gameplay-relevant tactics;
 - explicit player-visible evidence references.
 
 Current Act candidates:
@@ -133,7 +136,7 @@ Current Tactic candidates:
 - ACCUSATION
 - INDIRECT_PROBE
 
-Current proposal allows zero to two tactics in one otherwise single consequential dialogue action.
+There is no arbitrary fixed maximum for tactics. Every gameplay-relevant tactic supporting the one consequential action must appear once; duplicate entries and silent truncation are invalid.
 
 Dialogue v0.1 currently permits only one consequential semantic action per player turn.
 
@@ -166,10 +169,14 @@ NPC language generation occurs only after deterministic gameplay resolution.
 
 The intended flow is:
 
-Validated Player Semantic Action  
-→ Deterministic NPC Rule Resolution  
-→ NPC Response Plan  
-→ LLM Surface Language
+```text
+Validated Player Semantic Action
+→ Deterministic NPC Rule Resolution
+→ Deterministic NPC Response Plan
+→ LLM Surface Candidate
+→ NPC Output Validation Gate
+→ Display
+```
 
 The NPC generator does not independently decide:
 
@@ -180,7 +187,7 @@ The NPC generator does not independently decide:
 - gameplay variables;
 - branch changes.
 
-NPC deception is an authored/deterministic response decision.
+NPC deception is an authored/deterministic content decision orthogonal to response mode; `DECEIVE` is not a response mode.
 
 Where possible, the language model should receive only the utterance proposition required for the current response rather than hidden canonical truth.
 
@@ -194,22 +201,15 @@ Headline analysis is separate from NPC dialogue parsing.
 
 The Headline Analyzer converts a player's headline into one or more authored **Claim Atoms**.
 
-Current proposed Claim Atom semantics include:
+Frozen Claim Atom semantics include:
 
 - target;
 - value where required;
 - polarity;
-- claim posture;
+- commitment mode (`ASSERTED`, `SPECULATIVE`, `QUESTIONED`);
 - explicit source attribution where relevant.
 
-Current Claim Posture candidates:
-
-- FACT_ASSERTION
-- ATTRIBUTED_CLAIM
-- SPECULATION
-- QUESTION
-
-The current proposed limit is one to three consequential Claim Atoms per headline.
+`source_ref_id` is optional and orthogonal to commitment mode. Claim Sets contain all consequential claims with no fixed cap or silent truncation; `RESOLVED + claims=[]` is valid only when no consequential proposition or unresolved consequential content exists. Consequential presuppositions produce Claim Atoms and use `ASSERTED` in v0.1 unless a further gameplay distinction is required.
 
 ---
 
@@ -231,7 +231,7 @@ Therefore a headline may be:
 
 The LLM does not determine evidence sufficiency.
 
-Evidence evaluation remains deterministic.
+Evidence evaluation remains deterministic. Attribution support, underlying-proposition support, and canonical reality are distinct; publication responsibility uses an auditable publication-time evidence/knowledge basis and later evidence cannot rewrite that original judgement.
 
 ---
 
@@ -258,9 +258,9 @@ This preserves meaningful uncertainty.
 
 ---
 
-## Headline atomic-resolution proposal
+## Headline atomic-resolution rule
 
-Current Freeze Candidate:
+Frozen rule:
 
 A headline should not be partially simulated if it contains an unresolved consequential claim.
 
@@ -268,7 +268,7 @@ If one gameplay-relevant claim cannot be mapped into the authored semantic space
 
 Stylistic language does not require semantic representation unless gameplay rules depend on it.
 
-This proposal must be pressure-tested in `01B`.
+This behaviour passed `01B` targeted regression and is frozen.
 
 ---
 
@@ -320,11 +320,11 @@ Examples:
 - validator rejection;
 - NPC generator violating response constraints.
 
-Current proposed fallback:
+NPC surface failure fallback:
 
-Retry once  
-→ validate again  
-→ deterministic authored/template fallback.
+Retry once → revalidate → semantically faithful deterministic/template fallback.
+
+Headline parser retry exhaustion may only preserve the draft and show non-consequential edit/retry UX; it cannot fabricate a Claim Set or continue publication resolution.
 
 AI/system failure should not itself consume a consequential player action or create irreversible consequences.
 
@@ -369,7 +369,7 @@ Potential measurable metrics include:
 - Ambiguity Detection
 - Claim Atom Exact Match
 - Claim Omission Rate
-- Claim Posture Accuracy
+- Commitment Mode Accuracy
 - Source Attribution Accuracy
 - NPC Response Plan Compliance
 - Required Proposition Coverage
@@ -378,9 +378,9 @@ Numerical acceptance thresholds must not be invented before a real baseline is m
 
 ---
 
-## Validation thread split
+## Validation-thread record
 
-Validation Increment 01 is now split into three conversations.
+Validation Increment 01 used a Master reconciliation thread and two specialist threads. All three have completed their assigned milestone work.
 
 ### Master
 
@@ -392,58 +392,39 @@ Purpose:
 - resolve cross-system architecture issues;
 - approve significant schema changes;
 - integrate findings from specialised threads;
-- decide when Contract v0.1 can be frozen.
+- reconciled the findings and froze Contract v0.1.
 
-Do not use the Master thread for large numbers of detailed test cases once specialised threads are active.
+The Master thread should only reopen this scope for an authorised, narrowly scoped regression or a later design increment.
 
 ### 01A
 
 **01A | Dialogue & Grounded NPC Response Validation**
 
-Purpose:
+Completed scope:
 
-- pressure-test Dialogue Semantic Schema;
-- test contextual interpretation;
-- test tactics;
-- test evidence references and bluffing;
-- test semantic ambiguity/fallback;
-- pressure-test deterministic NPC Response Plans;
-- test NPC knowledge boundaries, deception, leakage and hallucination;
-- build the first dialogue/NPC evaluation dataset.
+- dialogue semantics, tactics, evidence references, bluffing, ambiguity, and failure handling;
+- deterministic NPC Response Plans, deception, information leakage, hallucination, and pre-display validation;
+- the first dialogue/NPC evaluation fixture and targeted regression at `659be28db16bea586136ac00a053f1f01452df96`.
 
-Cross-cutting changes must return to Master.
+**Status:** Complete and paused unless a narrowly scoped regression is requested.
 
 ### 01B
 
 **01B | Headline Analysis Validation**
 
-Purpose:
+Completed scope:
 
-- pressure-test the Claim Atom model;
-- test multi-claim headlines;
-- test negation, attribution, speculation and questions;
-- test evidence-based journalism semantics;
-- test atomic headline resolution;
-- test neutral pre-publish warnings;
-- retain difficult rhetorical cases for future framing decisions;
-- build the first headline evaluation dataset.
+- Claim Atom extraction, multi-claim headlines, commitment, attribution, presupposition, and zero-claim cases;
+- evidence-based journalism semantics, atomic resolution, parser failure, neutral warnings, and rhetorical deferrals;
+- the first headline evaluation fixture and targeted regression at `477086429c6beee7fae4da439383708803cf16f4`.
 
-Cross-cutting changes must return to Master.
+**Status:** Complete and paused unless a narrowly scoped regression is requested.
 
 ---
 
-## Immediate next tasks
+## Next permitted work
 
-1. Save the integrated AI Interaction Contract v0.1 Draft into the repository.
-2. Update Decision Log with newly confirmed headline decisions.
-3. Update Current State and this Handoff.
-4. Commit the documentation checkpoint.
-5. Refresh the latest project-source snapshots used by ChatGPT.
-6. Start `01A`.
-7. Start `01B`.
-8. Run both validation tracks in parallel.
-9. Return structural conflicts to the Master thread.
-10. Freeze AI Interaction Contract v0.1 only after both validation tracks have completed their first pressure-test pass.
+Keep this frozen Contract and its fixtures as the baseline. Do not resume 01A or 01B except for an explicitly requested, narrowly scoped regression. Any implementation or orchestration work requires a separate authorised increment and must preserve the Contract's deterministic authority boundary.
 
 ---
 
@@ -471,7 +452,7 @@ Priority:
 1. Project Instructions
 2. `docs/01_PROJECT_DEFINITION.md`
 3. `docs/05_DECISION_LOG.md`
-4. latest AI Interaction Contract v0.1 Draft
+4. `docs/08_AI_INTERACTION_CONTRACT.md` (Frozen)
 5. `docs/06_CURRENT_STATE.md`
 6. `docs/07_HANDOFF.md`
 

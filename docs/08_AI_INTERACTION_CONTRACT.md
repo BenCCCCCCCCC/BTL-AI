@@ -1,7 +1,7 @@
 # AI Interaction Contract v0.1 — Validation Increment 01
 
 **Project:** Between the Lines: AI Remake (BTL-AI)  
-**Status:** Draft — Freeze Candidate  
+**Status:** Frozen
 **Phase:** Pre-production / Validation Increment 01  
 **Scope:** Player–NPC dialogue parsing, grounded NPC dialogue generation, player-written headline analysis
 
@@ -53,7 +53,7 @@ Purpose:
 Purpose:
 
 - identify consequential claims contained in a headline;
-- represent attribution, negation and claim posture;
+- represent attribution, negation, and commitment mode;
 - make those claims available for deterministic evidence and publication evaluation.
 
 These three systems MUST remain separated by deterministic validation boundaries.
@@ -190,9 +190,7 @@ Polarity is conditional rather than universally required.
 
 ### `tactics[]`
 
-Represents gameplay-relevant conversational strategies.
-
-v0.1 allows zero to two tactics per semantic action.
+Represents gameplay-relevant conversational strategies as an order-insensitive unique set. There is no arbitrary fixed maximum: the set contains every gameplay-relevant authored tactic expressed by the single consequential action.
 
 Initial tactics:
 
@@ -200,7 +198,7 @@ Initial tactics:
 - `ACCUSATION`
 - `INDIRECT_PROBE`
 
-No tactic is represented by an empty collection.
+No tactic is represented by an empty collection. Duplicate values are invalid, and gameplay-relevant tactics MUST NOT be silently truncated.
 
 The parser identifies that a tactic is being attempted.
 
@@ -271,6 +269,14 @@ Example:
 maps to the authored `HAND_OVER_LEDGER` target.
 
 The AI does not decide whether the NPC complies.
+
+---
+
+**OFFER**
+
+Must identify an authored bilateral deal target. A surface imperative may still be an OFFER when it expresses that deal.
+
+Counteroffers are OFFERs only when they map to another available authored deal target. The parser MUST NOT create free-form deal terms or targets; unsupported negotiation fails safely. Richer free-form negotiation remains deferred.
 
 ---
 
@@ -352,7 +358,9 @@ Headline analysis uses a separate schema from NPC dialogue.
 
 The Headline Analyzer represents:
 
-**Status → 1–3 consequential Claim Atoms**
+**Status → all consequential Claim Atoms, including zero when none are present**
+
+`RESOLVED + claims=[]` is valid only when the headline contains no consequential proposition and no unresolved consequential content. There is no fixed Claim Atom limit, and consequential claims MUST NOT be silently truncated.
 
 The current event SHOULD come from deterministic UI context when the player entered the headline editor from a known story/event.
 
@@ -376,20 +384,21 @@ The authored value assigned to the proposition where required.
 
 Affirmation or denial when required.
 
-### `posture`
+### `commitment_mode`
 
-How the headline presents the proposition.
+How the headline commits to the proposition, independently of whether a source is named.
 
 v0.1 values:
 
-- `FACT_ASSERTION`
-- `ATTRIBUTED_CLAIM`
-- `SPECULATION`
-- `QUESTION`
+- `ASSERTED`
+- `SPECULATIVE`
+- `QUESTIONED`
+
+Consequential presuppositions also produce Claim Atoms. In v0.1, use `ASSERTED` when the presupposition does not require an additional gameplay distinction.
 
 ### `source_ref_id`
 
-Required when the posture is an ATTRIBUTED_CLAIM and the headline explicitly attributes the proposition to a known source.
+Optional when the headline explicitly attributes the proposition to a known source.
 
 It indicates linguistic attribution only.
 
@@ -437,7 +446,7 @@ This distinction is intentional gameplay.
 
 ---
 
-# 11. Claim Posture and Evidence Responsibility
+# 11. Commitment, Attribution, and Evidence Responsibility
 
 The same underlying proposition may create different journalistic responsibilities.
 
@@ -445,13 +454,15 @@ Example:
 
 > “Security forces fired first.”
 
-is a FACT_ASSERTION.
+is `ASSERTED` without attribution.
 
 > “Witness says security forces fired first.”
 
-is an ATTRIBUTED_CLAIM.
+is `ASSERTED` with a source reference.
 
-Evidence sufficient to support the second form does not automatically establish the first as fact.
+Attribution support (whether the source expressed the proposition), underlying-proposition support, and canonical reality are separate deterministic concepts. Evidence sufficient to support the second form does not automatically establish the first as fact.
+
+Publication responsibility MUST use an auditable evidence / knowledge basis captured at publication time. Later evidence or later player knowledge MUST NOT retroactively rewrite the responsibility judgement for the original publication.
 
 This allows journalistic language itself to become gameplay without requiring generic morality, bias or misinformation scores.
 
@@ -499,10 +510,14 @@ NPC response generation occurs only after deterministic gameplay resolution.
 
 The required flow is:
 
-**Validated Player Semantic Action  
-→ Deterministic NPC Rule Resolution  
-→ NPC Response Plan  
-→ LLM Surface Language**
+```text
+Validated Player Semantic Action
+→ Deterministic NPC Rule Resolution
+→ Deterministic NPC Response Plan
+→ LLM Surface Candidate
+→ NPC Output Validation Gate
+→ Display
+```
 
 The LLM MUST NOT independently decide what the NPC does.
 
@@ -513,7 +528,9 @@ The LLM MUST NOT independently decide what the NPC does.
 The deterministic system supplies information such as:
 
 - response mode;
-- required utterance propositions;
+- required propositions;
+- permitted context;
+- forbidden propositions;
 - player-visible clarification options;
 - relevant dynamic state;
 - language/personality constraints from the NPC card;
@@ -527,9 +544,12 @@ Initial response modes:
 - `REFUSE`
 - `CLARIFY`
 - `COUNTERQUESTION`
-- `DECEIVE`
 - `ACCEPT`
 - `REJECT`
+
+`DECEIVE` is not a response mode. Deception is a deterministic content/narrative decision orthogonal to response mode: the plan authorises the precise deceptive proposition, where applicable.
+
+`permitted_context` may ground safe wording, but it does not authorise gameplay-relevant optional clue disclosure. Such disclosure MUST be expressly represented in the required/authorised response content.
 
 ---
 
@@ -551,7 +571,15 @@ The generator MUST NOT output authoritative:
 
 ---
 
-# 15. NPC Deception
+# 15. NPC Output Validation Gate and Deception
+
+The Gate validates the Surface Candidate before display. It MUST reject a candidate that omits a required proposition; expresses a forbidden or unauthorised gameplay-relevant proposition; invents canon; expresses an unauthorised action, promise, commitment, trade, compliance, or refusal; contradicts the Response Plan; or attempts to create state, evidence, or branch consequences.
+
+On a gate failure: **retry once → revalidate → semantically faithful deterministic/template fallback → Display**. A response-plan-invalid candidate MUST never be displayed. The fallback preserves the deterministic response decision; it does not convert an authorised answer into a refusal or otherwise alter semantic content.
+
+Parser-level Semantic Clarification is separate from resolved-action NPC `CLARIFY`: semantic clarification has no Validated Player Semantic Action and produces no normal Response Plan, whereas NPC `CLARIFY` is an authorised deterministic response mode after action resolution.
+
+## NPC Deception
 
 NPC deception is a deterministic narrative decision, not LLM hallucination.
 
@@ -600,9 +628,11 @@ NPC language generation occurs after deterministic resolution:
 ```text
 Deterministic NPC Response Plan
       ↓
-LLM Surface Language
+LLM Surface Candidate
       ↓
-NPC Dialogue Text
+NPC Output Validation Gate
+      ↓
+Display
 ```
 
 Headline analysis similarly ends before evidence evaluation:
@@ -663,11 +693,11 @@ The deterministic validator MUST verify where relevant:
 - required value exists;
 - value belongs to the target;
 - polarity is structurally valid;
-- tactic count and values are valid;
+- tactic values form a unique set and all gameplay-relevant tactics are present with no silent truncation;
 - evidence IDs exist in the supplied player-visible catalogue;
 - ACCEPT / REFUSE has a valid pending interaction;
 - single-action dialogue rule is satisfied;
-- headline claim count and conditional requirements are valid.
+- headline Claim Set is complete, has no silently truncated consequential claim, and meets conditional requirements.
 
 Only validated output becomes a **Validated Semantic Action** or **Validated Claim Set**.
 
@@ -707,7 +737,9 @@ Examples:
 
 Default handling:
 
-**Retry once → validate again → deterministic authored/template fallback**
+For dialogue and NPC surface generation: **Retry once → validate again → semantically faithful deterministic/template fallback**.
+
+For headline parsing: retry once and validate again. If retry is exhausted, preserve the player's draft and show non-consequential edit/retry UX only. The system MUST NOT fabricate a Claim Set, and publication resolution MUST NOT continue.
 
 A model/system failure MUST NOT itself create an irreversible gameplay consequence.
 
@@ -796,7 +828,7 @@ Test categories include:
 - multi-claim extraction;
 - attribution;
 - negation;
-- claim posture;
+- commitment mode;
 - source attribution;
 - speculation vs assertion;
 - question vs assertion;
@@ -816,6 +848,8 @@ The following are correctness constraints rather than average quality metrics:
 - **Invalid canonical ID accepted = 0**
 - **Unauthorized NPC fact disclosure = 0**
 - **LLM-generated branch/state delta accepted = 0**
+- **Unauthorized NPC action / commitment expressed = 0**
+- **Response-plan-invalid NPC output displayed = 0**
 - **Semantically unresolved headline entering publication resolution = 0**
 - **AI/system failure creating irreversible gameplay consequence = 0**
 
@@ -836,7 +870,7 @@ Initial measurable quality metrics include:
 - Ambiguity Detection
 - Claim Atom Exact Match
 - Claim Omission Rate
-- Claim Posture Accuracy
+- Commitment Mode Accuracy
 - Source Attribution Accuracy
 - Response Mode Compliance
 - Required Proposition Coverage
@@ -880,4 +914,4 @@ Validation Increment 01 succeeds when:
 6. AI output cannot directly alter game reality.
 7. A reproducible evaluation set can measure semantic quality and authority-boundary failures before runtime implementation begins.
 
-Only after these conditions are validated should the project move into Dify or Unity implementation.
+These conditions are validated and this Contract is frozen. Any Dify or Unity work still requires a separately authorised implementation-validation increment; this Contract does not authorise implementation.
