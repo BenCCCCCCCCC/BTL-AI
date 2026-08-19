@@ -119,3 +119,14 @@ Validation Increment 01 succeeded because:
 - no structural contract issue remains that would require redesign during implementation.
 
 The contract is frozen. A future, separately approved implementation-validation increment may consider Dify only after its design and integration are validated; no such work is currently authorised.
+
+
+## Active repository branch
+
+Current working branch:
+
+`design/validation-increment-01`
+
+Validation Increment 01 has completed on this branch.
+
+Do not assume `main` contains the latest validated project state until this branch is integrated into `main`.

@@ -72,7 +72,7 @@ The contract currently defines:
 - ambiguity and unsupported-input handling;
 - AI/system failure handling;
 - initial evaluation test categories;
-- hard safety-gate candidates.
+- frozen hard safety gates.
 
 Both specialist threads and their targeted regressions are complete:
 
@@ -106,11 +106,11 @@ rather than unrestricted generative narrative control.
 
 ---
 
-## Current Dialogue Contract direction
+## Frozen Dialogue Contract v0.1
 
-Player dialogue is currently represented through a minimal gameplay-oriented semantic candidate.
+Player dialogue v0.1 is represented through a minimal gameplay-oriented semantic candidate.
 
-Current proposed semantic concepts:
+### Frozen semantic concepts
 
 - status;
 - optional resolution reason;
@@ -121,7 +121,7 @@ Current proposed semantic concepts:
 - an order-insensitive unique set of all gameplay-relevant tactics;
 - explicit player-visible evidence references.
 
-Current Act candidates:
+### v0.1 Acts
 
 - QUESTION
 - ASSERTION
@@ -130,7 +130,7 @@ Current Act candidates:
 - ACCEPT
 - REFUSE
 
-Current Tactic candidates:
+### v0.1 Tactics
 
 - THREAT
 - ACCUSATION
@@ -138,10 +138,9 @@ Current Tactic candidates:
 
 There is no arbitrary fixed maximum for tactics. Every gameplay-relevant tactic supporting the one consequential action must appear once; duplicate entries and silent truncation are invalid.
 
-Dialogue v0.1 currently permits only one consequential semantic action per player turn.
+Dialogue v0.1 permits only one consequential semantic action per player turn.
 
-Compound consequential actions are expected to fail safely rather than being partially executed.
-
+Compound consequential actions fail safely rather than being partially executed.
 ---
 
 ## Player truth and deception boundary
@@ -163,8 +162,7 @@ The LLM may not create nonexistent evidence to support a bluff.
 
 ---
 
-## Current Grounded NPC Response direction
-
+## Frozen Grounded NPC Response Contract v0.1
 NPC language generation occurs only after deterministic gameplay resolution.
 
 The intended flow is:
@@ -195,7 +193,7 @@ This follows a least-knowledge / context-minimisation principle.
 
 ---
 
-## Current Headline Contract direction
+## Frozen Headline Contract v0.1
 
 Headline analysis is separate from NPC dialogue parsing.
 
@@ -343,16 +341,20 @@ Once safely interpreted, they proceed to deterministic rules.
 
 ---
 
-## Current hard safety candidates
+## Frozen hard safety gates
 
-The following are intended as hard correctness constraints rather than average-quality metrics:
+The following are frozen correctness constraints for AI Interaction Contract v0.1 rather than average-quality metrics:
 
 - Unauthorized canonical state mutation = 0
 - Invalid canonical ID accepted = 0
 - Unauthorized NPC fact disclosure = 0
-- LLM-generated branch/state delta accepted = 0
+- Unauthorized NPC action / commitment expressed = 0
+- Response-plan-invalid NPC output displayed = 0
+- LLM-generated state or branch decisions accepted = 0
 - Semantically unresolved headline entering publication resolution = 0
 - AI/system failure creating irreversible gameplay consequence = 0
+
+Any occurrence of these conditions is treated as a defect rather than averaged away through an overall quality score.
 
 ---
 
@@ -479,3 +481,11 @@ It does not automatically override the Remake's confirmed design.
 - Whether rhetorical framing needs an authoritative gameplay field
 
 These remain unresolved unless explicitly confirmed in a future Decision Log entry.
+
+## Active repository branch
+
+`design/validation-increment-01`
+
+This branch contains the frozen Validation Increment 01 state.
+
+Future threads must not assume `main` is current until this branch has been integrated.
