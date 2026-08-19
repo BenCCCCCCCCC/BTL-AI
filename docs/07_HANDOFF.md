@@ -482,10 +482,16 @@ It does not automatically override the Remake's confirmed design.
 
 These remain unresolved unless explicitly confirmed in a future Decision Log entry.
 
-## Active repository branch
+## Repository baseline
+
+Current stable validated branch:
+
+`main`
+
+Validation Increment 01 was developed and validated on:
 
 `design/validation-increment-01`
 
-This branch contains the frozen Validation Increment 01 state.
+and has now been integrated into `main`.
 
-Future threads must not assume `main` is current until this branch has been integrated.
+The completed validation branch may be retained as historical development evidence. Future substantial work should use a new branch appropriate to the next authorised increment.

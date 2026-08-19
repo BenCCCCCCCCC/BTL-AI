@@ -123,10 +123,16 @@ The contract is frozen. A future, separately approved implementation-validation 
 
 ## Active repository branch
 
-Current working branch:
+Current stable branch:
+
+`main`
+
+Validation Increment 01 was completed on:
 
 `design/validation-increment-01`
 
-Validation Increment 01 has completed on this branch.
+and has now been integrated into `main`.
 
-Do not assume `main` contains the latest validated project state until this branch is integrated into `main`.
+`main` is the current stable validated project baseline.
+
+Future substantial work should begin on a new branch appropriate to the next authorised increment rather than continuing implementation directly on the completed Validation Increment 01 branch.
