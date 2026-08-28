@@ -2,9 +2,7 @@
 
 ## Project identity
 
-**Between the Lines: AI Remake (BTL-AI)** is a pre-production, PC-first, 2D, narrative/interface-driven journalism game.
-
-The initial target is a polished **20–30 minute AI-assisted vertical slice**, not the full legacy 14-day experience.
+**Between the Lines: AI Remake (BTL-AI)** is a pre-production, PC-first, 2D, narrative/interface-driven journalism game targeting a polished **20–30 minute AI-assisted vertical slice**.
 
 Portfolio goals:
 
@@ -17,120 +15,48 @@ Portfolio goals:
 
 Status:
 
-**Active — 02A accepted; 02B active; 02C READY FOR 02 MASTER REVIEW**
+**COMPLETE — awaiting deliberate integration of `design/validation-increment-02` into `main`.**
 
-Validation Increment 01 is complete and the **AI Interaction Contract v0.1 remains Frozen**.
+Validation Increment 01 is complete and the **AI Interaction Contract v0.1 remains Frozen and unchanged**.
 
-No Unity project, Dify runtime workflow, backend runtime, production prompt, or production AI implementation is authorised by the current milestone.
+No Dify runtime workflow, Unity implementation, backend runtime, production prompt, or final four-global-variable implementation is authorised by this milestone.
 
 ## Core architecture invariant
 
 > **AI controls language. Deterministic game systems control reality.**
 
-LLM output is non-authoritative and must not directly:
+LLM output remains non-authoritative. It may interpret or render language, but it cannot create or mutate canonical state, evidence, branch decisions, gameplay-variable deltas, NPC commitments, publication evidence verdicts, or endings.
 
-- modify canonical game state;
-- change gameplay variables;
-- create canonical evidence;
-- unlock narrative branches;
-- determine endings;
-- invent critical canonical world facts;
-- override authored narrative rules.
+## Validation Increment 01 baseline
 
-## Frozen P0 interaction boundary
+Frozen P0 boundaries:
 
-### Dialogue Semantic Parser
+1. Dialogue Semantic Parser;
+2. Grounded NPC Response Generator;
+3. Headline Analyzer.
 
-Frozen v0.1 represents a player turn through semantic status, act, authored target, conditional value/polarity, all gameplay-relevant tactics, and explicit player-visible evidence references.
+Authoritative reference:
 
-Dialogue allows one consequential semantic action per turn. `REQUEST` is unilateral. `OFFER` is an authored bilateral deal. Unsupported free-form deals fail safely.
-
-### Grounded NPC response
-
-The Frozen pipeline is:
-
-```text
-Validated Player Semantic Action
-→ Deterministic NPC Rule Resolution
-→ Deterministic NPC Response Plan
-→ LLM Surface Candidate
-→ NPC Output Validation Gate
-→ Display
-```
-
-The generator does not decide clue release, relationship changes, compliance, deception, state changes, deals, or branches.
-
-### Headline analysis
-
-The Headline Analyzer returns all consequential Claim Atoms with authored target/value, polarity, commitment mode, and optional source attribution.
-
-Attribution support, underlying-proposition support, canonical reality, and publication responsibility are separate deterministic concepts. Publication responsibility is evaluated against an auditable publication-time evidence/knowledge basis and is not rewritten by later evidence.
-
-## Validation Increment 01 record
-
-Validation Increment 01 completed and froze the shared AI Interaction Contract v0.1.
-
-Specialist evidence:
-
+- `docs/08_AI_INTERACTION_CONTRACT.md`
+- `docs/09_VALIDATION_INCREMENT_01_REPORT.md`
 - `tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md`
 - `tests/01B_HEADLINE_VALIDATION_FIXTURE.md`
 
-Targeted regression commits:
+## Validation Increment 02 result
 
-- 01A: `659be28db16bea586136ac00a053f1f01452df96`
-- 01B: `477086429c6beee7fae4da439383708803cf16f4`
+VI02 validated that the Frozen Contract can be instantiated by a small authored reality and supported by deterministic data/rule structures without expanding AI authority.
 
-VI01 was integrated into `main` at `28a6a9650fca8d6ad8ade992794d5d2f140e4b6f`.
+Detailed report:
 
-## Validation Increment 02 — 02A accepted baseline
+- `docs/10_VALIDATION_INCREMENT_02_REPORT.md`
 
-02A tested whether the Frozen Contract can be instantiated by one small authored reality shared across Dialogue, Grounded NPC Response, and Headline analysis.
+### 02A — Semantic Target Catalogue
 
-Result:
-
-**02A ACCEPTED — Frozen Contract change not required.**
-
-Reproducible evidence:
+Evidence:
 
 - `tests/02A_SEMANTIC_TARGET_CATALOGUE_FIXTURE.md`
 
-The fixture is **Experimental / Validation-only / Non-canonical**.
-
-### Shared validation fixture
-
-Event:
-
-- `EVENT_RAILYARD_CLASH`
-
-Temporary NPCs:
-
-- `NPC_WITNESS_A`
-- `NPC_CLERK_A`
-
-Shared propositions:
-
-- `PROP_FIRE_FIRST`
-- `PROP_FUNDED_OPERATION`
-
-Temporary evidence/source IDs:
-
-- `EV_AUDIO_A`
-- `EV_VIDEO_A`
-- `EV_LEDGER_A`
-- `SRC_WITNESS_A`
-
-Dialogue-only request/deal/pending IDs:
-
-- `REQ_HAND_OVER_LEDGER`
-- `DEAL_LEDGER_FOR_500` — currently exposed in the fixture
-- `DEAL_LEDGER_FOR_300` — authored but unavailable in the fixture
-- `PENDING_LEDGER_500`
-
-None of these story/NPC details are final canon.
-
-### Confirmed catalogue architecture
-
-DEC-017 confirms:
+Confirmed as DEC-017:
 
 ```text
 Global Authored Semantic Registry
@@ -140,216 +66,162 @@ Deterministic Runtime Projection
 Parser-specific Runtime Catalogue Views
 ```
 
-Key rules:
+Shared world propositions reuse global authored IDs. Dialogue-only REQUEST/DEAL meanings remain dialogue-scoped. Only currently exposed meanings enter parser views. Evidence, sources, and Pending Interactions remain separate deterministic registries/context.
 
-- identical propositions reuse one globally unique authored ID across relevant P0 systems;
-- dialogue-only REQUEST/DEAL meanings remain scoped to dialogue;
-- only currently exposed meanings are supplied to AI parsers;
-- authored-but-unavailable meanings are omitted from the current Runtime View;
-- evidence, sources, and Pending Interactions remain separate deterministic runtime registries/context;
-- unavailable or nonexistent model-returned IDs are rejected deterministically and never become gameplay reality;
-- no new semantic status or Frozen output field was required.
+### 02B — Evidence–Claim deterministic rules
 
-## 02B specialist assignment
+Evidence:
 
-Thread:
+- `tests/02B_EVIDENCE_CLAIM_RULES_FIXTURE.md`
 
-**`02B｜Evidence–Claim Deterministic Rules Validation`**
+Confirmed as DEC-018:
 
-Status:
+```text
+Validated Claim Atom
++
+Immutable Publication-Time Snapshot
++
+Authored Evidence–Claim Relationships
++
+Deterministic Commitment-Mode Rules
+→
+Auditable Publication Evaluation
+```
 
-**Active**
+Critical separations:
 
-Use the 02A fixture without inventing a new scenario.
+```text
+Attribution Support
+≠
+Underlying Proposition Support
+≠
+Canonical Reality
+```
 
-Primary questions:
+and:
 
-- how Evidence–Claim relationships are authored deterministically;
-- how attribution support differs from underlying-proposition support;
-- how canonical reality remains separate;
-- what a publication-time player knowledge/evidence snapshot minimally contains;
-- how later evidence is prevented from retroactively rewriting original publication responsibility;
-- how multi-evidence and contradictory-evidence cases resolve deterministically.
+```text
+Evidence exists in world
+≠
+Evidence available to player at publication
+```
 
-02B must not define Reputation/Public Opinion/Threat/Money deltas or use an LLM to decide evidence sufficiency.
+Later evidence cannot overwrite the original publication-time responsibility result. The LLM does not judge evidence sufficiency, source reliability, or truth.
 
-## 02C specialist handback
+The railyard relationship rows and sufficiency examples remain validation-only rather than final journalism policy/content.
 
-Thread:
+### 02C — NPC State & Character Card
 
-**`02C｜NPC State & Character-Card Schema Validation`**
-
-Status:
-
-**READY FOR 02 MASTER REVIEW**
-
-Reproducible evidence:
+Evidence:
 
 - `tests/02C_NPC_STATE_CHARACTER_CARD_SCHEMA_FIXTURE.md`
-- initial fixture commit: `203872623e80dbb21ed5c31e5297af69b6d44c5c`
 
-### 02C proposed data-layer model
-
-02C found that the Frozen Grounded NPC Response Contract can be supported by seven separate layers:
+Confirmed as DEC-019:
 
 1. Static Character Card;
 2. Authored Knowledge Boundary;
 3. Authoritative Dynamic NPC State;
 4. Current Interaction State;
-5. Canonical World Context;
+5. relevant Canonical World Context;
 6. Deterministic Response Plan;
-7. Minimal Generator-only Language Context.
+7. minimal Generator-only Language Context.
 
-The Character Card should remain small: identity, role, dialogue-relevant background references, voice/language constraints, and references to the knowledge/relationship policy definitions. It should not embed the world bible or dynamic game state.
-
-### 02C knowledge/disclosure finding
-
-The following are separate deterministic concepts:
+Critical separation:
 
 ```text
-NPC may know X
+NPC knows X
 ≠
-NPC may reveal X now
+NPC may reveal X
 ≠
-NPC is required to say X now
+NPC must say X now
 ```
 
-`permitted_context` does not authorise gameplay-relevant clue release.
+The generator receives least-knowledge context and surface-language authority only. Hidden canon, locked clues, state deltas, branch IDs, raw relationship values, and unrelated evidence should be withheld where unnecessary.
 
-Current knowledge, already-revealed content, and disclosure state remain authoritative deterministic data. Cooperation/refusal and clue-release eligibility are deterministic rule results rather than LLM choices.
+Shared `PROP_*` IDs may be reused for world propositions in Response Plan content.
 
-### 02C least-knowledge finding
+Exact internal representation for non-world response obligations remains deferred serialization/schema detail; VI02 does not redefine Frozen `required_propositions[]` semantics.
 
-For the shared 02A deception case:
+## Shared validation fixture status
 
-- canonical truth remains `PROP_FIRE_FIRST = MILITIA`;
-- an authored deterministic narrative decision may require Witness A to utter `PROP_FIRE_FIRST = SECURITY_FORCES`;
-- the rule engine may see the hidden truth;
-- the generator only needs the authorised utterance proposition plus minimal voice/context;
-- `EV_VIDEO_A` and hidden canonical truth can be withheld from the generator;
-- the Output Validation Gate retains enough authoritative information to reject leakage or invented facts.
+`EVENT_RAILYARD_CLASH` and all temporary NPC/evidence/deal IDs remain:
 
-The generator therefore does not need the hidden truth in order to render deterministic deception.
+**Experimental / Validation-only / Non-canonical.**
 
-### 02C response-mode result
+They are validation evidence, not final vertical-slice story content.
 
-All existing Frozen response modes can be constructed from deterministic state/rules:
+## Contract-impact result
 
-- `ANSWER`
-- `PARTIAL_ANSWER`
-- `EVADE`
-- `REFUSE`
-- `CLARIFY`
-- `COUNTERQUESTION`
-- `ACCEPT`
-- `REJECT`
+VI02 requires no change to:
 
-No `DECEIVE` response mode is needed.
-
-### 02C Response Plan proposition-ID finding
-
-For world propositions, 02C recommends direct reuse of shared `PROP_*` IDs in Response Plans.
-
-Not every required response obligation is a world proposition. REFUSE, EVADE, CLARIFY, COUNTERQUESTION, ACCEPT, and REJECT may require authored interaction-content clauses. 02C therefore proposes a hybrid internal representation under the existing Response Plan concept:
-
-- shared world-proposition clauses reuse `PROP_*` IDs;
-- non-world interaction obligations use response-layer authored clause IDs.
-
-This is **Proposed**, not Confirmed. 02 Master must decide whether it is merely deferred internal serialization or a semantic broadening of `required_propositions[]`. If Master judges it to change Frozen Response Plan semantics, return it to 01 Master before confirmation.
-
-### 02C NPC-originated offer finding
-
-The fixture can represent `PENDING_LEDGER_500` deterministically and safely bind player ACCEPT/REFUSE to it.
-
-A future NPC-originated offer should follow:
-
-```text
-Deterministic authored deal decision / Pending Interaction creation
-→ Response Plan authorises wording
-→ LLM verbalises only
-```
-
-However, the Frozen response-mode taxonomy has no NPC `OFFER` mode. If the vertical slice requires a new consequential NPC offer and existing modes cannot represent it without semantic distortion, 02C must not invent a new mode. Return to 02 Master, and then to 01 Master if Frozen Contract semantics must change.
-
-### 02C contract-impact assessment
-
-For the validated 02C core:
-
-- Frozen Contract change required: **No**;
-- AI authority boundary change required: **No**;
-- response-mode change required: **No**;
-- hard safety gate change required: **No**;
-- 01 Master review required now: **No**;
-- 02 Master review required: **Yes**.
-
-02C does not complete Validation Increment 02.
-
-## Shared-change escalation rule
-
-02B and 02C must stop specialist-level confirmation and return to the 02 Master if they require changes to:
-
-- shared semantic schema;
 - semantic statuses;
-- Dialogue Act taxonomy;
+- Dialogue Acts;
+- Dialogue single-action rule;
+- REQUEST/OFFER distinction;
 - Claim Atom schema;
-- Response Plan authority semantics;
+- commitment/source semantics;
+- NPC response modes;
+- deterministic deception rule;
 - AI authority boundary;
 - P0 scope;
-- shared cross-system evidence assumptions;
 - hard safety gates.
 
-If 02 Master determines that the Frozen AI Interaction Contract must change, the issue must return to **01｜AI Interaction Contract — Validation Increment 01** for a narrowly scoped Master review before becoming Confirmed.
+Therefore:
 
-## Do not do yet
+**Frozen AI Interaction Contract v0.1 remains unchanged.**
 
-Do not:
+**01 Master review required: No.**
 
-- create a Unity project;
-- implement gameplay state classes;
-- build a Dify runtime workflow;
-- choose production prompts;
-- measure a production AI-model baseline;
-- lock backend/API architecture;
-- define final four-global-variable formulas or thresholds;
-- design the full 14-day game;
-- promote the temporary railyard fixture into final canon merely because it is convenient for validation.
+## Important deferred issues
 
-## Known unresolved questions
+Do not silently treat the following as Confirmed:
 
-- final Evidence–Claim Relationship rules;
-- publication snapshot persistence details;
-- 02C proposed NPC state / knowledge / character-card model awaits 02 Master acceptance;
-- Response Plan internal content representation: direct shared proposition reuse for world propositions plus possible response-layer authored clauses for non-world obligations;
 - NPC-originated authored-offer lifecycle;
-- production catalogue serialization/exposure rules/authoring tools;
-- final vertical-slice story canon, NPC roster, and faction design;
-- final relationship dimensions/formulas;
-- richer NPC epistemic distinctions such as mistaken belief vs hearsay if later gameplay requires them;
-- Reputation/Public Opinion/Threat/Money deterministic rules;
-- AI model baseline and acceptance thresholds;
-- Dify feasibility/integration;
+- exact response-layer serialization for non-world Response Plan obligations;
+- attributed-paraphrase commitment weakening policy;
+- final evidence authenticity/verification rules;
+- final NPC relationship formulas or richer epistemic model;
+- final story canon/NPC/faction roster;
+- final catalogue/evidence authoring formats/tools;
+- Reputation / Public Opinion / Threat Level / Money formulas and thresholds;
+- real-model acceptance thresholds;
+- Dify integration;
 - backend/API architecture;
-- Unity implementation architecture;
-- production Output Validation Gate implementation strategy;
-- P1 long-term NPC memory;
-- whether rhetorical framing eventually needs authoritative gameplay semantics.
+- Unity implementation;
+- production Output Validation Gate implementation;
+- P1 NPC memory.
+
+If NPC-originated offers or Response Plan serialization later require new response modes or changed authority semantics, return to Contract review before implementation.
+
+## Next project step
+
+Open a **new Master planning thread** for the post-VI02 phase rather than continuing specialist work in this thread.
+
+Recommended planning scope:
+
+- deterministic four-global-variable consequence-rule validation;
+- real-model / Dify feasibility baseline using frozen 01/02 fixtures;
+- sequencing/parallelisation of those streams;
+- success criteria for the next increment;
+- backend/runtime architecture only after those needs are evidenced.
+
+Do not enter Unity implementation yet.
 
 ## Documentation protocol
 
 The Git repository is the canonical working copy.
 
-At each substantial specialist or Master checkpoint:
+At substantial checkpoints:
 
-- preserve detailed reproducible validation evidence in the relevant `tests/` fixture file;
-- update `06_CURRENT_STATE.md` when active/completed work or unresolved blockers change;
-- update this `07_HANDOFF.md` with the concise cross-thread state needed to resume work;
-- update `05_DECISION_LOG.md` only when a decision has become Confirmed;
-- do not use the Handoff as a full transcript or duplicate all fixture cases;
-- create/update a milestone report only when that validation increment reaches a real integration checkpoint.
+- detailed reproducible validation evidence → `tests/`;
+- Confirmed decisions → `docs/05_DECISION_LOG.md`;
+- current phase/progress/blockers → `docs/06_CURRENT_STATE.md`;
+- concise cross-thread resume state → `docs/07_HANDOFF.md`;
+- completed validation increment → milestone report.
 
-Chat discussion alone is not the canonical project record. When tooling allows, repository documentation should be synchronised directly rather than requiring the user to manually edit text.
+Chat history alone is not the canonical project record. When tooling allows, repository documentation should be synchronised directly rather than requiring manual user edits.
 
-## Files future VI02 specialist threads should read first
+## Files next Master thread should read first
 
 1. BTL-AI ChatGPT Project Instructions
 2. `docs/01_PROJECT_DEFINITION.md`
@@ -358,19 +230,19 @@ Chat discussion alone is not the canonical project record. When tooling allows, 
 5. `docs/06_CURRENT_STATE.md`
 6. `docs/07_HANDOFF.md`
 7. `docs/09_VALIDATION_INCREMENT_01_REPORT.md`
-8. `tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md`
-9. `tests/01B_HEADLINE_VALIDATION_FIXTURE.md`
-10. `tests/02A_SEMANTIC_TARGET_CATALOGUE_FIXTURE.md`
+8. `docs/10_VALIDATION_INCREMENT_02_REPORT.md`
+9. `tests/02A_SEMANTIC_TARGET_CATALOGUE_FIXTURE.md`
+10. `tests/02B_EVIDENCE_CLAIM_RULES_FIXTURE.md`
 11. `tests/02C_NPC_STATE_CHARACTER_CARD_SCHEMA_FIXTURE.md`
 
 ## Repository baseline
 
-Stable validated branch:
+Stable validated branch currently:
 
-`main`
+`main` — VI01 baseline until VI02 is deliberately integrated.
 
-Current active working branch:
+Completed VI02 branch:
 
 `design/validation-increment-02`
 
-Do not assume the default branch is the newest working state during VI02. Specialist threads should read the active working branch identified here.
+Do not start the next substantial branch until VI02 integration and next-increment authorisation are explicit.
