@@ -97,7 +97,6 @@ Only confirmed decisions belong here. Unresolved choices are recorded in `06_CUR
 - The LLM does not determine evidence sufficiency or canonical truth.
 - Evidence support evaluation must remain deterministic.
 
-
 ## DEC-012
 
 **Status:** Confirmed  
@@ -172,3 +171,22 @@ Only confirmed decisions belong here. Unresolved choices are recorded in `06_CUR
 - Evidence-based journalism and neutral behaviour-based pre-publish warnings remain confirmed.
 - The LLM does not determine evidence sufficiency, attribution support, or canonical truth.
 - A semantic fallback is forbidden for retry-exhausted headline parsing; a preserved draft and edit/retry UX is allowed.
+
+## DEC-017
+
+**Status:** Confirmed
+
+**Date:** 2026-08-28
+**Decision:** Represent authored semantic meanings through a globally unique authored semantic registry that is deterministically projected into parser-specific Runtime Catalogue Views. Shared propositions reuse the same authored proposition IDs across relevant P0 interactions; dialogue-only REQUEST and DEAL meanings remain scoped to dialogue. Only currently exposed meanings are supplied to AI parsers, while evidence, sources, and Pending Interactions remain separate deterministic runtime registries/context.
+
+**Rationale:** Validation Increment 02A demonstrated that one small authored reality can instantiate Dialogue, Grounded NPC Response, and Headline analysis without requiring the LLM to invent consequential gameplay meanings. Deterministic runtime projection keeps the language interface flexible while preserving a bounded, auditable gameplay space.
+
+**Consequences:**
+
+- Authored-but-unavailable meanings are omitted from the current Runtime Catalogue View.
+- Completely nonexistent meanings have no authored registry entry.
+- If an AI output returns an unavailable or nonexistent ID, deterministic validation rejects it; the ID cannot become gameplay reality.
+- No new semantic status or Frozen semantic-output field is introduced by this catalogue architecture.
+- Shared proposition IDs may support Dialogue, Headline Claim Atoms, deterministic NPC response content, and later Evidence–Claim relationship data.
+- The 02A railyard-clash fixture remains Experimental / Validation-only / Non-canonical; acceptance of its architecture does not confirm its story content.
+- Production serialization, exposure rules, and authoring tooling remain unresolved.
