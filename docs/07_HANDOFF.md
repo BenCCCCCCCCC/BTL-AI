@@ -15,7 +15,7 @@ Portfolio goals:
 
 Status:
 
-**COMPLETE — Master-reviewed and approved for fast-forward integration into `main`.**
+**COMPLETE — Master-reviewed and approved as the next stable baseline.**
 
 Validation Increment 01 is complete and the **AI Interaction Contract v0.1 remains Frozen and unchanged**.
 
@@ -27,24 +27,7 @@ No Dify runtime workflow, Unity implementation, backend runtime, production prom
 
 LLM output remains non-authoritative. It may interpret or render language, but it cannot create or mutate canonical state, evidence, branch decisions, gameplay-variable deltas, NPC commitments, publication evidence verdicts, or endings.
 
-## Validation Increment 01 baseline
-
-Frozen P0 boundaries:
-
-1. Dialogue Semantic Parser;
-2. Grounded NPC Response Generator;
-3. Headline Analyzer.
-
-Authoritative reference:
-
-- `docs/08_AI_INTERACTION_CONTRACT.md`
-- `docs/09_VALIDATION_INCREMENT_01_REPORT.md`
-- `tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md`
-- `tests/01B_HEADLINE_VALIDATION_FIXTURE.md`
-
 ## Validation Increment 02 result
-
-VI02 validated that the Frozen Contract can be instantiated by a small authored reality and supported by deterministic data/rule structures without expanding AI authority.
 
 Detailed report:
 
@@ -88,7 +71,7 @@ Deterministic Commitment-Mode Rules
 Auditable Publication Evaluation
 ```
 
-Critical separations:
+Critical separation:
 
 ```text
 Attribution Support
@@ -175,7 +158,7 @@ If NPC-originated offers or Response Plan serialization later require new respon
 
 ## Next project step
 
-After VI02 integration, open a **new Master planning thread** for the post-VI02 phase rather than continuing specialist work in this thread.
+Open a **new Master planning thread** for the post-VI02 phase rather than continuing specialist work in this thread.
 
 Recommended planning scope:
 
@@ -217,12 +200,10 @@ Chat history alone is not the canonical project record. When tooling allows, rep
 
 ## Repository baseline
 
-Stable baseline before VI02 integration:
-
-`main` — VI01 baseline.
-
-Completed and approved VI02 branch:
+Validation Increment 02 was completed on:
 
 `design/validation-increment-02`
 
-This branch is approved for fast-forward integration into `main`. Do not start the next substantial branch until the next increment is authorised.
+After fast-forward integration, `main` is the intended stable validated baseline for completed VI01 + VI02 work.
+
+Do not start the next substantial branch until the next increment is authorised.
