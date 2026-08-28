@@ -15,9 +15,11 @@ Portfolio goals:
 
 Status:
 
-**COMPLETE — Master-reviewed and approved as the next stable baseline.**
+**COMPLETE — integrated into `main`.**
 
-Validation Increment 01 is complete and the **AI Interaction Contract v0.1 remains Frozen and unchanged**.
+`main` is now the current stable validated baseline for completed VI01 + VI02 work.
+
+The **AI Interaction Contract v0.1 remains Frozen and unchanged**.
 
 No Dify runtime workflow, Unity implementation, backend runtime, production prompt, or final four-global-variable implementation is authorised by this milestone.
 
@@ -200,10 +202,12 @@ Chat history alone is not the canonical project record. When tooling allows, rep
 
 ## Repository baseline
 
-Validation Increment 02 was completed on:
+Current stable validated branch:
+
+`main`
+
+Completed historical VI02 branch:
 
 `design/validation-increment-02`
 
-After fast-forward integration, `main` is the intended stable validated baseline for completed VI01 + VI02 work.
-
-Do not start the next substantial branch until the next increment is authorised.
+Future substantial work should begin on a new branch only after the next increment is authorised.
