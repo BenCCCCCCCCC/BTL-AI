@@ -17,7 +17,7 @@ Portfolio goals:
 
 Status:
 
-**Active — 02A accepted; 02B and 02C authorised in parallel**
+**Active — 02A accepted; 02B active; 02C READY FOR 02 MASTER REVIEW**
 
 Validation Increment 01 is complete and the **AI Interaction Contract v0.1 remains Frozen**.
 
@@ -156,6 +156,10 @@ Thread:
 
 **`02B｜Evidence–Claim Deterministic Rules Validation`**
 
+Status:
+
+**Active**
+
 Use the 02A fixture without inventing a new scenario.
 
 Primary questions:
@@ -169,25 +173,116 @@ Primary questions:
 
 02B must not define Reputation/Public Opinion/Threat/Money deltas or use an LLM to decide evidence sufficiency.
 
-## 02C specialist assignment
+## 02C specialist handback
 
 Thread:
 
 **`02C｜NPC State & Character-Card Schema Validation`**
 
-Use `NPC_WITNESS_A` and `NPC_CLERK_A` only as temporary validation subjects.
+Status:
 
-Primary questions:
+**READY FOR 02 MASTER REVIEW**
 
-- what belongs in the static authored NPC card;
-- what belongs in authoritative dynamic NPC state;
-- how knowledge boundaries are represented;
-- what current interaction state is required;
-- what deterministic inputs produce NPC rule resolution and a Response Plan;
-- what minimal information the LLM generator needs;
-- what hidden canonical information should be withheld under least-knowledge/context-minimisation.
+Reproducible evidence:
 
-02C must not turn the temporary fixture into final character/world canon.
+- `tests/02C_NPC_STATE_CHARACTER_CARD_SCHEMA_FIXTURE.md`
+- initial fixture commit: `203872623e80dbb21ed5c31e5297af69b6d44c5c`
+
+### 02C proposed data-layer model
+
+02C found that the Frozen Grounded NPC Response Contract can be supported by seven separate layers:
+
+1. Static Character Card;
+2. Authored Knowledge Boundary;
+3. Authoritative Dynamic NPC State;
+4. Current Interaction State;
+5. Canonical World Context;
+6. Deterministic Response Plan;
+7. Minimal Generator-only Language Context.
+
+The Character Card should remain small: identity, role, dialogue-relevant background references, voice/language constraints, and references to the knowledge/relationship policy definitions. It should not embed the world bible or dynamic game state.
+
+### 02C knowledge/disclosure finding
+
+The following are separate deterministic concepts:
+
+```text
+NPC may know X
+≠
+NPC may reveal X now
+≠
+NPC is required to say X now
+```
+
+`permitted_context` does not authorise gameplay-relevant clue release.
+
+Current knowledge, already-revealed content, and disclosure state remain authoritative deterministic data. Cooperation/refusal and clue-release eligibility are deterministic rule results rather than LLM choices.
+
+### 02C least-knowledge finding
+
+For the shared 02A deception case:
+
+- canonical truth remains `PROP_FIRE_FIRST = MILITIA`;
+- an authored deterministic narrative decision may require Witness A to utter `PROP_FIRE_FIRST = SECURITY_FORCES`;
+- the rule engine may see the hidden truth;
+- the generator only needs the authorised utterance proposition plus minimal voice/context;
+- `EV_VIDEO_A` and hidden canonical truth can be withheld from the generator;
+- the Output Validation Gate retains enough authoritative information to reject leakage or invented facts.
+
+The generator therefore does not need the hidden truth in order to render deterministic deception.
+
+### 02C response-mode result
+
+All existing Frozen response modes can be constructed from deterministic state/rules:
+
+- `ANSWER`
+- `PARTIAL_ANSWER`
+- `EVADE`
+- `REFUSE`
+- `CLARIFY`
+- `COUNTERQUESTION`
+- `ACCEPT`
+- `REJECT`
+
+No `DECEIVE` response mode is needed.
+
+### 02C Response Plan proposition-ID finding
+
+For world propositions, 02C recommends direct reuse of shared `PROP_*` IDs in Response Plans.
+
+Not every required response obligation is a world proposition. REFUSE, EVADE, CLARIFY, COUNTERQUESTION, ACCEPT, and REJECT may require authored interaction-content clauses. 02C therefore proposes a hybrid internal representation under the existing Response Plan concept:
+
+- shared world-proposition clauses reuse `PROP_*` IDs;
+- non-world interaction obligations use response-layer authored clause IDs.
+
+This is **Proposed**, not Confirmed. 02 Master must decide whether it is merely deferred internal serialization or a semantic broadening of `required_propositions[]`. If Master judges it to change Frozen Response Plan semantics, return it to 01 Master before confirmation.
+
+### 02C NPC-originated offer finding
+
+The fixture can represent `PENDING_LEDGER_500` deterministically and safely bind player ACCEPT/REFUSE to it.
+
+A future NPC-originated offer should follow:
+
+```text
+Deterministic authored deal decision / Pending Interaction creation
+→ Response Plan authorises wording
+→ LLM verbalises only
+```
+
+However, the Frozen response-mode taxonomy has no NPC `OFFER` mode. If the vertical slice requires a new consequential NPC offer and existing modes cannot represent it without semantic distortion, 02C must not invent a new mode. Return to 02 Master, and then to 01 Master if Frozen Contract semantics must change.
+
+### 02C contract-impact assessment
+
+For the validated 02C core:
+
+- Frozen Contract change required: **No**;
+- AI authority boundary change required: **No**;
+- response-mode change required: **No**;
+- hard safety gate change required: **No**;
+- 01 Master review required now: **No**;
+- 02 Master review required: **Yes**.
+
+02C does not complete Validation Increment 02.
 
 ## Shared-change escalation rule
 
@@ -223,16 +318,20 @@ Do not:
 
 - final Evidence–Claim Relationship rules;
 - publication snapshot persistence details;
-- final NPC state / knowledge / character-card schema;
-- whether Response Plan proposition data directly reuses shared proposition IDs or a separate authored response-content registry;
+- 02C proposed NPC state / knowledge / character-card model awaits 02 Master acceptance;
+- Response Plan internal content representation: direct shared proposition reuse for world propositions plus possible response-layer authored clauses for non-world obligations;
 - NPC-originated authored-offer lifecycle;
 - production catalogue serialization/exposure rules/authoring tools;
 - final vertical-slice story canon, NPC roster, and faction design;
+- final relationship dimensions/formulas;
+- richer NPC epistemic distinctions such as mistaken belief vs hearsay if later gameplay requires them;
 - Reputation/Public Opinion/Threat/Money deterministic rules;
 - AI model baseline and acceptance thresholds;
 - Dify feasibility/integration;
 - backend/API architecture;
 - Unity implementation architecture;
+- production Output Validation Gate implementation strategy;
+- P1 long-term NPC memory;
 - whether rhetorical framing eventually needs authoritative gameplay semantics.
 
 ## Documentation protocol
@@ -262,6 +361,7 @@ Chat discussion alone is not the canonical project record. When tooling allows, 
 8. `tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md`
 9. `tests/01B_HEADLINE_VALIDATION_FIXTURE.md`
 10. `tests/02A_SEMANTIC_TARGET_CATALOGUE_FIXTURE.md`
+11. `tests/02C_NPC_STATE_CHARACTER_CARD_SCHEMA_FIXTURE.md`
 
 ## Repository baseline
 
