@@ -186,6 +186,22 @@ At substantial checkpoints:
 
 Chat history alone is not the canonical project record. When tooling allows, repository documentation should be synchronised directly rather than requiring manual user edits.
 
+## Local repository and Project Sources sync protocol
+
+GitHub is the canonical working copy, but the user's local repository and ChatGPT Project Sources are separate copies and do **not** update automatically when GitHub is changed through ChatGPT tooling.
+
+After every substantial GitHub checkpoint in which files are created, updated, deleted, merged, or otherwise corrected, the assistant must explicitly report:
+
+1. **GitHub files changed** — exact repository paths that changed;
+2. **Local repository sync required: Yes / No** — if Yes, tell the user to switch to the relevant canonical branch in GitHub Desktop, Fetch origin, then Pull origin so the local working copy matches GitHub;
+3. **Project Sources refresh required: Yes / No** — if Yes, list the exact Project Sources files that should be replaced or newly added;
+4. **Project Sources currently stale: Yes / No** — if GitHub has newer authoritative files than the uploaded Project Sources, state this explicitly until the user confirms refresh;
+5. **User manual action required** — only the minimal steps that cannot be performed automatically from ChatGPT.
+
+For milestone completions and major Master integrations, local repository sync and Project Sources refresh should be treated as part of the checkpoint rather than omitted from the handoff.
+
+Do not assume that a GitHub write automatically updates either the user's local files or Project Sources.
+
 ## Files next Master thread should read first
 
 1. BTL-AI ChatGPT Project Instructions
