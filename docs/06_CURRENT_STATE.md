@@ -2,9 +2,11 @@
 
 ## Current phase
 
-Pre-production — **Validation Increment 02 complete and validated.**
+Pre-production — **Validation Increment 02 complete and integrated into `main`.**
 
-Validation Increment 01 is complete and the **AI Interaction Contract v0.1 remains Frozen**. Validation Increment 02 completed Master integration on `design/validation-increment-02` and is approved as the next stable project baseline.
+`main` is the current stable validated project baseline for completed Validation Increment 01 + Validation Increment 02 work.
+
+The **AI Interaction Contract v0.1 remains Frozen and unchanged**.
 
 No Dify runtime, Unity implementation, backend runtime, production prompt, or final global-variable implementation is authorised by this state.
 
@@ -12,8 +14,7 @@ No Dify runtime, Unity implementation, backend runtime, production prompt, or fi
 
 - Repository bootstrap and baseline documentation completed.
 - Validation Increment 01 completed; AI Interaction Contract v0.1 frozen.
-- VI01 integrated into `main` at `28a6a9650fca8d6ad8ade992794d5d2f140e4b6f`.
-- Validation Increment 02 completed and Master-reviewed.
+- Validation Increment 02 completed, Master-reviewed, and integrated into `main`.
 - 02A Semantic Target Catalogue & Vertical-Slice Fixture Validation completed and accepted.
 - 02B Evidence–Claim Deterministic Rules Validation completed and accepted.
 - 02C NPC State & Character-Card Schema Validation completed and accepted.
@@ -132,17 +133,19 @@ The next work must be a separately scoped post-VI02 planning increment rather th
 Recommended next planning questions:
 
 1. define the smallest useful deterministic consequence model for Reputation / Public Opinion / Threat Level / Money without inventing arbitrary formulas;
-2. define a real-model / Dify feasibility baseline using the now-stable 01/02 fixtures, without yet making Dify a production dependency;
+2. define a real-model / Dify feasibility baseline using the stable 01/02 fixtures, without yet making Dify a production dependency;
 3. decide whether those two validation streams can run in parallel;
 4. defer backend/runtime architecture until deterministic-rule and orchestration needs are evidenced;
 5. do not create a Unity project until explicitly authorised.
 
 ## Repository baseline
 
-Validation Increment 02 was completed on:
+Current stable validated branch:
+
+`main`
+
+Completed historical VI02 branch:
 
 `design/validation-increment-02`
 
-After fast-forward integration, `main` is the intended stable validated baseline for completed VI01 + VI02 work.
-
-Future substantial work should begin on a new branch only after the next increment is authorised.
+Future substantial work should begin on a new branch only after the next validation/planning increment is authorised.
