@@ -2,9 +2,9 @@
 
 ## Current phase
 
-Pre-production — **Validation Increment 02 complete and approved for integration into `main`.**
+Pre-production — **Validation Increment 02 complete and validated.**
 
-Validation Increment 01 is complete and the **AI Interaction Contract v0.1 remains Frozen**. Validation Increment 02 completed Master integration on `design/validation-increment-02`; its validated branch is ready to become the stable project baseline.
+Validation Increment 01 is complete and the **AI Interaction Contract v0.1 remains Frozen**. Validation Increment 02 completed Master integration on `design/validation-increment-02` and is approved as the next stable project baseline.
 
 No Dify runtime, Unity implementation, backend runtime, production prompt, or final global-variable implementation is authorised by this state.
 
@@ -13,7 +13,7 @@ No Dify runtime, Unity implementation, backend runtime, production prompt, or fi
 - Repository bootstrap and baseline documentation completed.
 - Validation Increment 01 completed; AI Interaction Contract v0.1 frozen.
 - VI01 integrated into `main` at `28a6a9650fca8d6ad8ade992794d5d2f140e4b6f`.
-- Validation Increment 02 completed on `design/validation-increment-02`.
+- Validation Increment 02 completed and Master-reviewed.
 - 02A Semantic Target Catalogue & Vertical-Slice Fixture Validation completed and accepted.
 - 02B Evidence–Claim Deterministic Rules Validation completed and accepted.
 - 02C NPC State & Character-Card Schema Validation completed and accepted.
@@ -88,19 +88,7 @@ The generator receives least-knowledge context and retains surface-language auth
 
 Validation Increment 02 requires **no change** to the Frozen AI Interaction Contract v0.1.
 
-No change is required to:
-
-- semantic status taxonomy;
-- Dialogue Act taxonomy;
-- single-action Dialogue rule;
-- REQUEST/OFFER distinction;
-- Claim Atom schema;
-- commitment/source semantics;
-- NPC response-mode taxonomy;
-- deception authority;
-- generator authority;
-- P0 scope;
-- hard safety gates.
+No change is required to semantic status taxonomy, Dialogue Act taxonomy, single-action Dialogue rule, REQUEST/OFFER distinction, Claim Atom schema, commitment/source semantics, NPC response-mode taxonomy, deception authority, generator authority, P0 scope, or hard safety gates.
 
 **01 Master review required:** No.
 
@@ -149,14 +137,12 @@ Recommended next planning questions:
 4. defer backend/runtime architecture until deterministic-rule and orchestration needs are evidenced;
 5. do not create a Unity project until explicitly authorised.
 
-## Repository branches
+## Repository baseline
 
-Stable baseline before VI02 integration:
-
-`main` — VI01 baseline.
-
-Completed and approved VI02 branch:
+Validation Increment 02 was completed on:
 
 `design/validation-increment-02`
 
-This branch is approved for fast-forward integration into `main`. Future substantial work should begin on a new branch only after the next increment is authorised.
+After fast-forward integration, `main` is the intended stable validated baseline for completed VI01 + VI02 work.
+
+Future substantial work should begin on a new branch only after the next increment is authorised.
