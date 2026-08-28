@@ -15,7 +15,7 @@ Portfolio goals:
 
 Status:
 
-**COMPLETE — awaiting deliberate integration of `design/validation-increment-02` into `main`.**
+**COMPLETE — Master-reviewed and approved for fast-forward integration into `main`.**
 
 Validation Increment 01 is complete and the **AI Interaction Contract v0.1 remains Frozen and unchanged**.
 
@@ -98,14 +98,6 @@ Underlying Proposition Support
 Canonical Reality
 ```
 
-and:
-
-```text
-Evidence exists in world
-≠
-Evidence available to player at publication
-```
-
 Later evidence cannot overwrite the original publication-time responsibility result. The LLM does not judge evidence sufficiency, source reliability, or truth.
 
 The railyard relationship rows and sufficiency examples remain validation-only rather than final journalism policy/content.
@@ -152,19 +144,7 @@ They are validation evidence, not final vertical-slice story content.
 
 ## Contract-impact result
 
-VI02 requires no change to:
-
-- semantic statuses;
-- Dialogue Acts;
-- Dialogue single-action rule;
-- REQUEST/OFFER distinction;
-- Claim Atom schema;
-- commitment/source semantics;
-- NPC response modes;
-- deterministic deception rule;
-- AI authority boundary;
-- P0 scope;
-- hard safety gates.
+VI02 requires no change to semantic statuses, Dialogue Acts, Dialogue single-action rule, REQUEST/OFFER distinction, Claim Atom schema, commitment/source semantics, NPC response modes, deterministic deception rule, AI authority boundary, P0 scope, or hard safety gates.
 
 Therefore:
 
@@ -195,7 +175,7 @@ If NPC-originated offers or Response Plan serialization later require new respon
 
 ## Next project step
 
-Open a **new Master planning thread** for the post-VI02 phase rather than continuing specialist work in this thread.
+After VI02 integration, open a **new Master planning thread** for the post-VI02 phase rather than continuing specialist work in this thread.
 
 Recommended planning scope:
 
@@ -237,12 +217,12 @@ Chat history alone is not the canonical project record. When tooling allows, rep
 
 ## Repository baseline
 
-Stable validated branch currently:
+Stable baseline before VI02 integration:
 
-`main` — VI01 baseline until VI02 is deliberately integrated.
+`main` — VI01 baseline.
 
-Completed VI02 branch:
+Completed and approved VI02 branch:
 
 `design/validation-increment-02`
 
-Do not start the next substantial branch until VI02 integration and next-increment authorisation are explicit.
+This branch is approved for fast-forward integration into `main`. Do not start the next substantial branch until the next increment is authorised.
