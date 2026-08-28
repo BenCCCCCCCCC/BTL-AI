@@ -190,3 +190,41 @@ Only confirmed decisions belong here. Unresolved choices are recorded in `06_CUR
 - Shared proposition IDs may support Dialogue, Headline Claim Atoms, deterministic NPC response content, and later Evidence–Claim relationship data.
 - The 02A railyard-clash fixture remains Experimental / Validation-only / Non-canonical; acceptance of its architecture does not confirm its story content.
 - Production serialization, exposure rules, and authoring tooling remain unresolved.
+
+## DEC-018
+
+**Status:** Confirmed
+
+**Date:** 2026-08-29
+**Decision:** Evaluate headline publication support through an authored deterministic Evidence–Claim Relationship layer operating on an immutable publication-time evidence/knowledge snapshot. Attribution support, underlying-proposition support, and canonical reality remain independent axes. Publication evaluations are auditable and versioned, and later evidence or later rule changes do not overwrite the original publication-time result.
+
+**Rationale:** Validation Increment 02B demonstrated that the Frozen Claim Atom schema is sufficient for deterministic journalism evaluation without asking an LLM to judge evidence sufficiency, source reliability, or truth. A frozen snapshot preserves the player's actual information basis at the moment of publication.
+
+**Consequences:**
+
+- Evidence–Claim relationships are authored deterministic data, not Claim Atom fields or LLM output.
+- Attribution relationships never automatically create underlying-proposition relationships.
+- Evidence that exists in the world but was not known/content-accessible to the player is excluded from the original publication evaluation.
+- Publication evaluation may use deterministic labels such as `SUPPORTED`, `CONTRADICTED`, and `INSUFFICIENT`; these are gameplay-evaluation results, not additions to the Frozen semantic status taxonomy.
+- Conflicting evidence is resolved by authored deterministic commitment-mode rules rather than majority voting, model judgement, or hidden truth scores.
+- The specific railyard Evidence–Claim rows and sufficiency examples remain validation-only, not final journalism content/policy.
+- Persistence technology, serialization, authoring tooling, authenticity states, and attributed-paraphrase weakening policy remain unresolved.
+
+## DEC-019
+
+**Status:** Confirmed
+
+**Date:** 2026-08-29
+**Decision:** Ground P0 NPC responses through separated deterministic data layers: a small Static Character Card, Authored Knowledge Boundary, Authoritative Dynamic NPC State, Current Interaction State, relevant Canonical World Context, a Deterministic Response Plan, and a minimal Generator-only Language Context. NPC knowledge, disclosure permission, and required response content are separate concepts. The generator receives least-knowledge context and retains surface-language authority only.
+
+**Rationale:** Validation Increment 02C demonstrated that all Frozen NPC response modes, deterministic deception, clue control, request/deal decisions, and fallback semantics can be supported without exposing the full world state or giving the LLM gameplay authority.
+
+**Consequences:**
+
+- Character Cards remain small and must not become world-bible, memory, or authoritative runtime-state dumps.
+- Hidden canonical truth, locked clues, raw relationship values, rule thresholds, branch IDs, state deltas, and unrelated evidence should be omitted from generator context when unnecessary.
+- `NPC knows X`, `NPC may reveal X`, and `NPC must say X now` are distinct deterministic states.
+- Shared world propositions may reuse the globally unique `PROP_*` IDs in Response Plan content.
+- The exact internal representation for non-world response obligations (for example refusal, clarification, counterquestion, acceptance wording) remains deferred serialization/schema detail and is not a Frozen Contract change at this checkpoint.
+- NPC-originated authored-offer lifecycle remains unresolved. If a future vertical-slice requirement needs a new response mode or changed Response Plan authority semantics, it must return through the current Master process to Contract review before implementation.
+- Final NPC roster, relationship formulas, richer epistemic distinctions, production serialization, P1 memory, and Output Validation Gate implementation remain unresolved.
