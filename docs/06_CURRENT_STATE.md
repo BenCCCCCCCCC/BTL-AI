@@ -2,9 +2,9 @@
 
 ## Current phase
 
-Pre-production — **Validation Increment 02 complete; awaiting deliberate integration into `main`.**
+Pre-production — **Validation Increment 02 complete and approved for integration into `main`.**
 
-Validation Increment 01 is complete and the **AI Interaction Contract v0.1 remains Frozen**. Validation Increment 02 has now completed Master integration on `design/validation-increment-02`.
+Validation Increment 01 is complete and the **AI Interaction Contract v0.1 remains Frozen**. Validation Increment 02 completed Master integration on `design/validation-increment-02`; its validated branch is ready to become the stable project baseline.
 
 No Dify runtime, Unity implementation, backend runtime, production prompt, or final global-variable implementation is authorised by this state.
 
@@ -146,17 +146,17 @@ Recommended next planning questions:
 1. define the smallest useful deterministic consequence model for Reputation / Public Opinion / Threat Level / Money without inventing arbitrary formulas;
 2. define a real-model / Dify feasibility baseline using the now-stable 01/02 fixtures, without yet making Dify a production dependency;
 3. decide whether those two validation streams can run in parallel;
-4. defer backend/runtime architecture until the deterministic rule boundary and real-model orchestration requirements are better evidenced;
+4. defer backend/runtime architecture until deterministic-rule and orchestration needs are evidenced;
 5. do not create a Unity project until explicitly authorised.
 
 ## Repository branches
 
-Stable validated branch currently remains:
+Stable baseline before VI02 integration:
 
-`main` — VI01 baseline until VI02 is deliberately integrated.
+`main` — VI01 baseline.
 
-Completed VI02 branch:
+Completed and approved VI02 branch:
 
 `design/validation-increment-02`
 
-Future substantial work should begin on a new branch only after VI02 is integrated and the next increment is authorised.
+This branch is approved for fast-forward integration into `main`. Future substantial work should begin on a new branch only after the next increment is authorised.
