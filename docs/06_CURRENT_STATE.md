@@ -2,150 +2,117 @@
 
 ## Current phase
 
-Pre-production — **Validation Increment 02 complete and integrated into `main`.**
+Pre-production — **Pre-Prototype Gate 03 complete on `design/pre-prototype-gate-03`, pending integration into `main`.**
 
-`main` is the current stable validated project baseline for completed Validation Increment 01 + Validation Increment 02 work.
+`main` remains the current stable integrated VI01 + VI02 baseline until the 03 branch is merged.
 
 The **AI Interaction Contract v0.1 remains Frozen and unchanged**.
 
-No Dify runtime, Unity implementation, backend runtime, production prompt, or final global-variable implementation is authorised by this state.
+No Unity project, production Dify workflow, backend runtime, final balance model, or final four-global-variable implementation is authorised by this state.
 
 ## Completed
 
-- Repository bootstrap and baseline documentation completed.
+- Repository baseline and product definition completed.
 - Validation Increment 01 completed; AI Interaction Contract v0.1 frozen.
-- Validation Increment 02 completed, Master-reviewed, and integrated into `main`.
-- 02A Semantic Target Catalogue & Vertical-Slice Fixture Validation completed and accepted.
-- 02B Evidence–Claim Deterministic Rules Validation completed and accepted.
-- 02C NPC State & Character-Card Schema Validation completed and accepted.
-- VI02 integration report recorded in `docs/10_VALIDATION_INCREMENT_02_REPORT.md`.
+- Validation Increment 02 completed and integrated into `main`.
+- Pre-Prototype Gate 03 completed in the current design branch.
+- 03 confirmed the minimal deterministic consequence boundary (DEC-020).
+- 03 confirmed the real-model P0 baseline protocol (DEC-021).
+- Detailed 03 result recorded in `docs/11_PRE_PROTOTYPE_GATE_03_REPORT.md`.
 
-## Confirmed VI02 architecture
+## Confirmed Pre-Prototype Gate 03 result
 
-### DEC-017 — Authored semantic catalogue
+### DEC-020 — Minimal deterministic consequence boundary
 
 ```text
-Global Authored Semantic Registry
+Deterministically Resolved Gameplay Result
         ↓
-Deterministic Runtime Projection
+Authored Consequence Event
         ↓
-Parser-specific Runtime Catalogue Views
+Deterministic Variable Effect
+        ↓
+Authoritative Global-Variable State Update
 ```
 
-- Shared world propositions reuse globally unique authored `PROP_*` IDs across relevant P0 systems.
-- Dialogue-only REQUEST/DEAL meanings remain scoped to dialogue.
-- Only currently exposed authored meanings are supplied to AI parsers.
-- Evidence, sources, and Pending Interactions remain separate deterministic registries/context.
-- Unavailable/nonexistent IDs returned by AI are rejected deterministically.
+Only authored deterministic consequence rules may change Reputation, Public Opinion, Threat Level, or Money.
 
-### DEC-018 — Evidence–Claim publication evaluation
+AI semantic candidates, validated Claim Atoms, evidence/publication support labels, and NPC surface language never directly create variable deltas. Result type only determines possible eligibility; an authored consequence rule determines whether an effect actually exists.
 
-```text
-Validated Claim Atom
-+
-Immutable Publication-Time Snapshot
-+
-Authored Evidence–Claim Relationships
-+
-Deterministic Commitment-Mode Rules
-→
-Auditable Publication Evaluation
-```
+Exact deltas, ranges, balancing, cross-variable formulas, decay, and ending thresholds remain deferred. Experimental placeholder deltas may be used later only to exercise the technical interface.
 
-Confirmed separations:
+Legacy BTL variable formulas remain historical evidence, not confirmed Remake rules.
 
-- attribution support ≠ underlying-proposition support;
-- publication-time support ≠ canonical reality;
-- evidence existing in the world ≠ evidence available to the player;
-- original publication responsibility ≠ later evidence/state.
+### DEC-021 — First real-model P0 baseline
 
-The LLM does not judge evidence sufficiency, source reliability, or canonical truth.
+The first measured AI baseline will reuse the Frozen 01/02 fixtures through a versioned manifest and separately test:
 
-### DEC-019 — NPC grounding data boundary
+1. Dialogue Semantic Parser;
+2. Headline Analyzer;
+3. Grounded NPC Surface Generator.
 
-P0 NPC response grounding uses seven separated layers:
+The baseline includes deterministic validator/gate checks, deliberate invalid-output/fault injection, retry/fallback execution, Frozen quality metrics, and latency/token/cost logging. No numerical acceptance threshold is defined before the first baseline is measured.
 
-1. Static Character Card;
-2. Authored Knowledge Boundary;
-3. Authoritative Dynamic NPC State;
-4. Current Interaction State;
-5. relevant Canonical World Context;
-6. Deterministic Response Plan;
-7. minimal Generator-only Language Context.
+`02B` remains deterministic downstream evaluation and is not converted into an LLM evidence/truth task.
 
-Key invariant:
+Dify feasibility is evaluated after a direct baseline harness exists, so model performance and orchestration overhead can be separated.
 
-```text
-NPC knows X
-≠
-NPC may reveal X
-≠
-NPC must say X now
-```
+## Contract status
 
-The generator receives least-knowledge context and retains surface-language authority only.
+Pre-Prototype Gate 03 requires **no change** to:
 
-## Frozen Contract status
-
-Validation Increment 02 requires **no change** to the Frozen AI Interaction Contract v0.1.
-
-No change is required to semantic status taxonomy, Dialogue Act taxonomy, single-action Dialogue rule, REQUEST/OFFER distinction, Claim Atom schema, commitment/source semantics, NPC response-mode taxonomy, deception authority, generator authority, P0 scope, or hard safety gates.
+- AI authority boundary;
+- P0 scope;
+- Dialogue semantic schema or status taxonomy;
+- Claim Atom schema;
+- Response Plan authority semantics;
+- hard safety gates.
 
 **01 Master review required:** No.
 
-## Validation evidence
+## Prototype entry assessment
 
-- `tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md`
-- `tests/01B_HEADLINE_VALIDATION_FIXTURE.md`
-- `tests/02A_SEMANTIC_TARGET_CATALOGUE_FIXTURE.md`
-- `tests/02B_EVIDENCE_CLAIM_RULES_FIXTURE.md`
-- `tests/02C_NPC_STATE_CHARACTER_CARD_SCHEMA_FIXTURE.md`
-- `docs/09_VALIDATION_INCREMENT_01_REPORT.md`
-- `docs/10_VALIDATION_INCREMENT_02_REPORT.md`
+The project now has enough pre-production definition to stop adding abstract architecture and begin a narrowly scoped technical prototype after 03 is integrated.
 
-The `EVENT_RAILYARD_CLASH` fixture and its NPC/evidence/deal content remain **Experimental / Validation-only / Non-canonical**.
+The first technical prototype should prove:
 
-## Still unresolved
+- a versioned P0 baseline manifest derived from existing fixtures;
+- model calls for the three P0 language boundaries;
+- deterministic contract validators and a minimal NPC Output Validation Gate;
+- retry/fallback behaviour;
+- reproducible measurement/logging;
+- a thin deterministic Consequence Event stub capable of exercising all four global variables with Experimental placeholder effects.
 
-- final 20–30 minute vertical-slice story canon;
-- final NPC/faction/world roster;
-- production catalogue serialization/exposure/authoring tooling;
-- production Evidence–Claim serialization/persistence/tooling;
-- evidence authenticity/verification model if needed;
-- attributed-paraphrase commitment weakening policy;
-- exact Response Plan serialization for non-world response obligations;
+No Unity client is required for this first technical prototype.
+
+## Still unresolved / deferred
+
+- actual real-model baseline measurements and acceptance thresholds;
+- Dify feasibility and orchestration overhead;
+- final vertical-slice story canon and NPC/faction/world roster;
+- production catalogue/evidence/NPC serialization and authoring tooling;
+- production evidence persistence/authenticity policy;
+- exact non-world Response Plan serialization;
 - NPC-originated authored-offer lifecycle;
-- final NPC relationship dimensions/formulas;
-- richer NPC epistemic distinctions if gameplay later needs them;
-- Reputation / Public Opinion / Threat Level / Money deterministic rules and thresholds;
-- real-model P0 baseline and acceptance thresholds;
-- Dify feasibility/integration;
+- final NPC relationship system or richer epistemic model;
+- final Reputation / Public Opinion / Threat Level / Money ranges, deltas, formulas, balancing, decay, and ending thresholds;
 - backend/API architecture;
-- Unity implementation architecture;
-- production Output Validation Gate implementation;
-- P1 long-term NPC memory;
-- generic rhetorical framing unless later validation demonstrates gameplay need.
+- Unity architecture and implementation;
+- P1/P2 AI features.
 
 ## Next
 
-The next work must be a separately scoped post-VI02 planning increment rather than silently continuing implementation.
-
-Recommended next planning questions:
-
-1. define the smallest useful deterministic consequence model for Reputation / Public Opinion / Threat Level / Money without inventing arbitrary formulas;
-2. define a real-model / Dify feasibility baseline using the stable 01/02 fixtures, without yet making Dify a production dependency;
-3. decide whether those two validation streams can run in parallel;
-4. defer backend/runtime architecture until deterministic-rule and orchestration needs are evidenced;
-5. do not create a Unity project until explicitly authorised.
+1. Review and integrate `design/pre-prototype-gate-03` into `main`.
+2. Open a new technical-prototype implementation thread rather than extending 03.
+3. Build the P0 AI baseline harness and deterministic consequence stub before Dify or Unity production work.
+4. Run a direct real-model baseline and measure it.
+5. Then evaluate a minimal Dify reproduction/feasibility path if authorised.
 
 ## Repository baseline
 
-Current stable validated branch:
+Stable integrated branch before 03 merge:
 
 `main`
 
-Completed historical VI02 branch:
+Current 03 working branch:
 
-`design/validation-increment-02`
-
-Future substantial work should begin on a new branch only after the next validation/planning increment is authorised.
+`design/pre-prototype-gate-03`
