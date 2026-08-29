@@ -10,6 +10,31 @@ The **AI Interaction Contract v0.1 remains Frozen and unchanged**.
 
 No Unity project, production Dify workflow, backend runtime, final balance model, or final four-global-variable implementation is authorised by this state.
 
+## Technical Prototype 01 — Batch 1 branch milestone
+
+**Status:** Implemented and locally verified on `prototype/technical-prototype-01`, but **not accepted**. 04 Master accepted the Batch 1.1 technical finding as a Contract-review blocker. Batch 1 now requires 01 Master Contract review before any resolution is selected or implemented. It is not integrated or promoted to a production architecture decision.
+
+Batch 1 adds:
+
+- a small versioned P0 baseline manifest traced to the Frozen 01A/01B/02C fixture cases;
+- Frozen-v0.1 structural JSON Schemas for Dialogue and Headline semantic candidates;
+- deterministic current-catalogue contract validators for Dialogue and Headline candidates;
+- a separate fixture ground-truth oracle for tactic and Claim Set omissions/extras;
+- an explicitly Experimental, fixture-scoped lexical NPC Output Validation Gate;
+- an isolated deterministic Consequence Event stub with immutable Experimental authoritative test state and placeholder effects for all four global variables;
+- automated fault-injection and authority-boundary tests.
+
+Local verification: `48 passed` with Python 3.12, pytest, and jsonschema.
+
+One active prototype blocker and one Experimental limitation are explicit rather than hidden:
+
+1. **Active Gate 03 blocker:** Candidate-only runtime validation cannot prove natural-language tactic completeness, Claim Set completeness, or absence of an invented but otherwise catalogue-valid Claim Atom. Batch 1 detects D19/F04/F05 only by comparing candidates with fixture-authored expected semantics. That baseline oracle is evaluation-only and is not available for arbitrary production player text. Therefore the Frozen Contract requirements that all expressed tactics be present with no silent truncation and that the Claim Set be complete with no omitted or extra consequential claim are not currently runtime-enforceable under the implemented input boundary. Gate 03 section 4.8 item 2 applies; Batch 2 must not start while this remains unresolved.
+2. Natural-language required/forbidden NPC proposition coverage is lexical and fixture-specific in Batch 1. It is validation tooling, not the final production Output Validation Gate.
+
+Frozen Contract v0.1, the AI authority boundary, and all confirmed semantic taxonomies remain unchanged.
+
+**Review routing:** 04 Master has accepted the completeness finding. **01 Master Contract review is now required** to reconcile the Frozen completeness requirements with the current free-text → semantic candidate → deterministic validator input boundary. No Frozen Contract change has been made, and no resolution category is selected or confirmed by this branch.
+
 ## Completed
 
 - Repository baseline and product definition completed.
@@ -101,11 +126,9 @@ No Unity client is required for this first technical prototype.
 
 ## Next
 
-1. Open a new technical-prototype implementation thread rather than extending 03.
-2. Create a new technical-prototype branch from current `main`.
-3. Build the P0 AI baseline harness and deterministic consequence stub before Dify or Unity production work.
-4. Run a direct real-model baseline and measure it.
-5. Then evaluate a minimal Dify reproduction/feasibility path if authorised.
+1. Hand the accepted Batch 1.1 Completeness Enforcement finding to 01 Master for Contract review.
+2. Keep Batch 1 unaccepted and keep Batch 2 paused while the blocker remains unresolved.
+3. Do not change Frozen Contract semantics, the authorised input/authority boundary, or P0 scope until 01 Master selects and confirms a resolution.
 
 ## Repository baseline
 

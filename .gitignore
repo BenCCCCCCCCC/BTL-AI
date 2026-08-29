@@ -25,6 +25,12 @@ logs/
 tmp/
 temp/
 
+# Python prototype tooling
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.venv/
+
 # Generated AI evaluation artifacts
 ai/eval/output/
 ai/eval/results/

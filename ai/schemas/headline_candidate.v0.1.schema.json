@@ -1,0 +1,70 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://btl-ai.invalid/schemas/headline_candidate.v0.1.schema.json",
+  "title": "Frozen v0.1 Headline Semantic Candidate",
+  "type": "object",
+  "required": ["status"],
+  "additionalProperties": false,
+  "properties": {
+    "status": {
+      "enum": ["RESOLVED", "AMBIGUOUS", "UNSUPPORTED"]
+    },
+    "reason": {
+      "enum": [
+        "AMBIGUOUS_REFERENCE",
+        "INSUFFICIENT_CONTEXT",
+        "MULTIPLE_ACTIONS",
+        "OUT_OF_CATALOGUE",
+        "UNSUPPORTED_ACTION"
+      ]
+    },
+    "claims": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/claim_atom"
+      }
+    }
+  },
+  "$defs": {
+    "claim_atom": {
+      "type": "object",
+      "required": ["target_id", "commitment_mode"],
+      "additionalProperties": false,
+      "properties": {
+        "target_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "value_id": {
+          "type": "string",
+          "minLength": 1
+        },
+        "polarity": {
+          "enum": ["AFFIRM", "DENY"]
+        },
+        "commitment_mode": {
+          "enum": ["ASSERTED", "SPECULATIVE", "QUESTIONED"]
+        },
+        "source_ref_id": {
+          "type": "string",
+          "minLength": 1
+        }
+      }
+    }
+  },
+  "oneOf": [
+    {
+      "properties": {
+        "status": {"const": "RESOLVED"}
+      },
+      "required": ["claims"],
+      "not": {"required": ["reason"]}
+    },
+    {
+      "properties": {
+        "status": {"enum": ["AMBIGUOUS", "UNSUPPORTED"]}
+      },
+      "not": {"required": ["claims"]}
+    }
+  ]
+}

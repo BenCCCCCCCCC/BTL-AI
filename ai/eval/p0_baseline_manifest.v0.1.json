@@ -1,0 +1,349 @@
+{
+  "manifest_version": "0.1",
+  "contract_version": "Frozen v0.1",
+  "source_repository_baseline_sha": "aa87d39959e6a4b2f6cad31883528cb8e8d1cc42",
+  "scope_marker": ["Experimental", "Validation-only", "Non-canonical"],
+  "description": "Small representative Batch 1 baseline. Runtime contract validation and fixture ground-truth comparison are separate operations.",
+  "runtime_catalogue_views": {
+    "DIALOGUE_01A_D18": {
+      "targets": {
+        "REVEAL_PAYMENT_PAYER": {
+          "target_kind": "REQUEST",
+          "allowed_acts": ["REQUEST"],
+          "allowed_value_ids": [],
+          "value_required_acts": [],
+          "polarity_allowed_acts": [],
+          "polarity_required_acts": [],
+          "allowed_tactics": ["THREAT", "ACCUSATION", "INDIRECT_PROBE"]
+        }
+      },
+      "visible_evidence_ids": ["PHOTO_01"],
+      "visible_source_ids": [],
+      "pending_interaction_ids": []
+    },
+    "HEADLINE_01B": {
+      "targets": {
+        "FIRE_FIRST": {
+          "headline_eligible": true,
+          "allowed_value_ids": ["SECURITY_FORCES", "MILITIA"],
+          "value_required": true,
+          "polarity_required": true
+        },
+        "ORDERED_OPERATION": {
+          "headline_eligible": true,
+          "allowed_value_ids": ["MAYOR_OFFICE", "MILITIA_COMMAND"],
+          "value_required": true,
+          "polarity_required": true
+        },
+        "FUNDED_OPERATION": {
+          "headline_eligible": true,
+          "allowed_value_ids": ["COMPANY_A", "MAYOR_OFFICE"],
+          "value_required": true,
+          "polarity_required": true
+        },
+        "CIVILIAN_DEATH_CAUSE": {
+          "headline_eligible": true,
+          "allowed_value_ids": ["SECURITY_FORCES", "MILITIA"],
+          "value_required": true,
+          "polarity_required": true
+        }
+      },
+      "visible_evidence_ids": [],
+      "visible_source_ids": ["SRC_WITNESS_A", "SRC_POLICE", "SRC_MAYOR"],
+      "pending_interaction_ids": []
+    }
+  },
+  "npc_output_validation_metadata": {
+    "NPC_N01": {
+      "required_content": [{"rule_id": "PAYER_COMPANY_A", "patterns": ["company\\s+a\\s+paid"]}],
+      "forbidden_content": [],
+      "canon_lexemes": {"COMPANY_A": ["company\\s+a"]},
+      "authorised_canon_ids": ["COMPANY_A"],
+      "unauthorised_commitments": [],
+      "state_or_evidence_consequences": []
+    },
+    "NPC_N12": {
+      "required_content": [
+        {"rule_id": "SAW_VEHICLE", "patterns": ["saw\\s+(?:a\\s+)?vehicle"]},
+        {"rule_id": "VEHICLE_LEFT_WAREHOUSE", "patterns": ["vehicle.*left.*warehouse"]}
+      ],
+      "forbidden_content": [],
+      "canon_lexemes": {},
+      "authorised_canon_ids": [],
+      "unauthorised_commitments": [],
+      "state_or_evidence_consequences": []
+    },
+    "NPC_N13": {
+      "required_content": [{"rule_id": "SAW_VEHICLE", "patterns": ["saw\\s+(?:a\\s+)?vehicle"]}],
+      "forbidden_content": [{"rule_id": "DRIVER_MAYOR_AIDE", "patterns": ["mayor(?:'s|s)\\s+aide"]}],
+      "canon_lexemes": {"MAYOR_AIDE": ["mayor(?:'s|s)\\s+aide"]},
+      "authorised_canon_ids": [],
+      "unauthorised_commitments": [],
+      "state_or_evidence_consequences": []
+    },
+    "NPC_N14": {
+      "required_content": [],
+      "forbidden_content": [],
+      "canon_lexemes": {"MINISTER_SON": ["minister(?:'s|s)\\s+son"]},
+      "authorised_canon_ids": [],
+      "unauthorised_commitments": [],
+      "state_or_evidence_consequences": []
+    },
+    "NPC_N11": {
+      "required_content": [{"rule_id": "COMPANY_CONTACT", "patterns": ["company\\s+a\\s+contacted"]}],
+      "forbidden_content": [],
+      "canon_lexemes": {"COMPANY_A": ["company\\s+a"]},
+      "authorised_canon_ids": ["COMPANY_A"],
+      "unauthorised_commitments": [{"rule_id": "LEDGER_PROMISE", "patterns": ["i(?:'ll|\\s+will)\\s+give\\s+you\\s+the\\s+ledger"]}],
+      "state_or_evidence_consequences": []
+    },
+    "NPC_E06": {
+      "required_content": [],
+      "forbidden_content": [],
+      "canon_lexemes": {},
+      "authorised_canon_ids": [],
+      "unauthorised_commitments": [],
+      "state_or_evidence_consequences": [{"rule_id": "EVIDENCE_CREATION", "patterns": ["(?:made|created)\\s+a\\s+new\\s+recording", "added.*evidence\\s+inventory"]}]
+    }
+  },
+  "cases": [
+    {
+      "case_id": "dialogue-d18-valid",
+      "component": "dialogue",
+      "source_fixture": "tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md",
+      "source_case_id": "D18",
+      "execution_path": "real_model",
+      "deterministic_context": {"runtime_catalogue_view_ref": "DIALOGUE_01A_D18"},
+      "model_facing_input": {
+        "player_text": "Interesting how you suddenly got rich; you took their money, and if you don't tell me who paid you I'll publish the photo.",
+        "runtime_catalogue_view_ref": "DIALOGUE_01A_D18"
+      },
+      "expected_result": {
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "REQUEST",
+          "target_id": "REVEAL_PAYMENT_PAYER",
+          "tactics": ["INDIRECT_PROBE", "ACCUSATION", "THREAT"],
+          "evidence_ref_ids": ["PHOTO_01"]
+        },
+        "runtime_contract": "PASS",
+        "baseline_oracle": "EXACT_MATCH"
+      },
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "dialogue-d19-tactic-truncation",
+      "component": "dialogue",
+      "source_fixture": "tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md",
+      "source_case_id": "D19",
+      "execution_path": "fault_injection",
+      "deterministic_context": {
+        "runtime_catalogue_view_ref": "DIALOGUE_01A_D18",
+        "fixture_oracle_ref": "dialogue-d18-valid"
+      },
+      "model_facing_input": {"injected_candidate": {"status": "RESOLVED", "act": "REQUEST", "target_id": "REVEAL_PAYMENT_PAYER", "tactics": ["ACCUSATION", "THREAT"], "evidence_ref_ids": ["PHOTO_01"]}},
+      "expected_result": {"runtime_contract": "PASS", "baseline_oracle": "REJECT", "reason": "FIXTURE_SEMANTIC_MISMATCH"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "dialogue-d20-duplicate-tactic",
+      "component": "dialogue",
+      "source_fixture": "tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md",
+      "source_case_id": "D20",
+      "execution_path": "fault_injection",
+      "deterministic_context": {"runtime_catalogue_view_ref": "DIALOGUE_01A_D18"},
+      "model_facing_input": {"injected_candidate": {"status": "RESOLVED", "act": "REQUEST", "target_id": "REVEAL_PAYMENT_PAYER", "tactics": ["THREAT", "THREAT"], "evidence_ref_ids": ["PHOTO_01"]}},
+      "expected_result": {"runtime_contract": "REJECT", "failure_class": "AI_SYSTEM_FAILURE"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "dialogue-d30-illegal-act",
+      "component": "dialogue",
+      "source_fixture": "tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md",
+      "source_case_id": "D30",
+      "execution_path": "fault_injection",
+      "deterministic_context": {"runtime_catalogue_view_ref": "DIALOGUE_01A_D18"},
+      "model_facing_input": {"injected_candidate": {"status": "RESOLVED", "act": "INTIMIDATE", "target_id": "REVEAL_PAYMENT_PAYER"}},
+      "expected_result": {"runtime_contract": "REJECT", "failure_class": "AI_SYSTEM_FAILURE"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "dialogue-d31-invalid-target",
+      "component": "dialogue",
+      "source_fixture": "tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md",
+      "source_case_id": "D31",
+      "execution_path": "fault_injection",
+      "deterministic_context": {"runtime_catalogue_view_ref": "DIALOGUE_01A_D18"},
+      "model_facing_input": {"injected_candidate": {"status": "RESOLVED", "act": "REQUEST", "target_id": "SECRET_TARGET_99"}},
+      "expected_result": {"runtime_contract": "REJECT", "failure_class": "AI_SYSTEM_FAILURE", "reason": "TARGET_UNAVAILABLE_OR_NONEXISTENT"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "headline-t01-four-claims",
+      "component": "headline",
+      "source_fixture": "tests/01B_HEADLINE_VALIDATION_FIXTURE.md",
+      "source_case_id": "T01",
+      "execution_path": "real_model",
+      "deterministic_context": {"runtime_catalogue_view_ref": "HEADLINE_01B"},
+      "model_facing_input": {
+        "headline_text": "Security forces fired first, the mayor's office ordered the operation, Company A funded it, and militia forces caused the civilian deaths.",
+        "runtime_catalogue_view_ref": "HEADLINE_01B"
+      },
+      "expected_result": {
+        "candidate": {
+          "status": "RESOLVED",
+          "claims": [
+            {"target_id": "FIRE_FIRST", "value_id": "SECURITY_FORCES", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"},
+            {"target_id": "ORDERED_OPERATION", "value_id": "MAYOR_OFFICE", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"},
+            {"target_id": "FUNDED_OPERATION", "value_id": "COMPANY_A", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"},
+            {"target_id": "CIVILIAN_DEATH_CAUSE", "value_id": "MILITIA", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"}
+          ]
+        },
+        "runtime_contract": "PASS",
+        "baseline_oracle": "EXACT_MATCH"
+      },
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "headline-t02-zero-claims",
+      "component": "headline",
+      "source_fixture": "tests/01B_HEADLINE_VALIDATION_FIXTURE.md",
+      "source_case_id": "T02",
+      "execution_path": "real_model",
+      "deterministic_context": {"runtime_catalogue_view_ref": "HEADLINE_01B"},
+      "model_facing_input": {"headline_text": "A city waits for answers.", "runtime_catalogue_view_ref": "HEADLINE_01B"},
+      "expected_result": {"candidate": {"status": "RESOLVED", "claims": []}, "runtime_contract": "PASS", "baseline_oracle": "EXACT_MATCH"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "headline-t10-single-claim",
+      "component": "headline",
+      "source_fixture": "tests/01B_HEADLINE_VALIDATION_FIXTURE.md",
+      "source_case_id": "T10",
+      "execution_path": "real_model",
+      "deterministic_context": {"runtime_catalogue_view_ref": "HEADLINE_01B"},
+      "model_facing_input": {"headline_text": "Security forces fired first.", "runtime_catalogue_view_ref": "HEADLINE_01B"},
+      "expected_result": {"candidate": {"status": "RESOLVED", "claims": [
+        {"target_id": "FIRE_FIRST", "value_id": "SECURITY_FORCES", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"}
+      ]}, "runtime_contract": "PASS", "baseline_oracle": "EXACT_MATCH"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "headline-f02-illegal-commitment",
+      "component": "headline",
+      "source_fixture": "tests/01B_HEADLINE_VALIDATION_FIXTURE.md",
+      "source_case_id": "F02",
+      "execution_path": "fault_injection",
+      "deterministic_context": {"runtime_catalogue_view_ref": "HEADLINE_01B"},
+      "model_facing_input": {"injected_candidate": {"status": "RESOLVED", "claims": [{"target_id": "FIRE_FIRST", "value_id": "SECURITY_FORCES", "polarity": "AFFIRM", "commitment_mode": "CERTAIN_TRUE"}]}},
+      "expected_result": {"runtime_contract": "REJECT", "failure_class": "AI_SYSTEM_FAILURE"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "headline-f03-invalid-target",
+      "component": "headline",
+      "source_fixture": "tests/01B_HEADLINE_VALIDATION_FIXTURE.md",
+      "source_case_id": "F03",
+      "execution_path": "fault_injection",
+      "deterministic_context": {"runtime_catalogue_view_ref": "HEADLINE_01B"},
+      "model_facing_input": {"injected_candidate": {"status": "RESOLVED", "claims": [{"target_id": "CIA_DIRECTOR", "value_id": "CIA", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"}]}},
+      "expected_result": {"runtime_contract": "REJECT", "failure_class": "AI_SYSTEM_FAILURE", "reason": "TARGET_UNAVAILABLE_OR_NONEXISTENT"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "headline-f04-incomplete-claim-set",
+      "component": "headline",
+      "source_fixture": "tests/01B_HEADLINE_VALIDATION_FIXTURE.md",
+      "source_case_id": "F04",
+      "execution_path": "fault_injection",
+      "deterministic_context": {"runtime_catalogue_view_ref": "HEADLINE_01B", "fixture_oracle_ref": "headline-t01-four-claims"},
+      "model_facing_input": {"injected_candidate": {"status": "RESOLVED", "claims": [
+        {"target_id": "FIRE_FIRST", "value_id": "SECURITY_FORCES", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"},
+        {"target_id": "ORDERED_OPERATION", "value_id": "MAYOR_OFFICE", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"},
+        {"target_id": "FUNDED_OPERATION", "value_id": "COMPANY_A", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"}
+      ]}},
+      "expected_result": {"runtime_contract": "PASS", "baseline_oracle": "REJECT", "reason": "FIXTURE_CLAIM_SET_MISMATCH"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "headline-f05-invented-extra-claim",
+      "component": "headline",
+      "source_fixture": "tests/01B_HEADLINE_VALIDATION_FIXTURE.md",
+      "source_case_id": "F05",
+      "execution_path": "fault_injection",
+      "deterministic_context": {"runtime_catalogue_view_ref": "HEADLINE_01B", "fixture_oracle_ref": "headline-t10-single-claim"},
+      "model_facing_input": {"injected_candidate": {"status": "RESOLVED", "claims": [
+        {"target_id": "FIRE_FIRST", "value_id": "SECURITY_FORCES", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"},
+        {"target_id": "ORDERED_OPERATION", "value_id": "MAYOR_OFFICE", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"}
+      ]}},
+      "expected_result": {"runtime_contract": "PASS", "baseline_oracle": "REJECT", "reason": "FIXTURE_CLAIM_SET_MISMATCH"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "npc-n01-valid-answer",
+      "component": "npc",
+      "source_fixture": "tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md",
+      "source_case_id": "N01",
+      "execution_path": "real_model",
+      "deterministic_context": {"response_mode": "ANSWER", "required_content": ["PAYER=COMPANY_A"], "forbidden_content": [], "validation_metadata_ref": "NPC_N01"},
+      "model_facing_input": {"required_utterance": "PAYER=COMPANY_A", "surface_candidate_example": "Company A paid me."},
+      "expected_result": {"gate": "PASS"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "npc-n12-missing-required",
+      "component": "npc",
+      "source_fixture": "tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md",
+      "source_case_id": "N12",
+      "execution_path": "fault_injection",
+      "deterministic_context": {"response_mode": "PARTIAL_ANSWER", "required_content": ["SAW_VEHICLE", "VEHICLE_LEFT_WAREHOUSE"], "validation_metadata_ref": "NPC_N12"},
+      "model_facing_input": {"injected_surface_candidate": "I saw a vehicle."},
+      "expected_result": {"gate": "FAIL", "reason": "MISSING_REQUIRED_CONTENT:VEHICLE_LEFT_WAREHOUSE"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "npc-n13-forbidden-disclosure",
+      "component": "npc",
+      "source_fixture": "tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md",
+      "source_case_id": "N13",
+      "execution_path": "fault_injection",
+      "deterministic_context": {"response_mode": "PARTIAL_ANSWER", "required_content": ["SAW_VEHICLE"], "forbidden_content": ["DRIVER=MAYOR_AIDE"], "validation_metadata_ref": "NPC_N13"},
+      "model_facing_input": {"injected_surface_candidate": "I saw a vehicle driven by the mayor's aide."},
+      "expected_result": {"gate": "FAIL", "reason": "FORBIDDEN_CONTENT:DRIVER_MAYOR_AIDE"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "npc-n11-unauthorised-commitment",
+      "component": "npc",
+      "source_fixture": "tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md",
+      "source_case_id": "N11",
+      "execution_path": "fault_injection",
+      "deterministic_context": {"response_mode": "ANSWER", "required_content": ["COMPANY_A_CONTACTED_NPC"], "authorised_commitments": [], "validation_metadata_ref": "NPC_N11"},
+      "model_facing_input": {"injected_surface_candidate": "Company A contacted me. I'll give you the ledger tonight."},
+      "expected_result": {"gate": "FAIL", "reason": "UNAUTHORISED_COMMITMENT:LEDGER_PROMISE"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "npc-e06-invented-evidence-consequence",
+      "component": "npc",
+      "source_fixture": "tests/02C_NPC_STATE_CHARACTER_CARD_SCHEMA_FIXTURE.md",
+      "source_case_id": "E06",
+      "execution_path": "fault_injection",
+      "deterministic_context": {"response_mode": "ANSWER", "authorised_evidence_or_state_consequences": [], "validation_metadata_ref": "NPC_E06"},
+      "model_facing_input": {"injected_surface_candidate": "I made a new recording and added it to your evidence inventory."},
+      "expected_result": {"gate": "FAIL", "reason": "INVENTED_STATE_OR_EVIDENCE_CONSEQUENCE:EVIDENCE_CREATION"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    },
+    {
+      "case_id": "npc-n14-canon-hallucination",
+      "component": "npc",
+      "source_fixture": "tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md",
+      "source_case_id": "N14",
+      "execution_path": "fault_injection",
+      "deterministic_context": {"response_mode": "ANSWER", "authorised_canon_ids": [], "validation_metadata_ref": "NPC_N14"},
+      "model_facing_input": {"injected_surface_candidate": "The minister's son was there."},
+      "expected_result": {"gate": "FAIL", "reason": "INVENTED_OR_UNAUTHORISED_CANON:MINISTER_SON"},
+      "marker": ["Experimental", "Validation-only", "Non-canonical"]
+    }
+  ]
+}

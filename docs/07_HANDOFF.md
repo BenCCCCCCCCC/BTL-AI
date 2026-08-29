@@ -27,6 +27,34 @@ No Unity project, production Dify workflow, backend runtime, final balance model
 
 LLM output remains non-authoritative. It cannot create or mutate canonical state, evidence, branches, global-variable deltas, NPC commitments, evidence verdicts, or endings.
 
+## Active Contract-review handoff — Technical Prototype 01
+
+Active working branch:
+
+`prototype/technical-prototype-01`
+
+Starting baseline:
+
+`main @ aa87d39959e6a4b2f6cad31883528cb8e8d1cc42`
+
+Technical Prototype 01 Batch 1 is implemented on the prototype branch and locally verified, but it is **not accepted**, integrated, or a production architecture decision. The latest full test result is `48 passed` with Python 3.12, pytest, and jsonschema.
+
+04 Master accepted the Batch 1.1 Completeness Enforcement finding as a Contract-review blocker:
+
+> Frozen v0.1 semantic completeness is not genuinely runtime-enforceable under the current free-text → semantic candidate → deterministic validator input boundary.
+
+The implementation has three separate layers:
+
+1. structural/schema validation checks candidate shape, legal fields/enums, and collection uniqueness;
+2. deterministic runtime/context validation checks catalogue availability, allowed acts/values/polarity/tactics, visible evidence/sources, headline eligibility, and Pending Interaction validity;
+3. the baseline fixture ground-truth oracle compares a candidate with a fixture-authored expected candidate for evaluation only.
+
+The runtime validator has no independent authoritative semantic representation of arbitrary original player text. Therefore D19 tactic truncation, F04 incomplete Claim Set, and F05 invented but otherwise catalogue-valid extra Claim Atom pass structural and runtime/context validation and are rejected only by the evaluation fixture oracle. That oracle is not available for arbitrary production player input and must not be represented as a production validator.
+
+Gate 03 section 4.8 item 2 and the DEC-021 incomplete-Claim-Set blocker apply. Batch 2 is paused. No Frozen Contract or Decision Log change has been made.
+
+**Issue requiring 01 Master review:** reconcile the Frozen requirements that all expressed gameplay-relevant tactics be present and that every Claim Set be complete with no omitted or invented consequential Claim Atom, against a runtime boundary that currently has only the original free text, a non-authoritative semantic candidate, and deterministic catalogue/context data. No resolution category has been selected or confirmed.
+
 ## 03 result
 
 Detailed report:
@@ -102,20 +130,11 @@ Do not expand the next implementation scope into:
 
 ## Next project step
 
-Open a new implementation thread:
+Return the accepted Batch 1.1 technical finding to **01 Master Contract review**.
 
-**04｜Technical Prototype 01 — P0 AI Baseline Harness**
+01 Master must resolve or clarify the mismatch between the Frozen semantic-completeness requirements and the currently authorised runtime input/authority boundary before implementation continues. Batch 1 remains unaccepted and Batch 2 must not start while the blocker remains unresolved.
 
-Scope:
-
-1. convert existing fixture cases into a machine-readable/versioned baseline manifest without changing their semantics;
-2. implement deterministic schema/contract validators and a minimal NPC Output Validation Gate;
-3. implement retry/fallback execution and measurement logging;
-4. implement a thin deterministic Consequence Event stub with Experimental placeholder effects;
-5. run the first direct real-model baseline;
-6. only after that, evaluate minimal Dify reproduction/overhead if separately authorised.
-
-Do **not** create a Unity project for this step.
+Do not change the Frozen Contract, Decision Log, semantic schemas, AI authority boundary, or P0 scope before that review.
 
 ## Documentation protocol
 
@@ -151,6 +170,10 @@ At substantial GitHub checkpoints, report:
 Current stable validated branch:
 
 `main`
+
+Active Experimental prototype branch:
+
+`prototype/technical-prototype-01`
 
 Completed historical 03 branch:
 
