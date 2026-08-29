@@ -17,7 +17,7 @@ Status:
 
 **COMPLETE — integrated into `main`.**
 
-VI01, VI02, and Pre-Prototype Gate 03 are integrated into the stable `main` baseline. Gate 03 used Frozen Contract v0.1; the active prototype branch now carries the v0.1.1 patch-clarification candidate, pending the 01 Master final checkpoint, while preserving all v0.1 schemas and taxonomies.
+VI01, VI02, and Pre-Prototype Gate 03 are integrated into the stable `main` baseline. The active prototype branch now carries **Frozen AI Interaction Contract v0.1.1**, which supersedes v0.1 while preserving v0.1 in Git history and the historical VI01/VI02/03 reports. Dialogue/Headline schemas, semantic taxonomies, authority boundaries, P0 scope, and the eight Hard Safety Gates remain unchanged.
 
 No Unity project, production Dify workflow, backend runtime, final balance model, or final global-variable implementation is authorised by 03.
 
@@ -27,7 +27,7 @@ No Unity project, production Dify workflow, backend runtime, final balance model
 
 LLM output remains non-authoritative. It cannot create or mutate canonical state, evidence, branches, global-variable deltas, NPC commitments, evidence verdicts, or endings.
 
-## Active Contract-review handoff — Technical Prototype 01
+## Active technical-prototype handoff — Technical Prototype 01
 
 Active working branch:
 
@@ -37,9 +37,9 @@ Starting baseline:
 
 `main @ aa87d39959e6a4b2f6cad31883528cb8e8d1cc42`
 
-Technical Prototype 01 Batch 1 is implemented on the prototype branch and locally verified, but it is **not accepted**, integrated, or a production architecture decision. The existing Batch 1 full-suite baseline is `48 passed`; the Batch 1.2 pre-checkpoint full suite is `61 passed` (`48` existing + `13` v0.1.1 regression tests) with Python 3.12, pytest, and jsonschema.
+Technical Prototype 01 Batch 1 / 1.2 implementation and Contract documentation freeze checkpoint are complete on the prototype branch. The existing Batch 1 full-suite baseline is `48 passed`; the Batch 1.2 pre-checkpoint full suite is `61 passed / 0 failed` (`48` existing + `13` v0.1.1 regression tests) with Python 3.12, pytest, and jsonschema.
 
-01 Master accepted the Technical Prototype 01 implementation finding and confirmed the v0.1.1 clarification direction:
+01 Master completed the final Contract checkpoint and approved v0.1.1 as the new Frozen Contract baseline. The accepted implementation finding remains:
 
 > Frozen v0.1 semantic completeness is not genuinely runtime-enforceable under the current free-text → semantic candidate → deterministic validator input boundary.
 
@@ -51,13 +51,13 @@ The implementation has three separate layers:
 
 The runtime validator has no independent authoritative semantic representation of arbitrary original player text. Therefore D19 tactic truncation, F04 incomplete Claim Set, and F05 invented but otherwise catalogue-valid extra Claim Atom pass structural and runtime/context validation and are rejected only by the evaluation fixture oracle. That oracle is not available for arbitrary production player input, is not a production validator, and does not create a production runtime retry signal.
 
-The v0.1.1 candidate records runtime contract validity and semantic fidelity as separate results. D18/T01/T10 are runtime PASS + fidelity PASS; D19/F04/F05 are runtime PASS + fidelity FAIL. Representative invalid enums/IDs/commitment modes, unresolved statuses, duplicate tactics, and unauthorised structured output remain deterministic runtime rejections.
+Frozen v0.1.1 formally separates runtime contract validity and semantic fidelity/completeness. D18/T01/T10 are runtime PASS + fidelity PASS; D19/F04/F05 are runtime PASS + fidelity FAIL. Representative invalid enums/IDs/commitment modes, unresolved statuses, duplicate tactics, and unauthorised structured output remain deterministic runtime rejections.
 
-Contract v0.1.1 and DEC-022 clarify that candidate-only inability to prove arbitrary free-text completeness is not itself a blocker once the responsibilities are explicit and the mandatory baseline detects fidelity failures. A blocker remains if the baseline misses tactic/Claim omissions or extra Claim Atoms, runtime PASS is conflated with fidelity PASS, a Hard Safety Gate is breached, or the model path requires shared schema/authority/P0 changes.
+Frozen Contract v0.1.1 and confirmed DEC-022 clarify that candidate-only inability to prove arbitrary free-text completeness is not itself a blocker once the responsibilities are explicit and the mandatory baseline detects fidelity failures. A blocker remains if the baseline misses tactic/Claim omissions or extra Claim Atoms, runtime PASS is conflated with fidelity PASS, a Hard Safety Gate is breached, or the model path requires shared schema/authority/P0 changes.
 
-The v0.1.1 Contract candidate and DEC-022 are branch changes awaiting the final 01 Master checkpoint; historical VI01/VI02/03 reports remain unchanged. Dialogue/Headline schemas, semantic statuses, AI authority, Response Plan authority, P0 scope, and the eight Hard Safety Gates are unchanged. The Experimental fixture-scoped NPC lexical gate remains a recorded prototype limitation and is not promoted to a Contract change.
+The v0.1.1 Contract is Frozen and DEC-022 is Confirmed. Historical VI01/VI02/03 reports remain unchanged. Dialogue/Headline schemas, semantic statuses, AI authority, Response Plan authority, P0 scope, and the eight Hard Safety Gates are unchanged. The Experimental fixture-scoped NPC lexical gate remains a recorded prototype limitation and is not a production Output Validation Gate.
 
-Batch 2 is paused and not authorised.
+Technical Prototype 01 Batch 1 / 1.2 → Contract v0.1.1 Frozen → Batch 2 authorised. Batch 2 has not begun in this documentation checkpoint.
 
 ## 03 result
 
@@ -134,11 +134,9 @@ Do not expand the next implementation scope into:
 
 ## Next project step
 
-Route the **Technical Prototype 01 Batch 1.2 targeted regression / v0.1.1 candidate** to 01 Master for final Contract checkpoint confirmation.
+Next work: **Technical Prototype 01 Batch 2**. It is authorised following the Contract v0.1.1 freeze checkpoint and must be performed in a separately scoped task.
 
-Only after final 01 Master confirmation may the work return to 04 for a separate Batch 2 authorisation decision. Batch 1 remains unaccepted and Batch 2 must not start before that routing completes.
-
-Do not add model/API calls, prompts, retry/fallback execution, logging, Dify, Unity, backend architecture, or new gameplay scope at this checkpoint.
+Keep the next scope bounded: no Unity, no Dify yet, no backend architecture, no final story/world canon, no final balance model, and no P1/P2 expansion.
 
 ## Documentation protocol
 
@@ -157,7 +155,7 @@ At substantial GitHub checkpoints, report:
 1. BTL-AI ChatGPT Project Instructions
 2. `docs/01_PROJECT_DEFINITION.md`
 3. `docs/05_DECISION_LOG.md`
-4. `docs/08_AI_INTERACTION_CONTRACT.md` — v0.1.1 patch-clarification candidate
+4. `docs/08_AI_INTERACTION_CONTRACT.md` — Frozen v0.1.1
 5. `docs/06_CURRENT_STATE.md`
 6. `docs/07_HANDOFF.md`
 7. `docs/09_VALIDATION_INCREMENT_01_REPORT.md`

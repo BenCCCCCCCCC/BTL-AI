@@ -1,7 +1,7 @@
 # AI Interaction Contract v0.1.1 — Validation Increment 01
 
 **Project:** Between the Lines: AI Remake (BTL-AI)  
-**Status:** Candidate revision — pending 01 Master final checkpoint
+**Status:** Frozen
 **Phase:** Pre-production / Validation Increment 01  
 **Scope:** Player–NPC dialogue parsing, grounded NPC dialogue generation, player-written headline analysis
 
@@ -9,9 +9,9 @@
 
 ## v0.1.1 Revision Note
 
-Technical Prototype 01 demonstrated that candidate-only deterministic runtime validation cannot independently prove semantic fidelity or completeness against arbitrary natural-language source text. v0.1.1 clarifies two separate assurance responsibilities: deterministic runtime contract validation of observable candidate/context conditions, and reproducible semantic-fidelity/completeness evaluation against authored fixture ground truth.
+v0.1.1 supersedes v0.1 as the current Frozen Contract baseline. It is a patch clarification of two assurance responsibilities: deterministic runtime contract validation of observable candidate/context conditions, and reproducible semantic-fidelity/completeness evaluation against authored fixture ground truth.
 
-This patch does not change the v0.1 Dialogue schema, Headline schema, semantic statuses, NPC Response Plan authority, AI authority boundary, P0 scope, or Hard Safety Gate set. Git history preserves v0.1, and the historical VI01/VI02/03 reports remain unchanged.
+Git history preserves v0.1, and the historical VI01, VI02, and Pre-Prototype Gate 03 reports remain unchanged. v0.1.1 does not change the Dialogue schema, Headline schema, semantic statuses, AI authority, NPC Response Plan authority, P0 scope, or the existing eight Hard Safety Gates.
 
 ---
 
@@ -947,4 +947,4 @@ Validation Increment 01 succeeds when:
 6. AI output cannot directly alter game reality.
 7. A reproducible evaluation set can measure semantic quality and authority-boundary failures before runtime implementation begins.
 
-These conditions are the v0.1.1 candidate revision, pending 01 Master final checkpoint. Any Dify or Unity work still requires a separately authorised implementation-validation increment; this Contract does not authorise implementation.
+These conditions are Frozen in v0.1.1. Any Dify or Unity work still requires a separately authorised implementation-validation increment; this Contract does not authorise implementation.

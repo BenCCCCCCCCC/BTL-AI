@@ -6,13 +6,13 @@ Pre-production — **Pre-Prototype Gate 03 complete and integrated into `main`.*
 
 `main` is now the current stable validated baseline for completed VI01 + VI02 + Pre-Prototype Gate 03 work.
 
-On the active prototype branch, 01 Master has confirmed the **AI Interaction Contract v0.1.1** patch-clarification direction. The v0.1 Dialogue/Headline schemas, semantic taxonomies, authority boundaries, P0 scope, and Hard Safety Gate set remain unchanged. v0.1.1 is not yet integrated into `main`.
+01 Master final checkpoint passed. **AI Interaction Contract v0.1.1 is Frozen** as the current Contract baseline on the active prototype branch; v0.1 remains preserved in Git history and historical VI01, VI02, and Pre-Prototype Gate 03 reports. Dialogue/Headline schemas, semantic taxonomies, authority boundaries, P0 scope, and the existing eight Hard Safety Gates remain unchanged. v0.1.1 is not yet integrated into `main`.
 
 No Unity project, production Dify workflow, backend runtime, final balance model, or final four-global-variable implementation is authorised by this state.
 
 ## Technical Prototype 01 — Batch 1 branch milestone
 
-**Status:** Implemented and locally verified on `prototype/technical-prototype-01`, but **not accepted**. 01 Master accepted the Technical Prototype 01 completeness finding and confirmed the v0.1.1 Contract clarification direction. Batch 1.2 targeted regression and documentation reconciliation are the current checkpoint. Final 01 Master Contract checkpoint confirmation is still required before returning to 04 for any Batch 2 authorisation.
+**Status:** Technical Prototype 01 Batch 1 / 1.2 implementation and targeted regression are complete on `prototype/technical-prototype-01`. 01 Master final checkpoint passed; Contract v0.1.1 is Frozen, DEC-022 remains Confirmed, and Batch 2 is **AUTHORISED** after this documentation freeze checkpoint.
 
 Batch 1 adds:
 
@@ -35,7 +35,7 @@ Runtime contract PASS and semantic fidelity PASS are not interchangeable. Candid
 
 The Experimental fixture-scoped lexical NPC Output Validation Gate limitation remains recorded. It is validation tooling, not the final production Output Validation Gate, and is not promoted to a Contract change by v0.1.1.
 
-**Review routing:** Batch 1.2 targeted regression / v0.1.1 candidate → 01 Master final Contract checkpoint confirmation → only then return to 04 for Batch 2 authorisation. Batch 2 is not currently authorised.
+**Review routing:** Runtime contract validity and semantic fidelity/completeness are formally separated in Frozen Contract v0.1.1. No further 01 Master review is required unless later work produces a new shared Contract, schema, authority, or P0-scope issue. Batch 2 is **AUTHORISED**; it has not begun in this documentation checkpoint.
 
 ## Completed
 
@@ -45,6 +45,7 @@ The Experimental fixture-scoped lexical NPC Output Validation Gate limitation re
 - Pre-Prototype Gate 03 completed, Master-reviewed, and integrated into `main`.
 - 03 confirmed the minimal deterministic consequence boundary (DEC-020).
 - 03 confirmed the real-model P0 baseline protocol (DEC-021).
+- 01 Master final Contract checkpoint passed: AI Interaction Contract v0.1.1 Frozen; DEC-022 Confirmed; Batch 2 authorised.
 - Detailed 03 result recorded in `docs/11_PRE_PROTOTYPE_GATE_03_REPORT.md`.
 
 ## Confirmed Pre-Prototype Gate 03 result
@@ -113,8 +114,6 @@ No Unity client is required for this first technical prototype.
 
 ## Still unresolved / deferred
 
-- final 01 Master checkpoint confirmation for the v0.1.1 candidate;
-- 04 authorisation for any Batch 2 work;
 - actual real-model baseline measurements and acceptance thresholds;
 - Dify feasibility and orchestration overhead;
 - final vertical-slice story canon and NPC/faction/world roster;
@@ -130,9 +129,8 @@ No Unity client is required for this first technical prototype.
 
 ## Next
 
-1. Return the Batch 1.2 targeted regression and v0.1.1 candidate to 01 Master for final Contract checkpoint confirmation.
-2. Keep Batch 1 unaccepted and Batch 2 unauthorised until that confirmation.
-3. Only after final 01 confirmation, return to 04 for a separate Batch 2 authorisation decision.
+1. Next authorised work: Technical Prototype 01 Batch 2, under a separately scoped task.
+2. Return to 01 Master only if later work produces a new shared Contract, schema, authority, or P0-scope issue.
 
 ## Repository baseline
 
