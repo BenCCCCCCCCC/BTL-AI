@@ -228,3 +228,39 @@ Only confirmed decisions belong here. Unresolved choices are recorded in `06_CUR
 - The exact internal representation for non-world response obligations (for example refusal, clarification, counterquestion, acceptance wording) remains deferred serialization/schema detail and is not a Frozen Contract change at this checkpoint.
 - NPC-originated authored-offer lifecycle remains unresolved. If a future vertical-slice requirement needs a new response mode or changed Response Plan authority semantics, it must return through the current Master process to Contract review before implementation.
 - Final NPC roster, relationship formulas, richer epistemic distinctions, production serialization, P1 memory, and Output Validation Gate implementation remain unresolved.
+
+## DEC-020
+
+**Status:** Confirmed  
+**Date:** 2026-08-29  
+**Decision:** All changes to the four confirmed global variables — Reputation, Public Opinion, Threat Level, and Money — must originate from an authored deterministic Consequence Event created only after a deterministic gameplay result has been resolved. Validated AI semantic output, Claim Atoms, publication-support labels, and NPC surface text are not direct variable-change triggers. A result type may make a variable consequence eligible, but an authored deterministic rule must explicitly select the consequence; no implicit mapping or cross-variable formula is created by the AI layer.
+
+**Rationale:** The four variables need a minimal testable interface before prototyping without coupling language interpretation, evidence evaluation, or NPC wording directly to game-state mutation. An explicit consequence layer preserves the core authority boundary and keeps future balancing auditable.
+
+**Consequences:**
+
+- The minimal flow is `Deterministically Resolved Gameplay Result → Authored Consequence Event → Deterministic Variable Effect → Authoritative State Update`.
+- Publication outcomes may affect Reputation, Public Opinion, or Threat Level only when an authored consequence rule says so; Money requires an explicit economic consequence.
+- NPC/interpersonal outcomes may affect Reputation or Public Opinion only when an authored public/professional consequence exists; Threat Level requires an authored exposure/protection/risk consequence; Money requires an authored transaction/cost/reward consequence.
+- Authored story/external events may affect any global variable when explicitly authored.
+- Evidence/clue acquisition, semantic resolution, Claim Atom extraction, publication-support labels, and generated NPC text have no automatic global-variable delta.
+- Exact ranges, deltas, balance, decay, cross-variable formulas, and ending thresholds remain deferred. A technical prototype may use clearly marked Experimental placeholder deltas only to exercise the interface.
+- Legacy BTL formulas and thresholds remain historical evidence rather than Remake rules unless separately revalidated.
+
+## DEC-021
+
+**Status:** Confirmed  
+**Date:** 2026-08-29  
+**Decision:** The first real-model P0 baseline will reuse the Frozen VI01/VI02 validation fixtures through a versioned baseline manifest and will test Dialogue Semantic Parsing, Headline Analysis, and Grounded NPC Surface Generation as separate model boundaries. Model outputs must pass deterministic validators/gates; the baseline must also include deliberate invalid-output/fault-injection cases, record first-pass and retry/fallback outcomes, and capture model/prompt version, calls, token usage, latency, and estimated cost. Numerical acceptance thresholds will be set only after the first measured baseline.
+
+**Rationale:** The project already has stable expected semantics and hard safety constraints. The next useful evidence is empirical model performance against those fixtures, not another abstract schema round or premature production orchestration.
+
+**Consequences:**
+
+- `tests/01A_DIALOGUE_NPC_VALIDATION_FIXTURE.md`, `tests/01B_HEADLINE_VALIDATION_FIXTURE.md`, and the relevant model-facing cases from `tests/02A_*` / `tests/02C_*` become the source cases for the baseline manifest.
+- `tests/02B_EVIDENCE_CLAIM_RULES_FIXTURE.md` remains a deterministic downstream regression oracle; the LLM is not asked to judge evidence sufficiency or canonical truth.
+- Hard Safety Gates remain categorical correctness requirements and are not averaged into a quality score.
+- Model-invalid output that is caught by the validator is a model/retry quality failure; invalid output that is accepted, displayed, or allowed to mutate reality is a Hard Safety Gate breach.
+- Baseline blockers include a Hard Safety Gate breach, validators unable to reject invalid IDs/enums/incomplete Claim Sets, retry/fallback changing the deterministic decision, or a requirement to alter Frozen Contract semantics/P0 scope merely to make the model path work.
+- Dify remains a planned prototyping/orchestration layer, not a production dependency. Dify feasibility should be measured after a direct baseline harness exists so model quality can be separated from orchestration overhead.
+- No Unity implementation is authorised by this decision.
