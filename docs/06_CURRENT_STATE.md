@@ -6,13 +6,13 @@ Pre-production — **Pre-Prototype Gate 03 complete and integrated into `main`.*
 
 `main` is now the current stable validated baseline for completed VI01 + VI02 + Pre-Prototype Gate 03 work.
 
-The **AI Interaction Contract v0.1 remains Frozen and unchanged**.
+On the active prototype branch, 01 Master has confirmed the **AI Interaction Contract v0.1.1** patch-clarification direction. The v0.1 Dialogue/Headline schemas, semantic taxonomies, authority boundaries, P0 scope, and Hard Safety Gate set remain unchanged. v0.1.1 is not yet integrated into `main`.
 
 No Unity project, production Dify workflow, backend runtime, final balance model, or final four-global-variable implementation is authorised by this state.
 
 ## Technical Prototype 01 — Batch 1 branch milestone
 
-**Status:** Implemented and locally verified on `prototype/technical-prototype-01`, but **not accepted**. 04 Master accepted the Batch 1.1 technical finding as a Contract-review blocker. Batch 1 now requires 01 Master Contract review before any resolution is selected or implemented. It is not integrated or promoted to a production architecture decision.
+**Status:** Implemented and locally verified on `prototype/technical-prototype-01`, but **not accepted**. 01 Master accepted the Technical Prototype 01 completeness finding and confirmed the v0.1.1 Contract clarification direction. Batch 1.2 targeted regression and documentation reconciliation are the current checkpoint. Final 01 Master Contract checkpoint confirmation is still required before returning to 04 for any Batch 2 authorisation.
 
 Batch 1 adds:
 
@@ -24,16 +24,18 @@ Batch 1 adds:
 - an isolated deterministic Consequence Event stub with immutable Experimental authoritative test state and placeholder effects for all four global variables;
 - automated fault-injection and authority-boundary tests.
 
-Local verification: `48 passed` with Python 3.12, pytest, and jsonschema.
+Existing Batch 1 full-suite baseline: `48 passed`. Batch 1.2 pre-checkpoint full suite: `61 passed` (`48` existing + `13` v0.1.1 regression tests) with Python 3.12, pytest, and jsonschema.
 
-One active prototype blocker and one Experimental limitation are explicit rather than hidden:
+The v0.1.1 assurance responsibilities are explicit and separate:
 
-1. **Active Gate 03 blocker:** Candidate-only runtime validation cannot prove natural-language tactic completeness, Claim Set completeness, or absence of an invented but otherwise catalogue-valid Claim Atom. Batch 1 detects D19/F04/F05 only by comparing candidates with fixture-authored expected semantics. That baseline oracle is evaluation-only and is not available for arbitrary production player text. Therefore the Frozen Contract requirements that all expressed tactics be present with no silent truncation and that the Claim Set be complete with no omitted or extra consequential claim are not currently runtime-enforceable under the implemented input boundary. Gate 03 section 4.8 item 2 applies; Batch 2 must not start while this remains unresolved.
-2. Natural-language required/forbidden NPC proposition coverage is lexical and fixture-specific in Batch 1. It is validation tooling, not the final production Output Validation Gate.
+1. **Deterministic runtime contract validity** covers observable schema, enum, current-catalogue, context, compatibility, visibility, Pending Interaction, structured single-action, Claim Atom legality, and authority-boundary conditions.
+2. **Semantic fidelity/completeness** covers tactic omission, consequential Claim Atom omission, catalogue-valid but source-text-unsupported extra Claim Atoms, and general interpretation fidelity. Batch 1 measures this against authored fixture ground truth; D19/F04/F05 are detected only by this evaluation oracle, not by candidate-only runtime validation.
 
-Frozen Contract v0.1, the AI authority boundary, and all confirmed semantic taxonomies remain unchanged.
+Runtime contract PASS and semantic fidelity PASS are not interchangeable. Candidate-only runtime inability to prove arbitrary free-text completeness is no longer itself a blocker once this separation is explicit and the mandatory baseline detects the required errors. Blocking conditions remain if the baseline cannot detect tactic/Claim omissions or extra Claim Atoms, if runtime PASS is conflated with fidelity PASS, if a Hard Safety Gate is breached, or if the model path requires shared schema/authority/P0 changes.
 
-**Review routing:** 04 Master has accepted the completeness finding. **01 Master Contract review is now required** to reconcile the Frozen completeness requirements with the current free-text → semantic candidate → deterministic validator input boundary. No Frozen Contract change has been made, and no resolution category is selected or confirmed by this branch.
+The Experimental fixture-scoped lexical NPC Output Validation Gate limitation remains recorded. It is validation tooling, not the final production Output Validation Gate, and is not promoted to a Contract change by v0.1.1.
+
+**Review routing:** Batch 1.2 targeted regression / v0.1.1 candidate → 01 Master final Contract checkpoint confirmation → only then return to 04 for Batch 2 authorisation. Batch 2 is not currently authorised.
 
 ## Completed
 
@@ -81,7 +83,7 @@ The baseline includes deterministic validator/gate checks, deliberate invalid-ou
 
 Dify feasibility is evaluated after a direct baseline harness exists, so model performance and orchestration overhead can be separated.
 
-## Contract status
+## Historical Gate 03 Contract status
 
 Pre-Prototype Gate 03 requires **no change** to:
 
@@ -92,7 +94,7 @@ Pre-Prototype Gate 03 requires **no change** to:
 - Response Plan authority semantics;
 - hard safety gates.
 
-**01 Master review required:** No.
+**At Gate 03, 01 Master review required:** No.
 
 ## Prototype entry assessment
 
@@ -111,6 +113,8 @@ No Unity client is required for this first technical prototype.
 
 ## Still unresolved / deferred
 
+- final 01 Master checkpoint confirmation for the v0.1.1 candidate;
+- 04 authorisation for any Batch 2 work;
 - actual real-model baseline measurements and acceptance thresholds;
 - Dify feasibility and orchestration overhead;
 - final vertical-slice story canon and NPC/faction/world roster;
@@ -126,9 +130,9 @@ No Unity client is required for this first technical prototype.
 
 ## Next
 
-1. Hand the accepted Batch 1.1 Completeness Enforcement finding to 01 Master for Contract review.
-2. Keep Batch 1 unaccepted and keep Batch 2 paused while the blocker remains unresolved.
-3. Do not change Frozen Contract semantics, the authorised input/authority boundary, or P0 scope until 01 Master selects and confirms a resolution.
+1. Return the Batch 1.2 targeted regression and v0.1.1 candidate to 01 Master for final Contract checkpoint confirmation.
+2. Keep Batch 1 unaccepted and Batch 2 unauthorised until that confirmation.
+3. Only after final 01 confirmation, return to 04 for a separate Batch 2 authorisation decision.
 
 ## Repository baseline
 

@@ -13,8 +13,8 @@ REQUIRED_MARKERS = {"Experimental", "Validation-only", "Non-canonical"}
 
 
 def test_manifest_is_versioned_and_traces_every_case_to_a_fixture(manifest: dict) -> None:
-    assert manifest["manifest_version"] == "0.1"
-    assert manifest["contract_version"] == "Frozen v0.1"
+    assert manifest["manifest_version"] == "0.1.1"
+    assert manifest["contract_version"] == "0.1.1"
     assert manifest["source_repository_baseline_sha"] == BASELINE_SHA
     assert set(manifest["scope_marker"]) == REQUIRED_MARKERS
 

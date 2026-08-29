@@ -1,7 +1,8 @@
-"""Deterministic Frozen-v0.1 candidate validation for Technical Prototype 01.
+"""Contract v0.1.1 validation and baseline evaluation for Technical Prototype 01.
 
 Runtime validation deliberately does not attempt to infer natural-language
-completeness. Fixture ground-truth comparison is a separate baseline oracle.
+completeness. Semantic fidelity is a separate, evaluation-only comparison
+against authored fixture ground truth.
 """
 
 from __future__ import annotations
@@ -51,10 +52,17 @@ class ValidationResult:
 
 
 @dataclass(frozen=True)
-class BaselineEvaluation:
-    exact_match: bool
-    runtime_result: ValidationResult
+class SemanticFidelityResult:
+    """Evaluation-only fidelity result; never a production runtime signal."""
+
+    passed: bool
     reasons: tuple[str, ...] = ()
+
+
+@dataclass(frozen=True)
+class BaselineEvaluation:
+    runtime_contract: ValidationResult
+    semantic_fidelity: SemanticFidelityResult
 
 
 def _system_failure(*reasons: str) -> ValidationResult:
@@ -194,10 +202,13 @@ def evaluate_dialogue_baseline(
     expected_candidate: Mapping[str, Any],
     catalogue: RuntimeCatalogue,
 ) -> BaselineEvaluation:
-    runtime_result = validate_dialogue_candidate(candidate, catalogue)
+    runtime_contract = validate_dialogue_candidate(candidate, catalogue)
     exact_match = _normalise_dialogue(candidate) == _normalise_dialogue(expected_candidate)
     reasons = () if exact_match else ("FIXTURE_SEMANTIC_MISMATCH",)
-    return BaselineEvaluation(exact_match, runtime_result, reasons)
+    return BaselineEvaluation(
+        runtime_contract,
+        SemanticFidelityResult(exact_match, reasons),
+    )
 
 
 def evaluate_headline_baseline(
@@ -205,10 +216,13 @@ def evaluate_headline_baseline(
     expected_candidate: Mapping[str, Any],
     catalogue: RuntimeCatalogue,
 ) -> BaselineEvaluation:
-    runtime_result = validate_headline_candidate(candidate, catalogue)
+    runtime_contract = validate_headline_candidate(candidate, catalogue)
     exact_match = _normalise_headline(candidate) == _normalise_headline(expected_candidate)
     reasons = () if exact_match else ("FIXTURE_CLAIM_SET_MISMATCH",)
-    return BaselineEvaluation(exact_match, runtime_result, reasons)
+    return BaselineEvaluation(
+        runtime_contract,
+        SemanticFidelityResult(exact_match, reasons),
+    )
 
 
 def _normalise_dialogue(candidate: Mapping[str, Any]) -> dict[str, Any]:

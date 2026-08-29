@@ -9,7 +9,7 @@ from ai.prototype.validation import RuntimeCatalogue, TargetDefinition
 
 
 ROOT = Path(__file__).resolve().parents[1]
-MANIFEST_PATH = ROOT / "ai" / "eval" / "p0_baseline_manifest.v0.1.json"
+MANIFEST_PATH = ROOT / "ai" / "eval" / "p0_baseline_manifest.v0.1.1.json"
 
 
 @pytest.fixture(scope="session")

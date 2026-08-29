@@ -1,9 +1,17 @@
-# AI Interaction Contract v0.1 — Validation Increment 01
+# AI Interaction Contract v0.1.1 — Validation Increment 01
 
 **Project:** Between the Lines: AI Remake (BTL-AI)  
-**Status:** Frozen
+**Status:** Candidate revision — pending 01 Master final checkpoint
 **Phase:** Pre-production / Validation Increment 01  
 **Scope:** Player–NPC dialogue parsing, grounded NPC dialogue generation, player-written headline analysis
+
+---
+
+## v0.1.1 Revision Note
+
+Technical Prototype 01 demonstrated that candidate-only deterministic runtime validation cannot independently prove semantic fidelity or completeness against arbitrary natural-language source text. v0.1.1 clarifies two separate assurance responsibilities: deterministic runtime contract validation of observable candidate/context conditions, and reproducible semantic-fidelity/completeness evaluation against authored fixture ground truth.
+
+This patch does not change the v0.1 Dialogue schema, Headline schema, semantic statuses, NPC Response Plan authority, AI authority boundary, P0 scope, or Hard Safety Gate set. Git history preserves v0.1, and the historical VI01/VI02/03 reports remain unchanged.
 
 ---
 
@@ -680,11 +688,13 @@ P0 AI systems MUST NOT authoritatively determine:
 
 ---
 
-# 18. Contract Validator
+# 18. Runtime Contract Validation and Semantic Fidelity Evaluation
 
 A RESOLVED semantic candidate is not automatically trusted.
 
-The deterministic validator MUST verify where relevant:
+## A. Deterministic Runtime Contract Validation
+
+The deterministic runtime validator MUST verify observable candidate and context conditions where relevant:
 
 - valid enum values;
 - target ID exists;
@@ -693,13 +703,28 @@ The deterministic validator MUST verify where relevant:
 - required value exists;
 - value belongs to the target;
 - polarity is structurally valid;
-- tactic values form a unique set and all gameplay-relevant tactics are present with no silent truncation;
+- reported tactic values are legal, target-compatible, and unique;
 - evidence IDs exist in the supplied player-visible catalogue;
 - ACCEPT / REFUSE has a valid pending interaction;
-- single-action dialogue rule is satisfied;
-- headline Claim Set is complete, has no silently truncated consequential claim, and meets conditional requirements.
+- the candidate structurally represents one consequential Dialogue action;
+- each reported Claim Atom has legal fields and satisfies current target/value/polarity/commitment/source requirements;
+- headline targets are currently available and headline-eligible;
+- the candidate contains no unauthorised structured authority output.
 
-Only validated output becomes a **Validated Semantic Action** or **Validated Claim Set**.
+Only runtime-contract-valid output may become a **Validated Semantic Action** or **Validated Claim Set** and proceed to deterministic game rules. Runtime contract validity is not, by itself, a certification that an arbitrary source utterance or headline was interpreted completely or faithfully.
+
+## B. Semantic Fidelity / Completeness Evaluation
+
+The following remain REQUIRED parser behaviours and mandatory evaluation correctness requirements:
+
+- every gameplay-relevant authored tactic expressed by the single consequential Dialogue action is retained with no silent truncation;
+- every consequential Claim Atom expressed by the headline is retained with no silent truncation;
+- no catalogue-valid but source-text-unsupported Claim Atom is invented;
+- general act/target/value/polarity/commitment/source interpretation remains faithful to the source text.
+
+Candidate-only runtime validation cannot independently observe or prove these properties for arbitrary natural-language input. During the reproducible baseline, they are measured by comparing the non-authoritative candidate with authored fixture ground truth. Tactic omission, Claim Atom omission, semantic truncation, and extra Claim Atoms are mandatory semantic-fidelity evaluation failures.
+
+The fixture ground-truth oracle is evaluation-only. It MUST NOT be represented as a production runtime validator, a second authoritative LLM judge, or a deterministic full-natural-language parser. A ground-truth mismatch does not create a production runtime contract-failure or retry signal because that authored expected semantic result is not available for arbitrary runtime player input.
 
 ---
 
@@ -744,6 +769,8 @@ For headline parsing: retry once and validate again. If retry is exhausted, pres
 A model/system failure MUST NOT itself create an irreversible gameplay consequence.
 
 A model/system failure SHOULD NOT consume a limited consequential player action.
+
+An authored-baseline semantic-fidelity mismatch is an evaluation correctness failure, not by itself an observable production runtime AI/System Failure or retry trigger.
 
 ---
 
@@ -855,6 +882,10 @@ The following are correctness constraints rather than average quality metrics:
 
 Any occurrence should be treated as a defect rather than averaged away through an overall accuracy score.
 
+`Semantically unresolved headline entering publication resolution = 0` applies whenever unresolved or invalid state is observable at runtime, including `AMBIGUOUS`, `UNSUPPORTED`, schema failure, or deterministic runtime contract-validation failure. It does not assert that every `RESOLVED` runtime-contract-valid candidate has been independently proven semantically complete against arbitrary original free text.
+
+Semantic tactic omission, consequential Claim Atom omission, and catalogue-valid but source-text-unsupported extra Claim Atoms remain mandatory baseline evaluation correctness failures. This clarification does not add or remove a Hard Safety Gate.
+
 ---
 
 # 23. Quality Metrics
@@ -874,6 +905,8 @@ Initial measurable quality metrics include:
 - Source Attribution Accuracy
 - Response Mode Compliance
 - Required Proposition Coverage
+
+Tactic Precision / Recall, Claim Atom Exact Match, Claim Omission Rate, and the other source-interpretation accuracy metrics belong to authored-ground-truth semantic-fidelity baseline evaluation. They are not claims that candidate-only deterministic runtime validation can independently re-derive arbitrary source-text meaning.
 
 Acceptance thresholds are intentionally deferred until a real model baseline has been measured during validation.
 
@@ -914,4 +947,4 @@ Validation Increment 01 succeeds when:
 6. AI output cannot directly alter game reality.
 7. A reproducible evaluation set can measure semantic quality and authority-boundary failures before runtime implementation begins.
 
-These conditions are validated and this Contract is frozen. Any Dify or Unity work still requires a separately authorised implementation-validation increment; this Contract does not authorise implementation.
+These conditions are the v0.1.1 candidate revision, pending 01 Master final checkpoint. Any Dify or Unity work still requires a separately authorised implementation-validation increment; this Contract does not authorise implementation.

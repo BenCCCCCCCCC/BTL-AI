@@ -1,9 +1,20 @@
 {
-  "manifest_version": "0.1",
-  "contract_version": "Frozen v0.1",
+  "manifest_version": "0.1.1",
+  "contract_version": "0.1.1",
   "source_repository_baseline_sha": "aa87d39959e6a4b2f6cad31883528cb8e8d1cc42",
   "scope_marker": ["Experimental", "Validation-only", "Non-canonical"],
-  "description": "Small representative Batch 1 baseline. Runtime contract validation and fixture ground-truth comparison are separate operations.",
+  "description": "Small representative Batch 1 baseline. Runtime contract validity and authored-ground-truth semantic fidelity are separate assurance results.",
+  "assurance_layers": {
+    "runtime_contract": {
+      "scope": "Observable schema, catalogue, context, and authority-boundary validity",
+      "result_values": ["PASS", "FAIL"]
+    },
+    "semantic_fidelity": {
+      "scope": "Evaluation-only comparison with authored fixture ground truth",
+      "result_values": ["PASS", "FAIL"],
+      "production_runtime_retry_trigger": false
+    }
+  },
   "runtime_catalogue_views": {
     "DIALOGUE_01A_D18": {
       "targets": {
@@ -127,7 +138,7 @@
           "evidence_ref_ids": ["PHOTO_01"]
         },
         "runtime_contract": "PASS",
-        "baseline_oracle": "EXACT_MATCH"
+        "semantic_fidelity": "PASS"
       },
       "marker": ["Experimental", "Validation-only", "Non-canonical"]
     },
@@ -142,7 +153,7 @@
         "fixture_oracle_ref": "dialogue-d18-valid"
       },
       "model_facing_input": {"injected_candidate": {"status": "RESOLVED", "act": "REQUEST", "target_id": "REVEAL_PAYMENT_PAYER", "tactics": ["ACCUSATION", "THREAT"], "evidence_ref_ids": ["PHOTO_01"]}},
-      "expected_result": {"runtime_contract": "PASS", "baseline_oracle": "REJECT", "reason": "FIXTURE_SEMANTIC_MISMATCH"},
+      "expected_result": {"runtime_contract": "PASS", "semantic_fidelity": "FAIL", "reason": "FIXTURE_SEMANTIC_MISMATCH"},
       "marker": ["Experimental", "Validation-only", "Non-canonical"]
     },
     {
@@ -200,7 +211,7 @@
           ]
         },
         "runtime_contract": "PASS",
-        "baseline_oracle": "EXACT_MATCH"
+        "semantic_fidelity": "PASS"
       },
       "marker": ["Experimental", "Validation-only", "Non-canonical"]
     },
@@ -212,7 +223,7 @@
       "execution_path": "real_model",
       "deterministic_context": {"runtime_catalogue_view_ref": "HEADLINE_01B"},
       "model_facing_input": {"headline_text": "A city waits for answers.", "runtime_catalogue_view_ref": "HEADLINE_01B"},
-      "expected_result": {"candidate": {"status": "RESOLVED", "claims": []}, "runtime_contract": "PASS", "baseline_oracle": "EXACT_MATCH"},
+      "expected_result": {"candidate": {"status": "RESOLVED", "claims": []}, "runtime_contract": "PASS", "semantic_fidelity": "PASS"},
       "marker": ["Experimental", "Validation-only", "Non-canonical"]
     },
     {
@@ -225,7 +236,7 @@
       "model_facing_input": {"headline_text": "Security forces fired first.", "runtime_catalogue_view_ref": "HEADLINE_01B"},
       "expected_result": {"candidate": {"status": "RESOLVED", "claims": [
         {"target_id": "FIRE_FIRST", "value_id": "SECURITY_FORCES", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"}
-      ]}, "runtime_contract": "PASS", "baseline_oracle": "EXACT_MATCH"},
+      ]}, "runtime_contract": "PASS", "semantic_fidelity": "PASS"},
       "marker": ["Experimental", "Validation-only", "Non-canonical"]
     },
     {
@@ -262,7 +273,7 @@
         {"target_id": "ORDERED_OPERATION", "value_id": "MAYOR_OFFICE", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"},
         {"target_id": "FUNDED_OPERATION", "value_id": "COMPANY_A", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"}
       ]}},
-      "expected_result": {"runtime_contract": "PASS", "baseline_oracle": "REJECT", "reason": "FIXTURE_CLAIM_SET_MISMATCH"},
+      "expected_result": {"runtime_contract": "PASS", "semantic_fidelity": "FAIL", "reason": "FIXTURE_CLAIM_SET_MISMATCH"},
       "marker": ["Experimental", "Validation-only", "Non-canonical"]
     },
     {
@@ -276,7 +287,7 @@
         {"target_id": "FIRE_FIRST", "value_id": "SECURITY_FORCES", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"},
         {"target_id": "ORDERED_OPERATION", "value_id": "MAYOR_OFFICE", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"}
       ]}},
-      "expected_result": {"runtime_contract": "PASS", "baseline_oracle": "REJECT", "reason": "FIXTURE_CLAIM_SET_MISMATCH"},
+      "expected_result": {"runtime_contract": "PASS", "semantic_fidelity": "FAIL", "reason": "FIXTURE_CLAIM_SET_MISMATCH"},
       "marker": ["Experimental", "Validation-only", "Non-canonical"]
     },
     {

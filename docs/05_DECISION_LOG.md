@@ -264,3 +264,19 @@ Only confirmed decisions belong here. Unresolved choices are recorded in `06_CUR
 - Baseline blockers include a Hard Safety Gate breach, validators unable to reject invalid IDs/enums/incomplete Claim Sets, retry/fallback changing the deterministic decision, or a requirement to alter Frozen Contract semantics/P0 scope merely to make the model path work.
 - Dify remains a planned prototyping/orchestration layer, not a production dependency. Dify feasibility should be measured after a direct baseline harness exists so model quality can be separated from orchestration overhead.
 - No Unity implementation is authorised by this decision.
+
+## DEC-022
+
+**Status:** Confirmed
+**Date:** 2026-08-30
+**Decision:** Separate deterministic runtime contract validity from semantic fidelity/completeness assurance. Runtime validators enforce observable schema, enum, current-catalogue, context, compatibility, visibility, Pending Interaction, structured single-action, Claim Atom legality, and authority-boundary conditions. Fidelity of arbitrary natural-language interpretation — including tactic omission, consequential Claim Atom omission, and catalogue-valid but source-text-unsupported extra Claim Atoms — is measured against reproducible authored ground truth during baseline evaluation.
+
+**Rationale:** Technical Prototype 01 demonstrated that a candidate-only deterministic validator cannot independently re-derive the complete meaning of arbitrary free text without a second authoritative model judge, a deterministic full-natural-language parser, or a changed input/schema boundary. None of those changes is authorised or required by this clarification. Explicitly separating the assurance responsibilities preserves both deterministic runtime authority and measurable parser-quality requirements.
+
+**Consequences:**
+
+- Runtime contract PASS and semantic fidelity PASS are separate results and MUST NOT be conflated.
+- Authored fixture ground-truth comparison is evaluation-only and is not a production runtime validator or retry signal.
+- Candidate-only runtime inability to prove arbitrary natural-language completeness is not itself a prototype blocker once the two assurance responsibilities are explicit and the mandatory baseline measures fidelity.
+- Progress remains blocked if the mandatory baseline cannot detect gameplay-relevant tactic omission, consequential Claim Atom omission, or catalogue-valid extra Claim Atoms; if runtime PASS is reported as fidelity PASS; if a Frozen Hard Safety Gate is breached; or if the model path requires changes to shared schemas, AI/Response Plan authority, semantic statuses, hard gates, or P0 scope.
+- Dialogue and Headline schemas, semantic statuses, the AI authority boundary, NPC Response Plan authority, P0 scope, and the eight existing Hard Safety Gates remain unchanged.

@@ -21,7 +21,8 @@ def test_resolved_headline_cases_are_publication_ready(
     result = validate_headline_candidate(candidate, headline_catalogue)
     baseline = evaluate_headline_baseline(candidate, candidate, headline_catalogue)
     assert result.can_proceed
-    assert baseline.exact_match
+    assert baseline.runtime_contract.can_proceed
+    assert baseline.semantic_fidelity.passed
 
 
 @pytest.mark.parametrize("case_id", ["headline-f02-illegal-commitment", "headline-f03-invalid-target"])
@@ -39,9 +40,9 @@ def test_f04_incomplete_claim_set_is_caught_by_fixture_oracle(
     candidate = _candidate(cases_by_id["headline-f04-incomplete-claim-set"])
     expected = cases_by_id["headline-t01-four-claims"]["expected_result"]["candidate"]
     baseline = evaluate_headline_baseline(candidate, expected, headline_catalogue)
-    assert baseline.runtime_result.can_proceed
-    assert not baseline.exact_match
-    assert baseline.reasons == ("FIXTURE_CLAIM_SET_MISMATCH",)
+    assert baseline.runtime_contract.can_proceed
+    assert not baseline.semantic_fidelity.passed
+    assert baseline.semantic_fidelity.reasons == ("FIXTURE_CLAIM_SET_MISMATCH",)
 
 
 def test_f05_extra_claim_is_caught_by_fixture_oracle(
@@ -50,8 +51,8 @@ def test_f05_extra_claim_is_caught_by_fixture_oracle(
     candidate = _candidate(cases_by_id["headline-f05-invented-extra-claim"])
     expected = cases_by_id["headline-t10-single-claim"]["expected_result"]["candidate"]
     baseline = evaluate_headline_baseline(candidate, expected, headline_catalogue)
-    assert baseline.runtime_result.can_proceed
-    assert not baseline.exact_match
+    assert baseline.runtime_contract.can_proceed
+    assert not baseline.semantic_fidelity.passed
 
 
 @pytest.mark.parametrize(
