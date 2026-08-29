@@ -10,9 +10,11 @@ Pre-production — **Pre-Prototype Gate 03 complete and integrated into `main`.*
 
 No Unity project, production Dify workflow, backend runtime, final balance model, or final four-global-variable implementation is authorised by this state.
 
-## Technical Prototype 01 — Batch 1 branch milestone
+## Technical Prototype 01 — Batch 1 / Batch 2A branch milestones
 
 **Status:** Technical Prototype 01 Batch 1 / 1.2 implementation and targeted regression are complete on `prototype/technical-prototype-01`. 01 Master final checkpoint passed; Contract v0.1.1 is Frozen, DEC-022 remains Confirmed, and Batch 2 is **AUTHORISED** after this documentation freeze checkpoint.
+
+**Batch 2A:** Complete and accepted by 04 Master on `prototype/technical-prototype-01` at `5f14abf8ddd759f9dcefd864cf9d7de213150ae7` (`prototype: add baseline runner and retry policy`). It adds a provider-independent `ScriptedAdapter`, component runner, deterministic retry/fallback policy, and JSONL-compatible measurement logging. The full suite is `82 passed / 0 failed`.
 
 Batch 1 adds:
 
@@ -33,9 +35,17 @@ The v0.1.1 assurance responsibilities are explicit and separate:
 
 Runtime contract PASS and semantic fidelity PASS are not interchangeable. Candidate-only runtime inability to prove arbitrary free-text completeness is no longer itself a blocker once this separation is explicit and the mandatory baseline detects the required errors. Blocking conditions remain if the baseline cannot detect tactic/Claim omissions or extra Claim Atoms, if runtime PASS is conflated with fidelity PASS, if a Hard Safety Gate is breached, or if the model path requires shared schema/authority/P0 changes.
 
+Batch 2A policy evidence confirms:
+
+- Dialogue retries only `AI_SYSTEM_FAILURE` once; valid `AMBIGUOUS` / `UNSUPPORTED` output does not model-retry.
+- Semantic-fidelity mismatch is evaluation-only and never triggers runtime retry.
+- Headline retry exhaustion creates no Validated Claim Set, blocks publication, and preserves the draft; it is distinct from valid `RESOLVED + claims=[]`.
+- NPC gate failure retries once, then may display only an authored fallback that preserves the deterministic Response Plan semantics and passes the Experimental fixture-scoped gate.
+- The Consequence Event stub remains isolated from runner, adapter, retry, fallback, and measurement code. No Hard Safety Gate breach or new shared Contract/schema/authority/P0 issue was found.
+
 The Experimental fixture-scoped lexical NPC Output Validation Gate limitation remains recorded. It is validation tooling, not the final production Output Validation Gate, and is not promoted to a Contract change by v0.1.1.
 
-**Review routing:** Runtime contract validity and semantic fidelity/completeness are formally separated in Frozen Contract v0.1.1. No further 01 Master review is required unless later work produces a new shared Contract, schema, authority, or P0-scope issue. Batch 2 is **AUTHORISED**; it has not begun in this documentation checkpoint.
+**Review routing:** Runtime contract validity and semantic fidelity/completeness are formally separated in Frozen Contract v0.1.1. No further 01 Master review is required unless later work produces a new shared Contract, schema, authority, or P0-scope issue. Batch 2A is complete; the next authorised work is Batch 2B direct real-model baseline.
 
 ## Completed
 
@@ -46,6 +56,7 @@ The Experimental fixture-scoped lexical NPC Output Validation Gate limitation re
 - 03 confirmed the minimal deterministic consequence boundary (DEC-020).
 - 03 confirmed the real-model P0 baseline protocol (DEC-021).
 - 01 Master final Contract checkpoint passed: AI Interaction Contract v0.1.1 Frozen; DEC-022 Confirmed; Batch 2 authorised.
+- 04 Master accepted Technical Prototype 01 Batch 2A scripted baseline runner, retry/fallback policy, and measurement logging (`5f14abf8ddd759f9dcefd864cf9d7de213150ae7`; `82 passed / 0 failed`).
 - Detailed 03 result recorded in `docs/11_PRE_PROTOTYPE_GATE_03_REPORT.md`.
 
 ## Confirmed Pre-Prototype Gate 03 result
@@ -114,7 +125,7 @@ No Unity client is required for this first technical prototype.
 
 ## Still unresolved / deferred
 
-- actual real-model baseline measurements and acceptance thresholds;
+- Batch 2B direct real-model baseline measurements and acceptance thresholds;
 - Dify feasibility and orchestration overhead;
 - final vertical-slice story canon and NPC/faction/world roster;
 - production catalogue/evidence/NPC serialization and authoring tooling;
@@ -129,7 +140,7 @@ No Unity client is required for this first technical prototype.
 
 ## Next
 
-1. Next authorised work: Technical Prototype 01 Batch 2, under a separately scoped task.
+1. Next authorised work: Technical Prototype 01 Batch 2B direct real-model baseline, under a separately scoped task.
 2. Return to 01 Master only if later work produces a new shared Contract, schema, authority, or P0-scope issue.
 
 ## Repository baseline

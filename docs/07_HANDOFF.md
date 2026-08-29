@@ -39,6 +39,8 @@ Starting baseline:
 
 Technical Prototype 01 Batch 1 / 1.2 implementation and Contract documentation freeze checkpoint are complete on the prototype branch. The existing Batch 1 full-suite baseline is `48 passed`; the Batch 1.2 pre-checkpoint full suite is `61 passed / 0 failed` (`48` existing + `13` v0.1.1 regression tests) with Python 3.12, pytest, and jsonschema.
 
+**Batch 2A — complete and accepted by 04 Master.** Commit `5f14abf8ddd759f9dcefd864cf9d7de213150ae7` adds a provider-independent `ScriptedAdapter`, component baseline runner, deterministic retry/fallback policy, and JSONL-compatible measurement logging. The full suite result is `82 passed / 0 failed`.
+
 01 Master completed the final Contract checkpoint and approved v0.1.1 as the new Frozen Contract baseline. The accepted implementation finding remains:
 
 > Frozen v0.1 semantic completeness is not genuinely runtime-enforceable under the current free-text → semantic candidate → deterministic validator input boundary.
@@ -57,7 +59,15 @@ Frozen Contract v0.1.1 and confirmed DEC-022 clarify that candidate-only inabili
 
 The v0.1.1 Contract is Frozen and DEC-022 is Confirmed. Historical VI01/VI02/03 reports remain unchanged. Dialogue/Headline schemas, semantic statuses, AI authority, Response Plan authority, P0 scope, and the eight Hard Safety Gates are unchanged. The Experimental fixture-scoped NPC lexical gate remains a recorded prototype limitation and is not a production Output Validation Gate.
 
-Technical Prototype 01 Batch 1 / 1.2 → Contract v0.1.1 Frozen → Batch 2 authorised. Batch 2 has not begun in this documentation checkpoint.
+Technical Prototype 01 Batch 1 / 1.2 → Contract v0.1.1 Frozen → Batch 2 authorised. Batch 2A is complete; Batch 2B has not begun in this documentation checkpoint.
+
+Batch 2A confirms the operational policy boundary:
+
+1. Dialogue retries only `AI_SYSTEM_FAILURE` once; valid `AMBIGUOUS` / `UNSUPPORTED` output does not model-retry.
+2. Semantic-fidelity mismatch remains evaluation-only and never becomes a runtime retry signal.
+3. Headline retry exhaustion has no Validated Claim Set, blocks publication, and preserves the draft; it is not `RESOLVED + claims=[]`.
+4. NPC gate failure retries once, then may display only an authored fallback that preserves the deterministic Response Plan semantics and passes the Experimental fixture-scoped gate.
+5. The Consequence Event stub remains isolated. No Hard Safety Gate breach or new Contract/schema/authority/P0 issue was found.
 
 ## 03 result
 
@@ -134,7 +144,7 @@ Do not expand the next implementation scope into:
 
 ## Next project step
 
-Next work: **Technical Prototype 01 Batch 2**. It is authorised following the Contract v0.1.1 freeze checkpoint and must be performed in a separately scoped task.
+Next work: **Technical Prototype 01 Batch 2B direct real-model baseline**. It is authorised following the completed Batch 2A checkpoint and must be performed in a separately scoped task.
 
 Keep the next scope bounded: no Unity, no Dify yet, no backend architecture, no final story/world canon, no final balance model, and no P1/P2 expansion.
 
@@ -169,6 +179,10 @@ At substantial GitHub checkpoints, report:
 15. `ai/prototype/validation.py`
 16. `ai/eval/p0_baseline_manifest.v0.1.1.json`
 17. `tests/test_contract_v011_regression.py`
+18. `ai/prototype/adapters.py`
+19. `ai/prototype/measurement.py`
+20. `ai/prototype/runner.py`
+21. `tests/test_baseline_runner.py`
 
 ## Repository baseline
 
