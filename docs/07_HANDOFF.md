@@ -15,9 +15,9 @@ Portfolio goals:
 
 Status:
 
-**COMPLETE on `design/pre-prototype-gate-03` — pending integration into `main`.**
+**COMPLETE — integrated into `main`.**
 
-VI01 and VI02 remain integrated in `main`. The **AI Interaction Contract v0.1 remains Frozen and unchanged**.
+VI01, VI02, and Pre-Prototype Gate 03 are now integrated into the stable `main` baseline. The **AI Interaction Contract v0.1 remains Frozen and unchanged**.
 
 No Unity project, production Dify workflow, backend runtime, final balance model, or final global-variable implementation is authorised by 03.
 
@@ -102,7 +102,7 @@ Do not expand the next implementation scope into:
 
 ## Next project step
 
-After 03 is integrated into `main`, open a new implementation thread:
+Open a new implementation thread:
 
 **04｜Technical Prototype 01 — P0 AI Baseline Harness**
 
@@ -148,10 +148,10 @@ At substantial GitHub checkpoints, report:
 
 ## Repository baseline
 
-Stable integrated branch before 03 merge:
+Current stable validated branch:
 
 `main`
 
-Current 03 working branch:
+Completed historical 03 branch:
 
 `design/pre-prototype-gate-03`

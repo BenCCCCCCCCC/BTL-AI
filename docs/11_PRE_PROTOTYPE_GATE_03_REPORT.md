@@ -1,9 +1,10 @@
 # Pre-Prototype Gate 03 Report
 
 **Project:** Between the Lines: AI Remake (BTL-AI)  
-**Status:** Complete  
+**Status:** Complete — integrated into `main`  
 **Date:** 2026-08-29  
 **Working branch:** `design/pre-prototype-gate-03`  
+**Integrated baseline:** `main`  
 **Contract baseline:** `docs/08_AI_INTERACTION_CONTRACT.md` — Frozen v0.1
 
 ## 1. Purpose
@@ -289,7 +290,7 @@ No specialist 03A/03B threads are required. The scopes are small enough for the 
 
 ## 8. Recommended first technical work
 
-After 03 is integrated into `main`:
+From the integrated `main` baseline:
 
 1. create a technical-prototype branch;
 2. convert the existing fixture cases into a small machine-readable/versioned baseline manifest without changing expected semantics;
@@ -312,6 +313,6 @@ Do not create a Unity project for this first technical step.
 - 01 Master review required: **No**
 - Specialist threads required: **No**
 
-**Pre-Prototype Gate 03 — COMPLETE**
+**Pre-Prototype Gate 03 — COMPLETE AND INTEGRATED INTO `main`**
 
-The branch is ready for integration review. Once integrated into `main`, the project may enter the first technical prototype without additional abstract architecture work.
+The project may now enter the first technical prototype without additional abstract architecture work.

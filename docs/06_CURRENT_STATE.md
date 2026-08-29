@@ -2,9 +2,9 @@
 
 ## Current phase
 
-Pre-production — **Pre-Prototype Gate 03 complete on `design/pre-prototype-gate-03`, pending integration into `main`.**
+Pre-production — **Pre-Prototype Gate 03 complete and integrated into `main`.**
 
-`main` remains the current stable integrated VI01 + VI02 baseline until the 03 branch is merged.
+`main` is now the current stable validated baseline for completed VI01 + VI02 + Pre-Prototype Gate 03 work.
 
 The **AI Interaction Contract v0.1 remains Frozen and unchanged**.
 
@@ -15,7 +15,7 @@ No Unity project, production Dify workflow, backend runtime, final balance model
 - Repository baseline and product definition completed.
 - Validation Increment 01 completed; AI Interaction Contract v0.1 frozen.
 - Validation Increment 02 completed and integrated into `main`.
-- Pre-Prototype Gate 03 completed in the current design branch.
+- Pre-Prototype Gate 03 completed, Master-reviewed, and integrated into `main`.
 - 03 confirmed the minimal deterministic consequence boundary (DEC-020).
 - 03 confirmed the real-model P0 baseline protocol (DEC-021).
 - Detailed 03 result recorded in `docs/11_PRE_PROTOTYPE_GATE_03_REPORT.md`.
@@ -71,7 +71,7 @@ Pre-Prototype Gate 03 requires **no change** to:
 
 ## Prototype entry assessment
 
-The project now has enough pre-production definition to stop adding abstract architecture and begin a narrowly scoped technical prototype after 03 is integrated.
+The project now has enough pre-production definition to stop adding abstract architecture and begin a narrowly scoped technical prototype.
 
 The first technical prototype should prove:
 
@@ -101,18 +101,18 @@ No Unity client is required for this first technical prototype.
 
 ## Next
 
-1. Review and integrate `design/pre-prototype-gate-03` into `main`.
-2. Open a new technical-prototype implementation thread rather than extending 03.
+1. Open a new technical-prototype implementation thread rather than extending 03.
+2. Create a new technical-prototype branch from current `main`.
 3. Build the P0 AI baseline harness and deterministic consequence stub before Dify or Unity production work.
 4. Run a direct real-model baseline and measure it.
 5. Then evaluate a minimal Dify reproduction/feasibility path if authorised.
 
 ## Repository baseline
 
-Stable integrated branch before 03 merge:
+Current stable validated branch:
 
 `main`
 
-Current 03 working branch:
+Completed historical 03 branch:
 
 `design/pre-prototype-gate-03`
