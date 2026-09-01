@@ -13,13 +13,15 @@
   "request_timeout_seconds": 30.0,
   "tools_enabled": false,
   "max_logical_cases": 4,
-  "input_token_ceiling_per_api_call": 8192,
-  "max_api_calls": 8,
-  "aggregate_input_token_ceiling": 65536,
-  "max_output_tokens_per_api_call": 1024,
-  "aggregate_output_token_ceiling": 8192,
-  "calculated_worst_case_usd": 0.229376,
-  "absolute_planning_ceiling_usd": 0.25,
+  "max_model_generation_calls": 8,
+  "max_pre_send_input_token_count_requests": 8,
+  "input_token_ceiling_per_model_generation_call": 8192,
+  "max_output_tokens_per_model_generation_call": 1024,
+  "aggregate_planned_model_generation_input_ceiling": 65536,
+  "aggregate_planned_model_generation_output_ceiling": 8192,
+  "calculated_model_generation_worst_case_usd": 0.229376,
+  "model_generation_absolute_planning_ceiling_usd": 0.25,
+  "input_token_count_endpoint_billing_status": "UNKNOWN_NOT_ESTABLISHED_BY_REVIEWED_PROVIDER_SOURCE",
   "measurement_output_directory": "ai/eval/output",
   "cases": [
     {
@@ -27,28 +29,28 @@
       "component": "dialogue",
       "expected_safety_disposition": "ACCEPT",
       "max_attempts": 2,
-      "max_output_tokens_per_attempt": 1024
+      "max_output_tokens_per_model_generation_attempt": 1024
     },
     {
       "case_id": "headline-t01-four-claims",
       "component": "headline",
       "expected_safety_disposition": "ACCEPT",
       "max_attempts": 2,
-      "max_output_tokens_per_attempt": 1024
+      "max_output_tokens_per_model_generation_attempt": 1024
     },
     {
       "case_id": "headline-t02-zero-claims",
       "component": "headline",
       "expected_safety_disposition": "ACCEPT",
       "max_attempts": 2,
-      "max_output_tokens_per_attempt": 1024
+      "max_output_tokens_per_model_generation_attempt": 1024
     },
     {
       "case_id": "npc-n01-valid-answer",
       "component": "npc_surface",
       "expected_safety_disposition": "ACCEPT",
       "max_attempts": 2,
-      "max_output_tokens_per_attempt": 1024
+      "max_output_tokens_per_model_generation_attempt": 1024
     }
   ],
   "pricing_snapshot_usd_per_1m_tokens": {
@@ -57,15 +59,21 @@
   },
   "cost_ceiling_methodology": {
     "formula": "(65536 * 2.00 / 1000000) + (8192 * 12.00 / 1000000)",
-    "calculated_worst_case_usd": 0.229376,
-    "absolute_planning_ceiling_usd": 0.25,
+    "scope": "MODEL_GENERATION_ONLY",
+    "calculated_model_generation_worst_case_usd": 0.229376,
+    "model_generation_absolute_planning_ceiling_usd": 0.25,
     "actual_usage_or_cost_recorded_in_preflight": false
   },
   "governance": {
+    "recognised_execution_authorization_status": "AUTHORIZED_FOR_PAID_SMOKE",
+    "authorization_failure_reason": "PAID_SMOKE_NOT_AUTHORIZED",
     "prepared_request_input_token_check_required": true,
+    "input_token_count_method": "client.responses.input_tokens.count",
     "stop_condition": "EXPECTED_INPUT_TOKENS_EXCEED_8192",
     "required_action": "STOP_BEFORE_REQUEST_SEND",
     "automatic_ceiling_increase_allowed": false,
+    "model_generation_call_limit_reason": "MODEL_GENERATION_CALL_LIMIT_EXCEEDED",
+    "input_token_count_request_limit_reason": "INPUT_TOKEN_COUNT_REQUEST_LIMIT_EXCEEDED",
     "rule": "If a prepared API request is expected to exceed the 8192-token input ceiling, stop before the request is sent. Do not automatically enlarge the ceiling."
   },
   "prompts": {

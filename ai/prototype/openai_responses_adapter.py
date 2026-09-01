@@ -8,13 +8,13 @@ explicitly called by a runner.
 
 from __future__ import annotations
 
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 import json
 import os
 from functools import lru_cache
 from pathlib import Path
 from time import perf_counter
-from typing import Any, Mapping
+from typing import Any, Callable, Mapping
 
 from jsonschema import Draft202012Validator
 from openai import APIError, APITimeoutError, OpenAI
@@ -35,6 +35,25 @@ class _ComponentConfig:
     schema_path: Path | None
     schema_version: str | None
     max_output_tokens: int
+
+
+@dataclass(frozen=True)
+class _PreparedRequest:
+    component: str
+    config: _ComponentConfig
+    generation_parameters: Mapping[str, Any]
+
+
+@dataclass(frozen=True)
+class PaidSmokeExecutionDecision:
+    """Result of the mandatory pre-run paid-smoke authorization boundary."""
+
+    adapter: PaidSmokeGuardedAdapter | None = field(default=None, repr=False)
+    failure_reason: str | None = None
+
+    @property
+    def authorized(self) -> bool:
+        return self.adapter is not None and self.failure_reason is None
 
 
 def _read_field(value: Any, field_name: str, default: Any = None) -> Any:
@@ -59,7 +78,9 @@ def _component_config(component: str) -> _ComponentConfig:
         prompt_version=prompt["version"],
         schema_path=None if schema is None else ROOT / schema["path"],
         schema_version=None if schema is None else schema["version"],
-        max_output_tokens=case["max_output_tokens_per_attempt"],
+        max_output_tokens=case[
+            "max_output_tokens_per_model_generation_attempt"
+        ],
     )
 
 
@@ -126,8 +147,8 @@ class OpenAIResponsesAdapter:
         self.output_price_usd_per_1m = output_price_usd_per_1m
 
     @classmethod
-    def from_environment(cls) -> OpenAIResponsesAdapter:
-        """Build a future-call adapter without persisting or printing the key."""
+    def _from_environment_after_authorization(cls) -> OpenAIResponsesAdapter:
+        """Construct a provider client only after the paid-smoke boundary passes."""
 
         api_key = os.environ.get("OPENAI_API_KEY")
         if not api_key:
@@ -166,11 +187,28 @@ class OpenAIResponsesAdapter:
         if component not in {"dialogue", "headline", "npc_surface"}:
             return AdapterOutcome.system_failure("UNSUPPORTED_COMPONENT")
 
+        prepared = self._prepare_request(component, model_input)
+        return self._invoke_prepared(prepared)
+
+    def _prepare_request(
+        self, component: str, model_input: Mapping[str, Any]
+    ) -> _PreparedRequest:
         config = _component_config(component)
+        return _PreparedRequest(
+            component=component,
+            config=config,
+            generation_parameters=self._request_parameters(
+                component, model_input, config
+            ),
+        )
+
+    def _invoke_prepared(self, prepared: _PreparedRequest) -> AdapterOutcome:
+        component = prepared.component
+        config = prepared.config
         started = perf_counter()
         try:
             response = self._client.responses.create(
-                **self._request_parameters(component, model_input, config)
+                **prepared.generation_parameters
             )
         except (APITimeoutError, TimeoutError):
             return self._failure("TIMEOUT", config, started)
@@ -277,6 +315,141 @@ class OpenAIResponsesAdapter:
             "model_call_latency_ms": latency_ms,
             "estimated_cost": estimated_cost,
         }
+
+
+_INPUT_TOKEN_COUNT_PARAMETER_NAMES = frozenset(
+    {
+        "conversation",
+        "input",
+        "instructions",
+        "model",
+        "parallel_tool_calls",
+        "previous_response_id",
+        "reasoning",
+        "text",
+        "tool_choice",
+        "tools",
+        "truncation",
+    }
+)
+
+
+class PaidSmokeGuardedAdapter:
+    """OpenAI paid-smoke adapter with per-request and aggregate call guards."""
+
+    adapter_identifier = "openai-responses-paid-smoke-guarded"
+
+    def __init__(
+        self,
+        adapter: OpenAIResponsesAdapter,
+        authorization_sheet: Mapping[str, Any],
+    ) -> None:
+        self._adapter = adapter
+        self._authorization_sheet = dict(authorization_sheet)
+        self.model_identifier = adapter.model_identifier
+        self.prompt_version = adapter.prompt_version
+        self.schema_version = adapter.schema_version
+        self.input_token_count_requests = 0
+        self.model_generation_calls = 0
+
+    def invoke(
+        self, component: str, model_input: Mapping[str, Any]
+    ) -> AdapterOutcome:
+        if not _paid_smoke_is_authorized(self._authorization_sheet):
+            return AdapterOutcome.system_failure("PAID_SMOKE_NOT_AUTHORIZED")
+
+        if self.model_generation_calls >= self._authorization_sheet[
+            "max_model_generation_calls"
+        ]:
+            return AdapterOutcome.system_failure(
+                "MODEL_GENERATION_CALL_LIMIT_EXCEEDED"
+            )
+
+        if self.input_token_count_requests >= self._authorization_sheet[
+            "max_pre_send_input_token_count_requests"
+        ]:
+            return AdapterOutcome.system_failure(
+                "INPUT_TOKEN_COUNT_REQUEST_LIMIT_EXCEEDED"
+            )
+
+        if component not in {"dialogue", "headline", "npc_surface"}:
+            return AdapterOutcome.system_failure("UNSUPPORTED_COMPONENT")
+
+        prepared = self._adapter._prepare_request(component, model_input)
+        count_parameters = {
+            name: value
+            for name, value in prepared.generation_parameters.items()
+            if name in _INPUT_TOKEN_COUNT_PARAMETER_NAMES
+        }
+        self.input_token_count_requests += 1
+        try:
+            count_response = self._adapter._client.responses.input_tokens.count(
+                **count_parameters
+            )
+        except Exception:
+            return self._guard_failure("INPUT_TOKEN_COUNT_FAILED", prepared)
+
+        input_tokens = _read_field(count_response, "input_tokens")
+        if type(input_tokens) is not int or input_tokens < 0:
+            return self._guard_failure("INPUT_TOKEN_COUNT_FAILED", prepared)
+
+        if input_tokens > self._authorization_sheet[
+            "input_token_ceiling_per_model_generation_call"
+        ]:
+            return self._guard_failure(
+                "EXPECTED_INPUT_TOKENS_EXCEED_8192", prepared
+            )
+
+        self.model_generation_calls += 1
+        return self._adapter._invoke_prepared(prepared)
+
+    @staticmethod
+    def _guard_failure(
+        reason: str, prepared: _PreparedRequest
+    ) -> AdapterOutcome:
+        return AdapterOutcome.system_failure(
+            reason,
+            prompt_version=prepared.config.prompt_version,
+            schema_version=prepared.config.schema_version,
+        )
+
+
+def prepare_paid_smoke_execution(
+    adapter_factory: Callable[[], OpenAIResponsesAdapter],
+    authorization_sheet: Mapping[str, Any] | None = None,
+) -> PaidSmokeExecutionDecision:
+    """Authorize before constructing an adapter or entering BaselineRunner."""
+
+    sheet = (
+        load_authorization_sheet()
+        if authorization_sheet is None
+        else dict(authorization_sheet)
+    )
+    if not _paid_smoke_is_authorized(sheet):
+        return PaidSmokeExecutionDecision(
+            failure_reason="PAID_SMOKE_NOT_AUTHORIZED"
+        )
+    return PaidSmokeExecutionDecision(
+        adapter=PaidSmokeGuardedAdapter(adapter_factory(), sheet)
+    )
+
+
+def prepare_paid_smoke_execution_from_environment() -> PaidSmokeExecutionDecision:
+    """Future real-call boundary; current closed sheet stops before key access."""
+
+    return prepare_paid_smoke_execution(
+        OpenAIResponsesAdapter._from_environment_after_authorization,
+    )
+
+
+def _paid_smoke_is_authorized(sheet: Mapping[str, Any]) -> bool:
+    governance = sheet.get("governance", {})
+    return (
+        sheet.get("execution_authorized") is True
+        and sheet.get("authorization_status")
+        == governance.get("recognised_execution_authorization_status")
+        == "AUTHORIZED_FOR_PAID_SMOKE"
+    )
 
 
 def _has_refusal(response: Any) -> bool:

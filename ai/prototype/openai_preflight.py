@@ -38,9 +38,9 @@ def run_preflight() -> dict[str, Any]:
     sheet = load_authorization_sheet()
     pricing = sheet["pricing_snapshot_usd_per_1m_tokens"]
     calculated_worst_case = (
-        Decimal(sheet["aggregate_input_token_ceiling"])
+        Decimal(sheet["aggregate_planned_model_generation_input_ceiling"])
         * Decimal(str(pricing["input"]))
-        + Decimal(sheet["aggregate_output_token_ceiling"])
+        + Decimal(sheet["aggregate_planned_model_generation_output_ceiling"])
         * Decimal(str(pricing["output"]))
     ) / Decimal(1_000_000)
     checks: dict[str, bool] = {}
@@ -51,31 +51,49 @@ def run_preflight() -> dict[str, Any]:
     checks["execution_not_authorized"] = sheet["execution_authorized"] is False
     checks["tools_disabled"] = sheet["tools_enabled"] is False
     checks["call_ceiling"] = (
-        sheet["max_logical_cases"] == 4 and sheet["max_api_calls"] == 8
+        sheet["max_logical_cases"] == 4
+        and sheet["max_model_generation_calls"] == 8
+        and sheet["max_pre_send_input_token_count_requests"] == 8
     )
     checks["paid_smoke_budget"] = (
         sheet["authorization_status"] == "PROPOSED_NOT_AUTHORIZED"
-        and sheet["input_token_ceiling_per_api_call"] == 8192
-        and sheet["aggregate_input_token_ceiling"] == 65536
-        and sheet["max_output_tokens_per_api_call"] == 1024
-        and sheet["aggregate_output_token_ceiling"] == 8192
+        and sheet["input_token_ceiling_per_model_generation_call"] == 8192
+        and sheet["aggregate_planned_model_generation_input_ceiling"] == 65536
+        and sheet["max_output_tokens_per_model_generation_call"] == 1024
+        and sheet["aggregate_planned_model_generation_output_ceiling"] == 8192
         and calculated_worst_case == Decimal("0.229376")
-        and Decimal(str(sheet["calculated_worst_case_usd"]))
+        and Decimal(str(sheet["calculated_model_generation_worst_case_usd"]))
         == calculated_worst_case
-        and Decimal(str(sheet["absolute_planning_ceiling_usd"]))
+        and Decimal(
+            str(sheet["model_generation_absolute_planning_ceiling_usd"])
+        )
         == Decimal("0.25")
+        and sheet["input_token_count_endpoint_billing_status"]
+        == "UNKNOWN_NOT_ESTABLISHED_BY_REVIEWED_PROVIDER_SOURCE"
+        and sheet["cost_ceiling_methodology"]["scope"]
+        == "MODEL_GENERATION_ONLY"
         and all(
-            case["max_output_tokens_per_attempt"]
-            == sheet["max_output_tokens_per_api_call"]
+            case["max_output_tokens_per_model_generation_attempt"]
+            == sheet["max_output_tokens_per_model_generation_call"]
             for case in sheet["cases"]
         )
     )
     governance = sheet["governance"]
     checks["pre_send_input_ceiling_governance"] = (
-        governance["prepared_request_input_token_check_required"] is True
+        governance["recognised_execution_authorization_status"]
+        == "AUTHORIZED_FOR_PAID_SMOKE"
+        and governance["authorization_failure_reason"]
+        == "PAID_SMOKE_NOT_AUTHORIZED"
+        and governance["prepared_request_input_token_check_required"] is True
+        and governance["input_token_count_method"]
+        == "client.responses.input_tokens.count"
         and governance["stop_condition"] == "EXPECTED_INPUT_TOKENS_EXCEED_8192"
         and governance["required_action"] == "STOP_BEFORE_REQUEST_SEND"
         and governance["automatic_ceiling_increase_allowed"] is False
+        and governance["model_generation_call_limit_reason"]
+        == "MODEL_GENERATION_CALL_LIMIT_EXCEEDED"
+        and governance["input_token_count_request_limit_reason"]
+        == "INPUT_TOKEN_COUNT_REQUEST_LIMIT_EXCEEDED"
     )
 
     for component, schema_info in sheet["transport_schemas"].items():
