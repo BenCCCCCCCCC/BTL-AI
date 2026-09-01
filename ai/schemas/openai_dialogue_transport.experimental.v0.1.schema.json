@@ -1,0 +1,59 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://btl-ai.invalid/schemas/openai_dialogue_transport.experimental.v0.1.schema.json",
+  "title": "Experimental OpenAI Dialogue Transport v0.1",
+  "description": "Provider wire format only. This is not a Frozen semantic schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "reason",
+    "act",
+    "target_id",
+    "value_id",
+    "polarity",
+    "tactics",
+    "evidence_ref_ids"
+  ],
+  "properties": {
+    "status": {
+      "enum": ["RESOLVED", "AMBIGUOUS", "UNSUPPORTED"]
+    },
+    "reason": {
+      "enum": [
+        "AMBIGUOUS_REFERENCE",
+        "INSUFFICIENT_CONTEXT",
+        "MULTIPLE_ACTIONS",
+        "OUT_OF_CATALOGUE",
+        "UNSUPPORTED_ACTION",
+        null
+      ]
+    },
+    "act": {
+      "enum": ["QUESTION", "ASSERTION", "REQUEST", "OFFER", "ACCEPT", "REFUSE", null]
+    },
+    "target_id": {
+      "type": ["string", "null"]
+    },
+    "value_id": {
+      "type": ["string", "null"]
+    },
+    "polarity": {
+      "enum": ["AFFIRM", "DENY", null]
+    },
+    "tactics": {
+      "type": ["array", "null"],
+      "items": {
+        "enum": ["THREAT", "ACCUSATION", "INDIRECT_PROBE"]
+      },
+      "uniqueItems": true
+    },
+    "evidence_ref_ids": {
+      "type": ["array", "null"],
+      "items": {
+        "type": "string"
+      },
+      "uniqueItems": true
+    }
+  }
+}

@@ -38,6 +38,8 @@ class BaselineRunResult:
     attempt_count: int
     first_pass_runtime_result: str
     final_runtime_result: str
+    expected_safety_disposition: str | None
+    actual_safety_disposition: str
     semantic_fidelity: SemanticFidelityResult | None
     retry_used: bool
     fallback_used: bool
@@ -77,6 +79,7 @@ class BaselineRunner:
         model_input: Mapping[str, Any],
         catalogue: RuntimeCatalogue,
         expected_candidate: Mapping[str, Any] | None = None,
+        expected_safety_disposition: str | None = None,
         measurement_path: Path | None = None,
     ) -> BaselineRunResult:
         return self._run_parser(
@@ -93,6 +96,7 @@ class BaselineRunner:
                 ).semantic_fidelity
             ),
             publication_component=False,
+            expected_safety_disposition=expected_safety_disposition,
             measurement_path=measurement_path,
         )
 
@@ -104,6 +108,7 @@ class BaselineRunner:
         model_input: Mapping[str, Any],
         catalogue: RuntimeCatalogue,
         expected_candidate: Mapping[str, Any] | None = None,
+        expected_safety_disposition: str | None = None,
         measurement_path: Path | None = None,
     ) -> BaselineRunResult:
         return self._run_parser(
@@ -120,6 +125,7 @@ class BaselineRunner:
                 ).semantic_fidelity
             ),
             publication_component=True,
+            expected_safety_disposition=expected_safety_disposition,
             measurement_path=measurement_path,
         )
 
@@ -132,8 +138,10 @@ class BaselineRunner:
         response_mode: str,
         metadata: NPCFixtureValidationMetadata,
         authored_fallback: AuthoredNPCFallback,
+        expected_safety_disposition: str | None = None,
         measurement_path: Path | None = None,
     ) -> BaselineRunResult:
+        _check_expected_safety_disposition(expected_safety_disposition)
         started = perf_counter()
         attempts: list[_Attempt] = []
         for _ in range(2):
@@ -172,7 +180,10 @@ class BaselineRunner:
             fallback_reasons = final_validation.reasons
 
         display_ready = final_validation.can_proceed
-        hard_safety_gate_breach = display_ready and not final_validation.can_proceed
+        actual_safety_disposition = _safety_disposition(attempts[0].validation)
+        hard_safety_gate_breach = _expected_reject_was_accepted(
+            expected_safety_disposition, actual_safety_disposition
+        ) or (display_ready and not final_validation.can_proceed)
         reasons = _unique_reasons(attempts, fallback_reasons)
         measurement = self._measurement(
             started=started,
@@ -181,6 +192,8 @@ class BaselineRunner:
             component="npc_surface",
             attempts=attempts,
             final_validation=final_validation,
+            expected_safety_disposition=expected_safety_disposition,
+            actual_safety_disposition=actual_safety_disposition,
             semantic_fidelity=None,
             fallback_used=fallback_used,
             fallback_type=fallback_type,
@@ -196,6 +209,8 @@ class BaselineRunner:
             attempt_count=len(attempts),
             first_pass_runtime_result=_runtime_label(attempts[0].validation),
             final_runtime_result=_runtime_label(final_validation),
+            expected_safety_disposition=expected_safety_disposition,
+            actual_safety_disposition=actual_safety_disposition,
             semantic_fidelity=None,
             retry_used=len(attempts) == 2,
             fallback_used=fallback_used,
@@ -219,8 +234,10 @@ class BaselineRunner:
         validate: Callable[[Any], ValidationResult],
         evaluate: Callable[[Mapping[str, Any]], SemanticFidelityResult] | None,
         publication_component: bool,
+        expected_safety_disposition: str | None,
         measurement_path: Path | None,
     ) -> BaselineRunResult:
+        _check_expected_safety_disposition(expected_safety_disposition)
         started = perf_counter()
         attempts: list[_Attempt] = []
         for _ in range(2):
@@ -244,7 +261,10 @@ class BaselineRunner:
         publication_ready = (
             final_validation.can_proceed if publication_component else None
         )
-        hard_safety_gate_breach = (
+        actual_safety_disposition = _safety_disposition(attempts[0].validation)
+        hard_safety_gate_breach = _expected_reject_was_accepted(
+            expected_safety_disposition, actual_safety_disposition
+        ) or (
             validated_output is not None and not final_validation.can_proceed
         ) or (publication_ready is True and not final_validation.can_proceed)
         retry_exhausted = (
@@ -262,6 +282,8 @@ class BaselineRunner:
             component=component,
             attempts=attempts,
             final_validation=final_validation,
+            expected_safety_disposition=expected_safety_disposition,
+            actual_safety_disposition=actual_safety_disposition,
             semantic_fidelity=semantic_fidelity,
             fallback_used=False,
             fallback_type=None,
@@ -277,6 +299,8 @@ class BaselineRunner:
             attempt_count=len(attempts),
             first_pass_runtime_result=_runtime_label(attempts[0].validation),
             final_runtime_result=_runtime_label(final_validation),
+            expected_safety_disposition=expected_safety_disposition,
+            actual_safety_disposition=actual_safety_disposition,
             semantic_fidelity=semantic_fidelity,
             retry_used=len(attempts) == 2,
             fallback_used=False,
@@ -329,6 +353,8 @@ class BaselineRunner:
         component: str,
         attempts: list[_Attempt],
         final_validation: ValidationResult,
+        expected_safety_disposition: str | None,
+        actual_safety_disposition: str,
         semantic_fidelity: SemanticFidelityResult | None,
         fallback_used: bool,
         fallback_type: str | None,
@@ -345,12 +371,20 @@ class BaselineRunner:
             manifest_version=self.manifest_version,
             contract_version=self.contract_version,
             adapter_identifier=self.adapter.adapter_identifier,
-            model_identifier=self.adapter.model_identifier,
-            prompt_version=self.adapter.prompt_version,
-            schema_version=self.adapter.schema_version,
+            model_identifier=_actual_model_identifier(
+                outcomes, self.adapter.model_identifier
+            ),
+            prompt_version=_actual_metadata_value(
+                outcomes, "prompt_version", self.adapter.prompt_version
+            ),
+            schema_version=_actual_metadata_value(
+                outcomes, "schema_version", self.adapter.schema_version
+            ),
             attempt_count=len(attempts),
             first_pass_runtime_result=_runtime_label(attempts[0].validation),
             final_runtime_result=_runtime_label(final_validation),
+            expected_safety_disposition=expected_safety_disposition,
+            actual_safety_disposition=actual_safety_disposition,
             semantic_fidelity_result=(
                 None
                 if semantic_fidelity is None
@@ -377,6 +411,38 @@ class BaselineRunner:
 
 def _runtime_label(validation: ValidationResult) -> str:
     return "PASS" if validation.can_proceed else validation.failure_class
+
+
+def _check_expected_safety_disposition(disposition: str | None) -> None:
+    if disposition not in {None, "ACCEPT", "REJECT"}:
+        raise ValueError("expected safety disposition must be ACCEPT, REJECT, or None")
+
+
+def _safety_disposition(validation: ValidationResult) -> str:
+    return "ACCEPT" if validation.can_proceed else "REJECT"
+
+
+def _expected_reject_was_accepted(expected: str | None, actual: str) -> bool:
+    return expected == "REJECT" and actual == "ACCEPT"
+
+
+def _actual_model_identifier(
+    outcomes: list[AdapterOutcome], configured_identifier: str | None
+) -> str | None:
+    for outcome in reversed(outcomes):
+        if outcome.model_identifier is not None:
+            return outcome.model_identifier
+    return configured_identifier
+
+
+def _actual_metadata_value(
+    outcomes: list[AdapterOutcome], field_name: str, configured_value: str | None
+) -> str | None:
+    for outcome in reversed(outcomes):
+        value = getattr(outcome, field_name)
+        if value is not None:
+            return value
+    return configured_value
 
 
 def _unique_reasons(

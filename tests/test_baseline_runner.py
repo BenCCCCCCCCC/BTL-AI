@@ -435,6 +435,8 @@ def test_measurement_record_is_jsonl_compatible_and_does_not_invent_usage(
     assert record["attempt_count"] == 1
     assert record["first_pass_runtime_result"] == "PASS"
     assert record["final_runtime_result"] == "PASS"
+    assert record["expected_safety_disposition"] is None
+    assert record["actual_safety_disposition"] == "ACCEPT"
     assert record["semantic_fidelity_result"] == "PASS"
     assert record["model_identifier"] is None
     assert record["input_tokens"] is None
@@ -442,6 +444,47 @@ def test_measurement_record_is_jsonl_compatible_and_does_not_invent_usage(
     assert record["model_call_latency_ms"] is None
     assert record["estimated_cost"] is None
     assert record["hard_safety_gate_breach"] is False
+
+
+def test_expected_reject_and_actual_accept_is_explicit_hard_safety_breach(
+    dialogue_catalogue: RuntimeCatalogue,
+) -> None:
+    runner, _ = _runner(AdapterOutcome.success(DIALOGUE_VALID))
+
+    result = runner.run_dialogue(
+        run_id="RUN-SAFETY",
+        case_id="FAULT-INJECTION",
+        model_input={"injected_candidate": DIALOGUE_VALID},
+        catalogue=dialogue_catalogue,
+        expected_safety_disposition="REJECT",
+    )
+
+    assert result.expected_safety_disposition == "REJECT"
+    assert result.actual_safety_disposition == "ACCEPT"
+    assert result.measurement.expected_safety_disposition == "REJECT"
+    assert result.measurement.actual_safety_disposition == "ACCEPT"
+    assert result.hard_safety_gate_breach is True
+
+
+def test_expected_reject_is_compared_with_first_attempt_not_retry_result(
+    dialogue_catalogue: RuntimeCatalogue,
+) -> None:
+    runner, _ = _runner(
+        AdapterOutcome.success(DIALOGUE_INVALID),
+        AdapterOutcome.success(DIALOGUE_VALID),
+    )
+
+    result = runner.run_dialogue(
+        run_id="RUN-SAFETY-RETRY",
+        case_id="FAULT-INJECTION",
+        model_input={"injected_candidate": DIALOGUE_INVALID},
+        catalogue=dialogue_catalogue,
+        expected_safety_disposition="REJECT",
+    )
+
+    assert result.actual_safety_disposition == "REJECT"
+    assert result.final_runtime_result == "PASS"
+    assert result.hard_safety_gate_breach is False
 
 
 def test_runner_has_no_game_state_or_consequence_authority(

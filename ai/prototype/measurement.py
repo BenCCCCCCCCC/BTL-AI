@@ -21,6 +21,8 @@ class RunMeasurement:
     attempt_count: int
     first_pass_runtime_result: str
     final_runtime_result: str
+    expected_safety_disposition: str | None
+    actual_safety_disposition: str
     semantic_fidelity_result: str | None
     retry_used: bool
     fallback_used: bool

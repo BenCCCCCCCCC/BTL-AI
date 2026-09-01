@@ -1,0 +1,104 @@
+{
+  "sheet_version": "experimental.v0.1",
+  "authorization_status": "PROPOSED_NOT_AUTHORIZED",
+  "execution_authorized": false,
+  "pricing_snapshot_date": "2026-09-02",
+  "provider": "OpenAI",
+  "api": "Responses API",
+  "base_url": "https://api.openai.com/v1",
+  "model": "gpt-5.6-terra",
+  "reasoning_effort": "low",
+  "sdk_requirement": "openai==3.6.0",
+  "sdk_internal_retries": 0,
+  "request_timeout_seconds": 30.0,
+  "tools_enabled": false,
+  "max_logical_cases": 4,
+  "input_token_ceiling_per_api_call": 8192,
+  "max_api_calls": 8,
+  "aggregate_input_token_ceiling": 65536,
+  "max_output_tokens_per_api_call": 1024,
+  "aggregate_output_token_ceiling": 8192,
+  "calculated_worst_case_usd": 0.229376,
+  "absolute_planning_ceiling_usd": 0.25,
+  "measurement_output_directory": "ai/eval/output",
+  "cases": [
+    {
+      "case_id": "dialogue-d18-valid",
+      "component": "dialogue",
+      "expected_safety_disposition": "ACCEPT",
+      "max_attempts": 2,
+      "max_output_tokens_per_attempt": 1024
+    },
+    {
+      "case_id": "headline-t01-four-claims",
+      "component": "headline",
+      "expected_safety_disposition": "ACCEPT",
+      "max_attempts": 2,
+      "max_output_tokens_per_attempt": 1024
+    },
+    {
+      "case_id": "headline-t02-zero-claims",
+      "component": "headline",
+      "expected_safety_disposition": "ACCEPT",
+      "max_attempts": 2,
+      "max_output_tokens_per_attempt": 1024
+    },
+    {
+      "case_id": "npc-n01-valid-answer",
+      "component": "npc_surface",
+      "expected_safety_disposition": "ACCEPT",
+      "max_attempts": 2,
+      "max_output_tokens_per_attempt": 1024
+    }
+  ],
+  "pricing_snapshot_usd_per_1m_tokens": {
+    "input": 2.0,
+    "output": 12.0
+  },
+  "cost_ceiling_methodology": {
+    "formula": "(65536 * 2.00 / 1000000) + (8192 * 12.00 / 1000000)",
+    "calculated_worst_case_usd": 0.229376,
+    "absolute_planning_ceiling_usd": 0.25,
+    "actual_usage_or_cost_recorded_in_preflight": false
+  },
+  "governance": {
+    "prepared_request_input_token_check_required": true,
+    "stop_condition": "EXPECTED_INPUT_TOKENS_EXCEED_8192",
+    "required_action": "STOP_BEFORE_REQUEST_SEND",
+    "automatic_ceiling_increase_allowed": false,
+    "rule": "If a prepared API request is expected to exceed the 8192-token input ceiling, stop before the request is sent. Do not automatically enlarge the ceiling."
+  },
+  "prompts": {
+    "dialogue": {
+      "path": "ai/prompts/dialogue_parser.experimental.v0.1.txt",
+      "version": "dialogue-parser.experimental.v0.1"
+    },
+    "headline": {
+      "path": "ai/prompts/headline_analyzer.experimental.v0.1.txt",
+      "version": "headline-analyzer.experimental.v0.1"
+    },
+    "npc_surface": {
+      "path": "ai/prompts/npc_surface_generator.experimental.v0.1.txt",
+      "version": "npc-surface-generator.experimental.v0.1"
+    }
+  },
+  "transport_schemas": {
+    "dialogue": {
+      "path": "ai/schemas/openai_dialogue_transport.experimental.v0.1.schema.json",
+      "version": "openai-dialogue-transport.experimental.v0.1"
+    },
+    "headline": {
+      "path": "ai/schemas/openai_headline_transport.experimental.v0.1.schema.json",
+      "version": "openai-headline-transport.experimental.v0.1"
+    }
+  },
+  "frozen_schema_sha256_normalized_lf": {
+    "ai/schemas/dialogue_candidate.v0.1.schema.json": "26d4ec68a0acee601ea0f97e9b310ab48c1e96ef76221f110c9639ea8f521079",
+    "ai/schemas/headline_candidate.v0.1.schema.json": "c80dfc1a685f11bf9360aa053d6b4f2b4b3386b99eb6767305148a727306f94b"
+  },
+  "future_measured_baseline_not_implemented": {
+    "planning_assumption_model": "gpt-5.6-sol",
+    "planning_assumption_reasoning_effort": "medium",
+    "requires_separate_review_and_authorization": true
+  }
+}

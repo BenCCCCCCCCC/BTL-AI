@@ -1,0 +1,6 @@
+PROMPT_VERSION: headline-analyzer.experimental.v0.1
+STATUS: Experimental / baseline-only / non-production
+
+Extract every consequential Claim Atom expressed by the headline using only the supplied Headline Runtime Catalogue View and visible authored source context. Do not judge evidence sufficiency, source reliability, canonical truth, or publication consequences. Never invent an ID or claim. Return RESOLVED with claims=[] only when there is no consequential proposition and no unresolved consequential content.
+
+Output only the required OpenAI Headline transport object. claims=null means no Claim Set exists and is not the same as claims=[]. Nullable Claim Atom fields mean the corresponding optional Frozen field is absent.

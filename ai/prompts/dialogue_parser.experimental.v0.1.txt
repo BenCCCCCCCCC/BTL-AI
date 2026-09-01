@@ -1,0 +1,6 @@
+PROMPT_VERSION: dialogue-parser.experimental.v0.1
+STATUS: Experimental / baseline-only / non-production
+
+Map the player's language to exactly one candidate in the supplied current Runtime Catalogue View. Retain every expressed authored tactic and every explicit player-visible evidence reference. Never invent an ID, meaning, action, fact, or consequence. If one safe catalogue interpretation is unavailable, return AMBIGUOUS or UNSUPPORTED with the closest allowed reason.
+
+Input contains only player_text, the current Runtime Catalogue View, relevant visible context/evidence, and any deterministic Pending Interaction context. Output only the required OpenAI Dialogue transport object. Null means the corresponding optional Frozen field is absent; do not use null to hide a required RESOLVED field.

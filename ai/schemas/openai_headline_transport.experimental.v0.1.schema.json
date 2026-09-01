@@ -1,0 +1,60 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://btl-ai.invalid/schemas/openai_headline_transport.experimental.v0.1.schema.json",
+  "title": "Experimental OpenAI Headline Transport v0.1",
+  "description": "Provider wire format only. This is not a Frozen semantic schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["status", "reason", "claims"],
+  "properties": {
+    "status": {
+      "enum": ["RESOLVED", "AMBIGUOUS", "UNSUPPORTED"]
+    },
+    "reason": {
+      "enum": [
+        "AMBIGUOUS_REFERENCE",
+        "INSUFFICIENT_CONTEXT",
+        "MULTIPLE_ACTIONS",
+        "OUT_OF_CATALOGUE",
+        "UNSUPPORTED_ACTION",
+        null
+      ]
+    },
+    "claims": {
+      "type": ["array", "null"],
+      "items": {
+        "$ref": "#/$defs/claim_atom_transport"
+      }
+    }
+  },
+  "$defs": {
+    "claim_atom_transport": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "target_id",
+        "value_id",
+        "polarity",
+        "commitment_mode",
+        "source_ref_id"
+      ],
+      "properties": {
+        "target_id": {
+          "type": "string"
+        },
+        "value_id": {
+          "type": ["string", "null"]
+        },
+        "polarity": {
+          "enum": ["AFFIRM", "DENY", null]
+        },
+        "commitment_mode": {
+          "enum": ["ASSERTED", "SPECULATIVE", "QUESTIONED"]
+        },
+        "source_ref_id": {
+          "type": ["string", "null"]
+        }
+      }
+    }
+  }
+}

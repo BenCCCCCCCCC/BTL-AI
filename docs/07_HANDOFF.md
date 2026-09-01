@@ -41,6 +41,10 @@ Technical Prototype 01 Batch 1 / 1.2 implementation and Contract documentation f
 
 **Batch 2A — complete and accepted by 04 Master.** Commit `5f14abf8ddd759f9dcefd864cf9d7de213150ae7` adds a provider-independent `ScriptedAdapter`, component baseline runner, deterministic retry/fallback policy, and JSONL-compatible measurement logging. The full suite result is `82 passed / 0 failed`.
 
+**Batch 2B.0 — implementation and final experiment-governance checkpoint complete.** The branch now contains an Experimental direct OpenAI Responses adapter, three versioned Experimental baseline prompts, two provider-specific transport schemas, a zero-call preflight, mock/fake-client coverage, and an explicit paid-smoke authorization sheet. The full suite result is `104 passed / 0 failed`. No OpenAI model request was made, cost remains `USD 0.00`, and no credential or secret was configured or tracked.
+
+Paid smoke remains **PROPOSED_NOT_AUTHORIZED**. The proposed boundary is `gpt-5.6-terra`, `reasoning=low`, four logical cases, at most eight provider calls, SDK retries `0`, unchanged Frozen-runner retry policy, `8,192` input tokens and `1,024` output tokens per call, aggregate ceilings of `65,536` input and `8,192` output tokens, calculated worst case `USD 0.229376`, and an absolute planning ceiling of `USD 0.25`. If a prepared request is expected to exceed the per-call input ceiling, execution must stop before send; automatic ceiling expansion is forbidden.
+
 01 Master completed the final Contract checkpoint and approved v0.1.1 as the new Frozen Contract baseline. The accepted implementation finding remains:
 
 > Frozen v0.1 semantic completeness is not genuinely runtime-enforceable under the current free-text → semantic candidate → deterministic validator input boundary.
@@ -59,7 +63,7 @@ Frozen Contract v0.1.1 and confirmed DEC-022 clarify that candidate-only inabili
 
 The v0.1.1 Contract is Frozen and DEC-022 is Confirmed. Historical VI01/VI02/03 reports remain unchanged. Dialogue/Headline schemas, semantic statuses, AI authority, Response Plan authority, P0 scope, and the eight Hard Safety Gates are unchanged. The Experimental fixture-scoped NPC lexical gate remains a recorded prototype limitation and is not a production Output Validation Gate.
 
-Technical Prototype 01 Batch 1 / 1.2 → Contract v0.1.1 Frozen → Batch 2 authorised. Batch 2A is complete; Batch 2B has not begun in this documentation checkpoint.
+Technical Prototype 01 Batch 1 / 1.2 → Contract v0.1.1 Frozen → Batch 2A complete → Batch 2B.0 preflight complete. Batch 2B.1 has not started, and paid smoke still requires separate explicit authorization.
 
 Batch 2A confirms the operational policy boundary:
 
@@ -144,7 +148,7 @@ Do not expand the next implementation scope into:
 
 ## Next project step
 
-Next work: **Technical Prototype 01 Batch 2B direct real-model baseline**. It is authorised following the completed Batch 2A checkpoint and must be performed in a separately scoped task.
+Next gated work: **Technical Prototype 01 paid smoke**, only after separate explicit authorization. Batch 2B.0 does not authorise credentials, model requests, paid calls, or Batch 2B.1.
 
 Keep the next scope bounded: no Unity, no Dify yet, no backend architecture, no final story/world canon, no final balance model, and no P1/P2 expansion.
 
@@ -183,6 +187,9 @@ At substantial GitHub checkpoints, report:
 19. `ai/prototype/measurement.py`
 20. `ai/prototype/runner.py`
 21. `tests/test_baseline_runner.py`
+22. `ai/eval/paid_smoke_authorization.experimental.v0.1.json`
+23. `ai/prototype/openai_responses_adapter.py`
+24. `ai/prototype/openai_preflight.py`
 
 ## Repository baseline
 

@@ -1,0 +1,6 @@
+PROMPT_VERSION: npc-surface-generator.experimental.v0.1
+STATUS: Experimental / baseline-only / non-production
+
+Render only the authorised NPC surface response from the supplied speaker/role, voice constraints, deterministic response_mode, required authorised content, safe permitted wording context, and minimal visible recent context. Preserve the Response Plan decision exactly. Do not add facts, clues, promises, actions, refusals, trades, evidence, state changes, branches, global variables, or hidden information.
+
+Output plain NPC dialogue text only. Do not output metadata or structured gameplay data.

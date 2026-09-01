@@ -10,11 +10,15 @@ Pre-production — **Pre-Prototype Gate 03 complete and integrated into `main`.*
 
 No Unity project, production Dify workflow, backend runtime, final balance model, or final four-global-variable implementation is authorised by this state.
 
-## Technical Prototype 01 — Batch 1 / Batch 2A branch milestones
+## Technical Prototype 01 — Batch 1 / Batch 2A / Batch 2B.0 branch milestones
 
 **Status:** Technical Prototype 01 Batch 1 / 1.2 implementation and targeted regression are complete on `prototype/technical-prototype-01`. 01 Master final checkpoint passed; Contract v0.1.1 is Frozen, DEC-022 remains Confirmed, and Batch 2 is **AUTHORISED** after this documentation freeze checkpoint.
 
 **Batch 2A:** Complete and accepted by 04 Master on `prototype/technical-prototype-01` at `5f14abf8ddd759f9dcefd864cf9d7de213150ae7` (`prototype: add baseline runner and retry policy`). It adds a provider-independent `ScriptedAdapter`, component runner, deterministic retry/fallback policy, and JSONL-compatible measurement logging. The full suite is `82 passed / 0 failed`.
+
+**Batch 2B.0:** Direct OpenAI API preflight implementation and its final experiment-governance checkpoint are complete on `prototype/technical-prototype-01`; the full suite is `104 passed / 0 failed`. The direct OpenAI Responses adapter, three versioned baseline prompts, and provider-specific transport schemas remain explicitly Experimental / baseline-only / non-production. The checkpoint made zero OpenAI model requests, incurred `USD 0.00`, and did not configure or track credentials.
+
+Paid smoke remains **PROPOSED_NOT_AUTHORIZED**. Its fixed planning boundary is four logical cases, at most eight provider calls, SDK retries `0`, Frozen-runner retry policy unchanged, `gpt-5.6-terra` with `reasoning=low`, `8,192` input tokens and `1,024` output tokens per API call, aggregate ceilings of `65,536` input and `8,192` output tokens, calculated worst case `USD 0.229376`, and an absolute planning ceiling of `USD 0.25`. A prepared request expected to exceed the per-call input ceiling must stop before send; the ceiling must not be enlarged automatically.
 
 Batch 1 adds:
 
@@ -45,7 +49,7 @@ Batch 2A policy evidence confirms:
 
 The Experimental fixture-scoped lexical NPC Output Validation Gate limitation remains recorded. It is validation tooling, not the final production Output Validation Gate, and is not promoted to a Contract change by v0.1.1.
 
-**Review routing:** Runtime contract validity and semantic fidelity/completeness are formally separated in Frozen Contract v0.1.1. No further 01 Master review is required unless later work produces a new shared Contract, schema, authority, or P0-scope issue. Batch 2A is complete; the next authorised work is Batch 2B direct real-model baseline.
+**Review routing:** Runtime contract validity and semantic fidelity/completeness are formally separated in Frozen Contract v0.1.1. No further 01 Master review is required unless later work produces a new shared Contract, schema, authority, or P0-scope issue. Batch 2B.0 is complete with no such issue. Paid smoke and Batch 2B.1 remain not authorised until a separate explicit authorization is returned.
 
 ## Completed
 
@@ -57,6 +61,7 @@ The Experimental fixture-scoped lexical NPC Output Validation Gate limitation re
 - 03 confirmed the real-model P0 baseline protocol (DEC-021).
 - 01 Master final Contract checkpoint passed: AI Interaction Contract v0.1.1 Frozen; DEC-022 Confirmed; Batch 2 authorised.
 - 04 Master accepted Technical Prototype 01 Batch 2A scripted baseline runner, retry/fallback policy, and measurement logging (`5f14abf8ddd759f9dcefd864cf9d7de213150ae7`; `82 passed / 0 failed`).
+- Technical Prototype 01 Batch 2B.0 direct OpenAI preflight and experiment-governance checkpoint completed with `104 passed / 0 failed`, zero model calls, `USD 0.00` cost, and paid smoke still not authorised.
 - Detailed 03 result recorded in `docs/11_PRE_PROTOTYPE_GATE_03_REPORT.md`.
 
 ## Confirmed Pre-Prototype Gate 03 result
@@ -140,8 +145,8 @@ No Unity client is required for this first technical prototype.
 
 ## Next
 
-1. Next authorised work: Technical Prototype 01 Batch 2B direct real-model baseline, under a separately scoped task.
-2. Return to 01 Master only if later work produces a new shared Contract, schema, authority, or P0-scope issue.
+1. Next gated work: Technical Prototype 01 paid smoke, only after separate explicit authorization. It is not authorised by the Batch 2B.0 checkpoint.
+2. Batch 2B.1 has not started. Return to 01 Master only if later work produces a new shared Contract, schema, authority, or P0-scope issue.
 
 ## Repository baseline
 

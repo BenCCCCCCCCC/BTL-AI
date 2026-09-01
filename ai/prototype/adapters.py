@@ -10,6 +10,9 @@ from typing import Any, Mapping, Protocol, Sequence
 class AdapterOutcome:
     output: Any = None
     system_failure_reason: str | None = None
+    model_identifier: str | None = None
+    prompt_version: str | None = None
+    schema_version: str | None = None
     input_tokens: int | None = None
     output_tokens: int | None = None
     model_call_latency_ms: float | None = None
@@ -20,6 +23,9 @@ class AdapterOutcome:
         cls,
         output: Any,
         *,
+        model_identifier: str | None = None,
+        prompt_version: str | None = None,
+        schema_version: str | None = None,
         input_tokens: int | None = None,
         output_tokens: int | None = None,
         model_call_latency_ms: float | None = None,
@@ -27,6 +33,9 @@ class AdapterOutcome:
     ) -> AdapterOutcome:
         return cls(
             output=output,
+            model_identifier=model_identifier,
+            prompt_version=prompt_version,
+            schema_version=schema_version,
             input_tokens=input_tokens,
             output_tokens=output_tokens,
             model_call_latency_ms=model_call_latency_ms,
@@ -38,11 +47,23 @@ class AdapterOutcome:
         cls,
         reason: str,
         *,
+        model_identifier: str | None = None,
+        prompt_version: str | None = None,
+        schema_version: str | None = None,
+        input_tokens: int | None = None,
+        output_tokens: int | None = None,
         model_call_latency_ms: float | None = None,
+        estimated_cost: float | None = None,
     ) -> AdapterOutcome:
         return cls(
             system_failure_reason=reason,
+            model_identifier=model_identifier,
+            prompt_version=prompt_version,
+            schema_version=schema_version,
+            input_tokens=input_tokens,
+            output_tokens=output_tokens,
             model_call_latency_ms=model_call_latency_ms,
+            estimated_cost=estimated_cost,
         )
 
 
