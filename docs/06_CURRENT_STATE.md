@@ -1,159 +1,75 @@
 # Current State
 
-## Current phase
+**Reviewed:** 2026-09-19  
+**Current phase:** **04 — Technical Prototype 01, IN PROGRESS**  
+**Active branch:** `prototype/technical-prototype-01`  
+**Reviewed implementation:** `38703c4368ae774ebc36b6cbdc27cd61dd1a8c87`  
+**Stable historical baseline:** `main @ aa87d39959e6a4b2f6cad31883528cb8e8d1cc42`
 
-Pre-production — **Pre-Prototype Gate 03 complete and integrated into `main`.**
+This is a documentation-only recovery checkpoint. The implementation SHA is an audit anchor, not the moving documentation HEAD; resolve the current branch tip before work.
 
-`main` is now the current stable validated baseline for completed VI01 + VI02 + Pre-Prototype Gate 03 work.
+## Actual position
 
-01 Master final checkpoint passed. **AI Interaction Contract v0.1.1 is Frozen** as the current Contract baseline on the active prototype branch; v0.1 remains preserved in Git history and historical VI01, VI02, and Pre-Prototype Gate 03 reports. Dialogue/Headline schemas, semantic taxonomies, authority boundaries, P0 scope, and the existing eight Hard Safety Gates remain unchanged. v0.1.1 is not yet integrated into `main`.
+Product definition, VI01, VI02 and Gate 03 are complete. An Experimental Python test harness is implemented. **A measured real-model baseline, playable Remake demo and player validation are not evidenced as complete.**
 
-No Unity project, production Dify workflow, backend runtime, final balance model, or final four-global-variable implementation is authorised by this state.
+Frozen Contract **v0.1.1** is current on the active branch. Historical reports 09–11 retain v0.1 context; they do not supersede v0.1.1. `main` is the earlier stable design baseline, not the latest implementation.
 
-## Technical Prototype 01 — Batch 1 / Batch 2A / Batch 2B.0 branch milestones
+## Stage and evidence ledger
 
-**Status:** Technical Prototype 01 Batch 1 / 1.2 implementation and targeted regression are complete on `prototype/technical-prototype-01`. 01 Master final checkpoint passed; Contract v0.1.1 is Frozen, DEC-022 remains Confirmed, and Batch 2 is **AUTHORISED** after this documentation freeze checkpoint.
+| Increment | Result | Evidence / limitation |
+| --- | --- | --- |
+| 00 / repository baseline | Complete | Product scope and working agreement |
+| VI01 | Complete: three P0 AI boundaries | Report 09; design/fixture validation, not real-model results |
+| VI02 | Complete: catalogue, Evidence–Claim rules and NPC grounding | Report 10; railyard sample remains Experimental / non-canonical |
+| Gate 03 | Complete; integrated into main | Report 11; DEC-020 consequence interface and DEC-021 model-baseline protocol |
+| 04 / Batch 1 and 1.2 | Implemented; Contract v0.1.1 accepted | Manifest, schemas, validators, fixture oracle, lexical NPC gate and isolated consequence stub; historical reports: 48 then 61 tests passed |
+| 04 / Batch 2A | Complete; accepted by 04 Master | `5f14abf8ddd759f9dcefd864cf9d7de213150ae7`; scripted runner, retry/fallback and JSONL measurement; historical report: 82 passed |
+| 04 / Batch 2B.0 | Implemented; zero-call checkpoint recorded | `e4412efa27ff41a77ca3f3cc7e777c12cf222be5`; Experimental Responses adapter, prompts, transport schemas and preflight; historical report: 104 passed, zero model requests at that checkpoint |
+| 04 / Batch 2B.0.1 | Implementation present; omitted handoff entry repaired here | `38703c4368ae774ebc36b6cbdc27cd61dd1a8c87`; authorisation, pre-send input-token count and call-limit guards. No fresh full-suite result established by this audit |
+| Live smoke / Batch 2B.1 / measured baseline | Not evidenced as complete | No reviewed committed measurement proves completion; ignored local output files were inaccessible |
+| Dify / Unity / playable loop / player testing | Not started in reviewed repository | Future direction/placeholders, not delivered functionality |
 
-**Batch 2A:** Complete and accepted by 04 Master on `prototype/technical-prototype-01` at `5f14abf8ddd759f9dcefd864cf9d7de213150ae7` (`prototype: add baseline runner and retry policy`). It adds a provider-independent `ScriptedAdapter`, component runner, deterministic retry/fallback policy, and JSONL-compatible measurement logging. The full suite is `82 passed / 0 failed`.
+These test counts are **historical reported results**, not tests rerun on 2026-09-19, player counts or model accuracy. The implementation HEAD's combined-status lookup returned no statuses; that is not a CI pass.
 
-**Batch 2B.0:** Direct OpenAI API preflight implementation and its final experiment-governance checkpoint are complete on `prototype/technical-prototype-01`; the full suite is `104 passed / 0 failed`. The direct OpenAI Responses adapter, three versioned baseline prompts, and provider-specific transport schemas remain explicitly Experimental / baseline-only / non-production. The checkpoint made zero OpenAI model requests, incurred `USD 0.00`, and did not configure or track credentials.
+## Invariants and known limits
 
-Paid smoke remains **PROPOSED_NOT_AUTHORIZED**. Its fixed planning boundary is four logical cases, at most eight provider calls, SDK retries `0`, Frozen-runner retry policy unchanged, `gpt-5.6-terra` with `reasoning=low`, `8,192` input tokens and `1,024` output tokens per API call, aggregate ceilings of `65,536` input and `8,192` output tokens, calculated worst case `USD 0.229376`, and an absolute planning ceiling of `USD 0.25`. A prepared request expected to exceed the per-call input ceiling must stop before send; the ceiling must not be enlarged automatically.
+- **Runtime PASS is not fidelity PASS.** D19 tactic omission, F04 missing claims and F05 extra catalogue-valid claims can pass candidate/context validation and fail the authored oracle. DEC-022 and v0.1.1 preserve this separation. Fixture truth is evaluation-only, never a production runtime judge or retry signal.
+- **The lexical NPC gate is fixture-scoped, not production safety.** Known regex checks do not prove arbitrary free-text response-plan fidelity. The eight Hard Safety Gates remain unchanged.
+- Dialogue retries system failure once, but not valid AMBIGUOUS/UNSUPPORTED. Exhaustion invents no validated action. Headline exhaustion preserves the draft and blocks publication, not `RESOLVED + claims=[]`. NPC fallback must preserve the deterministic plan and pass the gate.
+- The consequence stub is isolated and uses Experimental effects, not final balance or a complete game rule engine. AI never creates authoritative state deltas.
+- Measurement infrastructure exists; a complete Frozen quality-metric report does not. Retain sanitised candidates and distinguish first-pass/final quality, runtime safety, omissions/extras, latency, retries, tokens and cost. Never include expected answers in model inputs.
+- **Static-review operational caveat:** `openai_preflight.py::main()` returns 0 even when JSON `preflight_passed` is false. Until a focused CLI fix/regression is made, check that Boolean explicitly. No runtime fix or test rerun is claimed here.
 
-Batch 1 adds:
+## Cost and execution
 
-- a small versioned P0 baseline manifest traced to the Frozen 01A/01B/02C fixture cases;
-- Frozen-v0.1 structural JSON Schemas for Dialogue and Headline semantic candidates;
-- deterministic current-catalogue contract validators for Dialogue and Headline candidates;
-- a separate fixture ground-truth oracle for tactic and Claim Set omissions/extras;
-- an explicitly Experimental, fixture-scoped lexical NPC Output Validation Gate;
-- an isolated deterministic Consequence Event stub with immutable Experimental authoritative test state and placeholder effects for all four global variables;
-- automated fault-injection and authority-boundary tests.
+The user's preference is **suitable free models first; minimise spending**. No free provider is evidenced as integrated; scripted tests are not free real-model tests.
 
-Existing Batch 1 full-suite baseline: `48 passed`. Batch 1.2 pre-checkpoint full suite: `61 passed` (`48` existing + `13` v0.1.1 regression tests) with Python 3.12, pytest, and jsonschema.
+The paid sheet remains `PROPOSED_NOT_AUTHORIZED`, `execution_authorized=false`. This audit authorises no live model/token-count requests, new accounts, credentials or spending. A previous conversation reported an API key configured; its current existence/validity is unverified and is not execution permission.
 
-The v0.1.1 assurance responsibilities are explicit and separate:
+The historical paid plan covered four cases, up to eight generation calls, 8,192/1,024 input/output tokens per call, aggregate 65,536/8,192 and a USD 0.25 **model-generation-only planning ceiling**. Token-count endpoint billing is explicitly unknown. Reverify model, SDK, pricing and full billing coverage before any separately authorised live run; never silently substitute paid execution.
 
-1. **Deterministic runtime contract validity** covers observable schema, enum, current-catalogue, context, compatibility, visibility, Pending Interaction, structured single-action, Claim Atom legality, and authority-boundary conditions.
-2. **Semantic fidelity/completeness** covers tactic omission, consequential Claim Atom omission, catalogue-valid but source-text-unsupported extra Claim Atoms, and general interpretation fidelity. Batch 1 measures this against authored fixture ground truth; D19/F04/F05 are detected only by this evaluation oracle, not by candidate-only runtime validation.
+## Next smallest outcome
 
-Runtime contract PASS and semantic fidelity PASS are not interchangeable. Candidate-only runtime inability to prove arbitrary free-text completeness is no longer itself a blocker once this separation is explicit and the mandatory baseline detects the required errors. Blocking conditions remain if the baseline cannot detect tactic/Claim omissions or extra Claim Atoms, if runtime PASS is conflated with fidelity PASS, if a Hard Safety Gate is breached, or if the model path requires shared schema/authority/P0 changes.
+1. Reconcile the actual local checkout and rerun offline tests using `07_HANDOFF.md`. Record exact SHA/environment/results. Address the preflight CLI caveat with a focused regression before relying on exit codes.
+2. Check **one** currently accessible free route; reuse the existing runner/manifest/schemas rather than building a multi-provider platform. Verify access, billing, data handling and compatibility. Report a specific blocker if no suitable free route works.
+3. After separate live-execution authorisation, run a smoke and then the fixture-derived three-component P0 baseline. Four smoke cases alone are not the full quality baseline. Preserve safety boundaries and first/final evidence; set numerical acceptance thresholds after initial measurements as DEC-021 requires.
+4. Return **proceed / fix / defer**, aimed at a minimal playable loop. Escalate only new shared Contract/schema/authority/P0 issues to Contract Master; ordinary implementation stays in 04.
 
-Batch 2A policy evidence confirms:
+Future route: **technical evidence → one minimal playable investigation/conversation/evidence/headline/consequence loop → polished 20–30 minute vertical slice → player evaluation and portfolio evidence**. Future stages are not started or authorised by this audit. Dify remains optional post-baseline feasibility; Unity creation, final canon/balance, production tooling, backend and P1/P2 remain separately gated.
 
-- Dialogue retries only `AI_SYSTEM_FAILURE` once; valid `AMBIGUOUS` / `UNSUPPORTED` output does not model-retry.
-- Semantic-fidelity mismatch is evaluation-only and never triggers runtime retry.
-- Headline retry exhaustion creates no Validated Claim Set, blocks publication, and preserves the draft; it is distinct from valid `RESOLVED + claims=[]`.
-- NPC gate failure retries once, then may display only an authored fallback that preserves the deterministic Response Plan semantics and passes the Experimental fixture-scoped gate.
-- The Consequence Event stub remains isolated from runner, adapter, retry, fallback, and measurement code. No Hard Safety Gate breach or new shared Contract/schema/authority/P0 issue was found.
+## Source reconciliation
 
-The Experimental fixture-scoped lexical NPC Output Validation Gate limitation remains recorded. It is validation tooling, not the final production Output Validation Gate, and is not promoted to a Contract change by v0.1.1.
+| Surface | Verified status |
+| --- | --- |
+| GitHub | Read directly. Before this docs checkpoint the active branch was 7 commits ahead of main, 0 behind |
+| Windows checkout | Inaccessible here; historical `F:\BTL-AI` is not a verified current path. Branch, local changes, ignored outputs and sync remain unknown |
+| Project Sources | Project-scoped search returned no files; freshness/existence could not be verified. This does not prove deletion |
+| Library | No authoritative current source bundle recovered; resumes/unrelated results do not substitute for project evidence |
 
-**Review routing:** Runtime contract validity and semantic fidelity/completeness are formally separated in Frozen Contract v0.1.1. No further 01 Master review is required unless later work produces a new shared Contract, schema, authority, or P0-scope issue. Batch 2B.0 is complete with no such issue. Paid smoke and Batch 2B.1 remain not authorised until a separate explicit authorization is returned.
+No local pull, Project Sources refresh, full-suite rerun or live-model request occurred in this Chat audit. GitHub changes do not update the other copies automatically.
 
-## Completed
+## Workflow repair applied
 
-- Repository baseline and product definition completed.
-- Validation Increment 01 completed; AI Interaction Contract v0.1 frozen.
-- Validation Increment 02 completed and integrated into `main`.
-- Pre-Prototype Gate 03 completed, Master-reviewed, and integrated into `main`.
-- 03 confirmed the minimal deterministic consequence boundary (DEC-020).
-- 03 confirmed the real-model P0 baseline protocol (DEC-021).
-- 01 Master final Contract checkpoint passed: AI Interaction Contract v0.1.1 Frozen; DEC-022 Confirmed; Batch 2 authorised.
-- 04 Master accepted Technical Prototype 01 Batch 2A scripted baseline runner, retry/fallback policy, and measurement logging (`5f14abf8ddd759f9dcefd864cf9d7de213150ae7`; `82 passed / 0 failed`).
-- Technical Prototype 01 Batch 2B.0 direct OpenAI preflight and experiment-governance checkpoint completed with `104 passed / 0 failed`, zero model calls, `USD 0.00` cost, and paid smoke still not authorised.
-- Detailed 03 result recorded in `docs/11_PRE_PROTOTYPE_GATE_03_REPORT.md`.
+The user's 2026-09-19 audit/optimisation request is implemented as: corrected stage labels; restored Batch 2B.0.1 history; explicit evidence limits/free-first preference; one Master plus local Codex for routine work; a compact task-specific handoff.
 
-## Confirmed Pre-Prototype Gate 03 result
-
-### DEC-020 — Minimal deterministic consequence boundary
-
-```text
-Deterministically Resolved Gameplay Result
-        ↓
-Authored Consequence Event
-        ↓
-Deterministic Variable Effect
-        ↓
-Authoritative Global-Variable State Update
-```
-
-Only authored deterministic consequence rules may change Reputation, Public Opinion, Threat Level, or Money.
-
-AI semantic candidates, validated Claim Atoms, evidence/publication support labels, and NPC surface language never directly create variable deltas. Result type only determines possible eligibility; an authored consequence rule determines whether an effect actually exists.
-
-Exact deltas, ranges, balancing, cross-variable formulas, decay, and ending thresholds remain deferred. Experimental placeholder deltas may be used later only to exercise the technical interface.
-
-Legacy BTL variable formulas remain historical evidence, not confirmed Remake rules.
-
-### DEC-021 — First real-model P0 baseline
-
-The first measured AI baseline will reuse the Frozen 01/02 fixtures through a versioned manifest and separately test:
-
-1. Dialogue Semantic Parser;
-2. Headline Analyzer;
-3. Grounded NPC Surface Generator.
-
-The baseline includes deterministic validator/gate checks, deliberate invalid-output/fault injection, retry/fallback execution, Frozen quality metrics, and latency/token/cost logging. No numerical acceptance threshold is defined before the first baseline is measured.
-
-`02B` remains deterministic downstream evaluation and is not converted into an LLM evidence/truth task.
-
-Dify feasibility is evaluated after a direct baseline harness exists, so model performance and orchestration overhead can be separated.
-
-## Historical Gate 03 Contract status
-
-Pre-Prototype Gate 03 requires **no change** to:
-
-- AI authority boundary;
-- P0 scope;
-- Dialogue semantic schema or status taxonomy;
-- Claim Atom schema;
-- Response Plan authority semantics;
-- hard safety gates.
-
-**At Gate 03, 01 Master review required:** No.
-
-## Prototype entry assessment
-
-The project now has enough pre-production definition to stop adding abstract architecture and begin a narrowly scoped technical prototype.
-
-The first technical prototype should prove:
-
-- a versioned P0 baseline manifest derived from existing fixtures;
-- model calls for the three P0 language boundaries;
-- deterministic contract validators and a minimal NPC Output Validation Gate;
-- retry/fallback behaviour;
-- reproducible measurement/logging;
-- a thin deterministic Consequence Event stub capable of exercising all four global variables with Experimental placeholder effects.
-
-No Unity client is required for this first technical prototype.
-
-## Still unresolved / deferred
-
-- Batch 2B direct real-model baseline measurements and acceptance thresholds;
-- Dify feasibility and orchestration overhead;
-- final vertical-slice story canon and NPC/faction/world roster;
-- production catalogue/evidence/NPC serialization and authoring tooling;
-- production evidence persistence/authenticity policy;
-- exact non-world Response Plan serialization;
-- NPC-originated authored-offer lifecycle;
-- final NPC relationship system or richer epistemic model;
-- final Reputation / Public Opinion / Threat Level / Money ranges, deltas, formulas, balancing, decay, and ending thresholds;
-- backend/API architecture;
-- Unity architecture and implementation;
-- P1/P2 AI features.
-
-## Next
-
-1. Next gated work: Technical Prototype 01 paid smoke, only after separate explicit authorization. It is not authorised by the Batch 2B.0 checkpoint.
-2. Batch 2B.1 has not started. Return to 01 Master only if later work produces a new shared Contract, schema, authority, or P0-scope issue.
-
-## Repository baseline
-
-Current stable validated branch:
-
-`main`
-
-Completed historical 03 branch:
-
-`design/pre-prototype-gate-03`
+README = entry; Overview = plain-language history; Current State = live evidence; Handoff = action/sync; Decision Log = confirmed decisions; Contract = frozen semantics. Existing reports and Git history preserve earlier evidence. No new report or product/architecture decision is introduced. Code, tests, schemas, prompts, authorisation settings, historical reports and branch history are unchanged.
