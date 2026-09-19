@@ -1,25 +1,53 @@
-# Project Overview
+# BTL-AI｜游戏介绍与阶段总览
 
-## Product vision
+更新：2026-09-19。本文用于快速理解和对外介绍；实时进度以 [Current State](06_CURRENT_STATE.md) 为准，游戏规则以 [Project Definition](01_PROJECT_DEFINITION.md)、[Decision Log](05_DECISION_LOG.md) 和 [Frozen Contract](08_AI_INTERACTION_CONTRACT.md) 为准。
 
-Between the Lines: AI Remake (BTL-AI) is an AI-assisted narrative journalism game set in a fictional modern country. It can draw inspiration from and satirise real-world politics and media without reproducing a real political setting.
+## 一句话介绍
 
-The experience is PC-first, 2D, and interface-driven. Players investigate and publish within an authored branching narrative, using keyboard-first free-text interaction where AI can interpret dialogue and express grounded NPC language.
+**这是一款让玩家扮演记者的 AI 辅助叙事游戏：你可以自由输入问题采访角色、调查证据、撰写新闻标题，并承担报道带来的后果。**
 
-## Dual portfolio goals
+## 向别人介绍时可以这样说
 
-1. Demonstrate game design and game-system design ability.
-2. Demonstrate AI product and AI orchestration ability.
+> 我在做《Between the Lines: AI Remake》，一款以新闻调查为主题的叙事游戏。玩家不只是点击固定对话选项，而是可以自己输入问题，与角色交流，并决定如何报道事件。AI 负责理解玩家说了什么、让角色自然地回应；事实、证据、剧情分支和关键后果仍由预先设计的游戏规则控制。这样既保留表达自由，也避免 AI 随意编造剧情。目标是先做出一段完整、可玩的 20–30 分钟体验。
 
-## Vertical slice
+这段话描述的是**产品目标**，不是宣称上述体验已经全部实现。
 
-The initial target is a polished 20–30 minute vertical slice. It will prove the core loop and selected AI-assisted interactions; it is not a commitment to the full legacy 14-day content structure.
+## 游戏独特在哪里
 
-## Development phases
+核心不是“任何输入都能变成剧情”，而是“玩家可以自由表达，游戏只执行已设计、可验证的含义”。
 
-1. **Pre-production** — define the product, architecture boundaries, vertical-slice scope, and validation plan.
-2. **Prototype and validation** — validate interaction, deterministic state rules, and proposed AI orchestration choices in small increments.
-3. **Vertical-slice production** — author and integrate the selected playable slice.
-4. **Polish and evaluation** — test narrative/system quality and evaluate AI-assisted features.
+新闻标题也不只是填空。把一件事写成“事实”“猜测”或“某人的说法”，会对应不同的报道责任。游戏根据玩家发布时掌握的信息和证据进行判断，不让 AI 充当全知裁判。
 
-The project is currently in pre-production.
+产品面向 PC，以 2D 和界面交互为主，背景是虚构的现代国家。剧情是人工设计的分支故事，不是无限生成的世界。
+
+## 现在做到哪里
+
+**已经完成核心规则与设计验证，并实现第一轮技术原型的测试框架；真实模型效果还没有可核验的基线结果，也还没有可玩的 Remake demo。**
+
+已实现的内容主要是 Python 测试工具：检查模型输出是否合法，处理重试和安全失败，记录测量结果，以及限制未经授权的 API 调用。它们是制作游戏的技术基础，不等于游戏成品。
+
+## 之前分别做了什么
+
+| 原阶段 | 做了什么 | 为什么要做 | 当前结果 |
+| --- | --- | --- | --- |
+| 00｜项目起步 | 确定记者题材、自由文本交互、20–30 分钟目标和 Git 仓库 | 避免一开始就做过大的完整游戏 | 完成 |
+| 01｜AI 交互规则 | 规定玩家对话、NPC 回复、新闻标题三条 AI 链路；设计错误处理 | 让 AI 不能擅自创造证据、承诺或剧情后果 | 设计验证完成；当前合约为 Frozen v0.1.1 |
+| 02｜用具体案例验证规则 | 建立临时事件样例，验证可识别含义、证据与报道关系、NPC 知识和发言边界 | 检查规则能否用于同一个实际场景，而不只是纸面概念 | 完成；样例不是最终剧情 |
+| 03｜进入原型前收尾 | 明确四项全局变量的后果入口，以及真实模型该怎么测 | 停止继续扩写抽象架构，开始实现 | 完成 |
+| 04｜技术原型 | 实现校验器、样例数据、重试/失败处理、测量记录、API 适配与调用限制 | 检查技术链路能否可靠运行 | 进行中：模拟链路已实现，真实模型基线待完成 |
+
+01A/01B、02A/02B/02C 和 04 内的 Batch 编号是内部子任务，不是需要向外介绍的额外产品阶段。
+
+## 接下来的路线
+
+**完成真实模型技术验证 → 做一个最小可玩闭环 → 扩展为 20–30 分钟完整切片 → 玩家测试、打磨和作品集整理。**
+
+最小可玩闭环只需要证明一次调查能从采访、证据、标题走到可理解的后果。不先扩展大型世界观、复杂 NPC 记忆、完整经济系统或语音功能。
+
+Dify 保留为待验证的编排选择，不是已经完成的功能，也不是必须先搭好才能做游戏的前提。后续阶段尚未开始；这份路线说明不自动授权创建 Unity 项目或调用付费模型。
+
+## 回答“目前进度如何”
+
+> 目前处于技术原型阶段。游戏的核心交互规则、AI 权限边界和测试案例已经确定，基础测试程序也已经实现。下一步是测真实模型的理解质量和响应表现，再把这些能力接成一个最小可玩版本；还没有进入完整 demo 的制作和玩家测试阶段。
+
+不要写成“已经完成 Dify 工作流、Unity AI demo、玩家验证”或“已经解决 AI 幻觉”。本项目当前的工程测试结果不能证明这些结论。
