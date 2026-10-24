@@ -13,20 +13,9 @@ Optimize decisions for both goals where possible, but never add AI features pure
 
 ## Source of Truth
 
-Treat project sources and approved project documents as the authoritative source of truth.
+The active Git branch identified in Current State is the canonical working copy. Apply the user's explicit current instructions; use confirmed repository decisions and Current State / Handoff for continuity. Project Sources are snapshots, followed by chat history, external research and assumptions.
 
-Priority:
-
-1. Confirmed project documents and Decision Log
-2. Current State / Handoff documents
-3. Current conversation decisions
-4. Project chat history and memory
-5. External research
-6. Assumptions
-
-Do not silently replace an established project decision with a new assumption.
-
-If new information conflicts with an established decision, identify the conflict before proposing a change.
+Record requested changes to established decisions explicitly. Do not turn an unresolved proposal into a confirmed product decision. Workflow simplification does not expand live-call, spending or Unity authorisation.
 
 ## Decision States
 
@@ -204,73 +193,16 @@ Where practical, preserve evidence of:
 
 The project should demonstrate not only what was built, but why specific product and technical decisions were made.
 
-## Operational Routing and Documentation Sync
+## Execution, Verification and Handoff
 
-For every substantial project task, actively determine the best working environment:
+Follow AGENTS and the change-based verification table in `docs/07_HANDOFF.md`. The current workflow direction (2026-10-25) is to prioritise the smallest useful outcome, reuse valid evidence, reduce redundant tests and remove unnecessary defensive process.
 
-- Chat — design discussion, product/game-system reasoning, architecture decisions, research synthesis, validation planning, and decision-making.
-- Work — creation or substantial editing of project documents and other structured artifacts when Work provides a better persistent editing environment.
-- Codex — repository edits, implementation, code generation, schema implementation, test harnesses, automated validation, refactoring, and engineering work.
+Within an authorised task, complete routine reversible edits and repository-scoped setup without repeated permission requests. Preserve user work; isolate unrelated changes instead of stopping the whole task. New checks must address a concrete defect, explicit input boundary or Frozen requirement. Live execution, spending, destructive operations and shared Contract changes retain the applicable authorisation boundaries.
 
-When recommending a switch away from Chat, explicitly state:
+Documentation-only changes do not trigger runtime tests. Behaviour changes receive focused affected tests. Use full offline regression only when a new environment has no applicable result, a shared-path change creates cross-component risk, or an integration checkpoint requires it. Reuse compatible smoke results in the same baseline batch and stop testing when the agreed completion criteria are satisfied.
 
-1. which environment to use: Chat, Work, or Codex;
-2. why that environment is better for the next task;
-3. the recommended currently available model;
-4. the recommended reasoning level;
-5. whether the user should accept the mode switch now or remain in the current thread.
+Prefer the current working environment when its tools can complete the task. Switch to local Codex only when implementation or local execution requires it; explain the practical reason. Do not prescribe a new model/reasoning level, specialist conversation or Master review for every patch.
 
-Do not recommend Work or Codex merely because they are available.
+At a substantial checkpoint update Current State and Handoff together. Report five things: outcome and commit/files; actual verification and limits; unresolved issues; next useful action; local/Project copies needing refresh. Update Decision Log or Contract only for a relevant decision. Do not create duplicate reports or repeat a long Yes/No checklist.
 
-Use the smallest environment that fits the task.
-
-### Documentation Checkpoint Protocol
-
-At the end of a substantial design decision, validation pass, milestone, or thread handoff, explicitly report:
-
-- Repo files to update
-- Project Sources files to refresh
-- Decision Log update required: Yes / No
-- Current State update required: Yes / No
-- Handoff update required: Yes / No
-- Other project documents affected
-- Git commit recommended: Yes / No
-- Recommended commit scope/message when useful
-- Master-thread review required: Yes / No
-- New Chat thread recommended: Yes / No
-- Recommended next working environment: Chat / Work / Codex
-- Recommended model and reasoning level if a mode change is appropriate
-
-Do not require Project Sources to be refreshed after every minor edit.
-
-Recommend refreshing Project Sources when:
-
-- a confirmed decision changes;
-- an authoritative contract/schema changes materially;
-- Current State or Handoff changes materially;
-- a validation increment or milestone reaches a checkpoint;
-- a new major Chat thread is about to begin.
-
-The Git repository is the canonical working copy.
-Project Sources are stable cross-chat snapshots.
-
-If the GitHub repository is accessible, check the relevant repository documents when freshness matters.
-If the repository is not accessible, use Project Sources and explicitly state that the repository could not be verified.
-
-### Conversation Management
-
-Proactively recommend opening a new Chat thread when:
-
-- the current thread has completed a coherent milestone or validation scope;
-- two workstreams have diverged enough that sharing one context increases confusion;
-- the conversation has accumulated substantial unrelated detail;
-- a specialist validation or implementation thread would reduce context loss or hallucination risk.
-
-When recommending a new thread, state:
-
-- the exact suggested thread name;
-- its scope;
-- what source documents it should read first;
-- what must be handed back to the Master thread.
-
-Do not split conversations unnecessarily.
+Refresh Project Sources at material state/Contract changes or cross-environment handoffs, not every edit. A repository edit to this Instructions file does not automatically update the Project's instruction settings. Pending copy refresh does not block independent repository work.

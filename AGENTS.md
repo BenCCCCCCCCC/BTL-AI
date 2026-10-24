@@ -1,37 +1,39 @@
 # Working Agreement
 
-## Before significant changes
+## Start with the current task
 
-Read `README.md`, `docs/01_PROJECT_DEFINITION.md`, `docs/05_DECISION_LOG.md`, and `docs/06_CURRENT_STATE.md`. Read `docs/07_HANDOFF.md` when taking over from another environment/tool.
+Read README, Current State and Handoff; for significant product or architecture changes also read Project Definition and the relevant Decision Log / Frozen Contract sections. Read affected code and fixtures as needed, not the entire archive.
 
-Check the actual repository root, remote, branch, HEAD and worktree. Use the active branch in Current State, not an assumed-latest `main`. Resolve differences before writes; preserve local work. Project Sources are separate snapshots.
+Check the actual repository, active branch, HEAD and relevant local changes once when taking over. Use the active branch in Current State. Preserve local work; unrelated dirty files do not block independent work. Resolve overlapping edits or actual divergence before touching those paths.
 
 ## Architecture invariants
 
-- AI controls language; deterministic game systems control reality.
-- Unity is the planned authoritative state/rule owner; the Python prototype is not an implemented Unity client.
-- LLM output must never directly modify canonical state.
-- NPC output is grounded by authored character cards, knowledge, canon and dynamic state.
-- Follow Frozen Contract v0.1.1 on the active branch. Runtime validity and semantic fidelity are separate; fixture truth is evaluation-only. The lexical NPC gate is Experimental, not a general safety guarantee.
+- AI controls language; deterministic systems control reality.
+- Unity is the planned authoritative state/rule owner; Python components are Experimental.
+- LLM output never directly changes canonical state.
+- Frozen Contract v0.1.1 and the eight Hard Safety Gates remain in force.
+- Runtime validity and semantic fidelity are separate. Fixture truth is evaluation-only; the lexical NPC gate is not a general natural-language guarantee.
 
-## Do not
+## Progress without repeated gates
 
-- Create Unity unless explicitly requested.
-- Implement Dify/production runtime integration before validation and authorisation. Existing Experimental harness work follows Current State/Handoff.
-- Replace authored branches with fully generated plot; invent unresolved story canon or architecture.
-- Commit/push unrelated work without approval, reset/force-push, delete historical branches or auto-stash local work.
-- Treat a configured API key as permission for live model/token-count requests, credential access or spending. Preserve execution gates.
+Within an authorised task, proceed with routine reversible implementation, document fixes and repository-scoped environment setup using existing requirements. Do not repeatedly request the same approval or add checks without a concrete defect, input boundary or contractual requirement.
 
-## Smallest useful increment
+Reuse existing components and evidence. Choose one suitable free-first route; stop provider comparison when it meets the immediate need. Never silently substitute paid execution. A configured key is not live-call or spending permission.
 
-Prefer a bounded testable change, state assumptions and keep scope narrow. Free-first is the user's experimentation preference: verify access/billing; never silently substitute paid execution. Reuse schemas and authority boundaries across provider experiments.
+Use the existing Master/implementation stream. Escalate new shared semantic/schema/authority/P0 decisions; ordinary fixes need no specialist thread. Dify is optional when it solves an observed orchestration need. Unity creation, live calls and spending retain their recorded authorisation requirements.
 
-Use the current Master/local implementation stream. Reopen historical validation or add a specialist only for a concrete issue. Dify is a planned feasibility choice, not a compulsory delay before a minimal playable loop.
+Preserve user changes. No unrelated commits, destructive reset/force-push, branch deletion or automatic disposal/stashing of local work.
 
-## Evidence and handback
+## Verification and completion
 
-Add appropriate tests for behaviour changes. Distinguish implemented code, historical reported tests, actual reruns, measured model results and player validation. Preflight, test counts and key configuration are not proof of a working game.
+Use the change-based verification table in `docs/07_HANDOFF.md`:
+- Documentation-only changes: factual/link/consistency review, no runtime suite.
+- Behaviour changes: the smallest affected existing tests plus a focused regression for a concrete new behaviour.
+- Full offline regression: a new execution environment with no applicable results, material shared-path changes, or a justified integration checkpoint.
+- Reuse unchanged smoke/baseline evidence under matching code, model, prompt, schema, inputs and run conditions. Do not repeat identical calls to satisfy separate labels.
 
-Update Current State and Handoff together at substantial checkpoints. README is the entry; Overview explains the project; Decision Log records confirmed product/architecture decisions; Contract changes require the appropriate approval. Avoid duplicate histories and a new report for every patch.
+Stop when the agreed acceptance criteria are met. Broaden verification only to answer a named unresolved issue. Keep useful existing boundary tests; reducing redundant execution is preferable to a separate mass-deletion project.
 
-Done means the requested change is implemented, appropriately verified and documented, with AI/state boundaries intact. Report exact commit/files, actual tests/limits, next action, local sync needs and Source refresh files. Never claim a pull or Project refresh without evidence it occurred.
+Report implementation, historical tests, actual reruns, measured model quality and player validation distinctly. At substantive checkpoints update 06/07 together. Handback needs outcome/commit/files, actual verification and limits, unresolved issues, next action and copy-sync needs. Avoid duplicate reports, repeated Yes/No checklists and unnecessary mode/model switches.
+
+Done means the requested result is implemented, proportionately verified and documented. Never claim local pull, Project refresh, runtime repair or live-model results without evidence.

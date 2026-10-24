@@ -1,83 +1,70 @@
-# Handoff — recovery checkpoint 2026-09-19
+# BTL-AI｜交接与下一轮计划
 
-**BTL-AI:** PC-first, 2D narrative journalism; target 20–30 minute vertical slice. AI controls language; deterministic systems control reality. Portfolio goals: game/system design and AI product/orchestration.
+更新：2026-10-25（Australia/Sydney）。活动分支：`prototype/technical-prototype-01`。本轮审阅起点：`e1e66556ae67aed32ef6e739bec4183d708c6b88`；最新实现锚点：`38703c4368ae774ebc36b6cbdc27cd61dd1a8c87`。继续工作时读取当前分支，不回退到锚点。
 
-**Current:** 04 / Technical Prototype 01, in progress.  
-**Active branch:** `prototype/technical-prototype-01`  
-**Reviewed implementation anchor:** `38703c4368ae774ebc36b6cbdc27cd61dd1a8c87`  
-**Stable historical baseline:** `main @ aa87d39959e6a4b2f6cad31883528cb8e8d1cc42`
+项目仍在 **04 / Technical Prototype 01**。阶段与证据只在 [Current State](06_CURRENT_STATE.md) 维护。目标仍是 20–30 分钟叙事新闻游戏切片；AI 处理语言，确定性系统决定现实。
 
-This is a later documentation-only checkpoint. Resolve the current remote HEAD; do not reset to the anchor. Completed stages, historical test counts and remaining risks are in `06_CURRENT_STATE.md`.
+## 下一轮要交付什么
 
-## Read by task, not the entire archive
+**让现有案例经同一个入口完成上下文装配、模型执行、结果留存和评估，得到第一份可复核的小样本实测，再决定 proceed / fix / defer。**
 
-Resume with AGENTS, applicable Project Instructions, README, Current State and this handoff. Before significant changes also read Project Definition and relevant Decision Log entries. For AI semantics/implementation, read applicable Frozen Contract v0.1.1 sections and affected code/tests. Reports 09–11 and specialist fixtures are reference evidence, not a mandatory full reread for every patch.
+目前主要缺口是实测闭环。沿用现有 runner、manifest、validator、oracle 与 JSONL；本轮文档更新没有把后续实现或实测标为完成。
 
-## Immediate local task: reconcile and rerun offline tests
+### 1. 补齐最薄的执行入口
 
-Use the existing BTL-AI checkout selected in GitHub Desktop/Codex. `F:\BTL-AI` is a historical location, not verified now; do not create another copy or assume a drive letter.
+先查看当前 checkout 是否已有未提交入口或测量结果，有则复用。否则只补：
+- 展开 `runtime_catalogue_view_ref`，为模型输入与 runtime validator 装配一致的 catalogue；映射 manifest 的 `npc` 到 runner 的 `npc_surface`。
+- 从允许字段构造模型输入。保留 Response Plan 授权事实与 required content；排除 `expected_result`、oracle、故障注入候选及 NPC 的 `surface_candidate_example`。
+- 沿用 `run_id + case_id + attempt`，留存脱敏候选、每次验证/语义结果、遗漏或多余项，以及已有版本、调用、token、延迟和成本字段。优先扩展现有记录，不增加数据库或观测平台。
 
-Read-only inventory from that repository:
+完成标准：一个入口能用 scripted adapter 跑通三组件，并能从记录还原“输入什么、输出什么、为什么通过或失败”。
 
-```powershell
-git rev-parse --show-toplevel
-git remote get-url origin
-git branch --show-current
-git status --short --branch
-git rev-parse HEAD
-git log -5 --oneline
-```
+### 2. 跑一个可用的真实模型路径
 
-Confirm remote `BenCCCCCCCCC/BTL-AI`. Redact embedded credentials in URLs. Do not inspect/print/upload `.env`, API keys or credential stores.
+免费优先，只核实一个当前可用候选的实际额度/计费和接口兼容性；满足需求就停止横向选型。采用薄 adapter，复用现有边界。
 
-Preserve local work first. On the correct branch with no conflicting changes, use GitHub Desktop **Fetch origin → Pull origin**, or:
+执行前一次性明确本批模型、案例、调用/费用上限；批内按授权连续完成，不逐案例重复询问。现有 paid sheet 仍未授权，四案例额度不能自动扩成五案例；详见 06。
 
-```powershell
-git fetch origin
-git rev-list --left-right --count HEAD...origin/prototype/technical-prototype-01
-git pull --ff-only origin prototype/technical-prototype-01
-```
+现有 manifest 是 **5 个 real-model 案例 + 13 个离线故障注入案例**。先取得这组代表性证据；未变化的离线证据可复用。相同代码、模型、prompt、schema、输入和运行条件下，smoke 已完成案例计入同一批，只补剩余案例。故障注入不消耗真实模型调用。
 
-Dirty worktree, wrong branch or divergent local commits: stop before changing files and report the difference. No reset, force-push, auto-stash, deletion or unrelated merge. Fetch alone does not update the checkout. Record HEAD/status after a safe pull.
+完成标准：三组件都有可复核结果，运行时合规与语义正确分别报告。5 个真实案例只支持小样本判断，不宣称完整质量覆盖或玩家验证。
 
-Inspect the tracked tests and use the existing verified Python environment:
+### 3. 按结果推进产品
 
-```powershell
-python -m pytest -q
-```
+针对观察到的失败修输入、prompt 或 adapter，复测失败案例和受影响的相邻行为。只在现有案例无法回答具体产品问题时补少量既有 fixture，不为测试数量扩充集合。
 
-No provider calls or silent dependency installation/upgrade. Report missing dependencies as a blocker, not a test pass. Preserve a sanitised test result with exact SHA/environment.
+下一产品实验建议：一个临时调查事件、一个 NPC、少量现有证据、一次标题发布及可理解的确定性后果。先验证“自由输入是否有用、后果是否清楚”，再扩为 20–30 分钟切片。临时剧情/数值保持 Experimental。Dify 仅在出现明确编排需求后评估；Unity 创建仍按已有授权边界处理。
 
-The optional OpenAI preflight is not a model test. Check JSON `preflight_passed`, not exit code alone: the reviewed CLI returns 0 on false. Make a narrow CLI fix/regression before automating it. It also briefly creates/removes a local write probe, so it is not strictly read-only.
+OpenAI 专用 preflight 退出码问题可单独修；免费路径不依赖它时，不把它作为前置阻塞。
 
-## Continue 04 after reconciliation
+## 测试按改动选择
 
-Select one **free-first** candidate route only after checking current access, quotas/billing, data handling and compatibility. No free provider is integrated in the reviewed branch. Reuse the runner, manifest and schemas; no broad provider framework or silent paid fallback.
+| 改动 | 足够的验证 |
+| --- | --- |
+| 文档、注释、交接 | 核对事实、链接和相互一致性；不跑 runtime suite，不写镜像测试 |
+| preflight 退出码 | mock 通过/失败两种结果，检查 JSON 与退出码 |
+| manifest 输入装配 | 三组件装配、引用展开、NPC 映射、评估答案未进入请求 |
+| 候选记录 | 一条首次失败、重试成功的 scripted sequence，核对两次输出与指标关联 |
+| 单一 adapter / prompt | adapter 的成功解析和具体接口失败；prompt 只测受影响案例 |
+| 共享 validator / runner / Contract 行为 | 跑受影响既有测试；确有跨组件风险时，在整合点完整回归一次 |
 
-Live calls require separate execution authorisation. Their deliverable is reproducible three-component P0 evidence and a proceed/fix/defer decision, not just connectivity. Four smoke cases do not replace the full baseline. Preserve sanitised candidates and first-pass/final quality evidence; do not pass expected answers to the model.
+首次建立执行环境且没有适用结果、共享链路有实质变化或版本整合时，才安排必要的全量离线回归。接手对话、文档更新或小补丁本身不触发全套。
 
-Keep Frozen semantics, Response Plan authority and eight Hard Safety Gates unchanged. Runtime validity is not fidelity; fixture truth is evaluation-only. Dialogue failure invents no action; headline failure preserves draft/blocks publication; NPC fallback preserves the plan. The lexical gate and consequence stub remain Experimental.
+已有有效证据标明版本与环境后复用。通过约定完成标准即停止；追加测试须说明要解决哪个尚存问题。保留已有边界测试，暂不做“大批删测试”的清理工程。
 
-The paid sheet stays `execution_authorized=false`. API-key configuration and old price estimates are not permission for model or token-count requests. Dify remains optional post-baseline feasibility. Do not create Unity, production backend, final canon/balance or P1/P2 here. The later product target is one separately authorised minimal playable loop.
+## 执行方式：少停顿，少流程
 
-## Smaller collaboration and completion loop
+- 在已授权任务内，普通实现、文档修订、仓库内隔离环境及按现有 requirements 安装依赖直接推进；不因这些可逆步骤重新申请同一权限。
+- 接手时一次核对仓库、分支、HEAD、相关本地改动和已有结果。无关 dirty files 不使整个任务停工；避开或隔离它们，只有重叠修改、归属不明或实际冲突才先解决。保留用户工作，不自动 reset、force-push 或丢弃改动。
+- 已有 retry/fallback 按冻结规则工作；一次失败先用结果定位，不默认叠加更多 validator、审批层或泛化防护。新增防护要对应已观察缺陷、明确外部输入边界或冻结要求。
+- 局部缺项记录后继续独立可做部分。普通实现留在当前 Master/实现流；仅共享语义、schema、AI/Response Plan 权限或 P0 范围变化需要专门决策。
+- 真实模型调用、支出、Unity 创建和破坏性操作按现有授权范围执行。确认一次具体批次后，在范围内连续完成；不把历史金额或已配置 key 当作新授权。
+- 八项 Hard Safety Gates、确定性状态权限与评估/运行时分离继续适用；不要求先证明任意自然语言都绝对正确才开展小样本实验。
 
-Use one active Master conversation and the existing local Codex implementation stream. Routine implementation stays in 04; 01-M2 handles only new shared Contract/schema/authority/P0 issues. Open another specialist thread only for a concrete need, not every sub-batch.
+## 读取、保存和交接
 
-Each handback contains: exact branch/commit/files; what changed; what was actually tested and its limits; next smallest action; local sync and Project Sources status. Update 06/07 together at substantive checkpoints. Do not create a new report or copy the whole history for every patch.
+先读 README、AGENTS、06/07；按改动补读相关 Contract/Decision Log 与代码。报告 09–11 和历史 fixture 按需引用，不全量重读。使用实际选中的 BTL-AI checkout；`F:/BTL-AI` 只是历史路径。确认无重叠冲突后正常 fetch / fast-forward pull；不为续接另造项目副本。
 
-## Required sync for this checkpoint
+交付只需：**成果及提交/文件、实际验证及限制、未解决问题、下一步、需要同步的副本**。有实质状态变化时一起更新 06/07；小补丁不新建报告、专项线程或逐项 Yes/No 检查单。
 
-Changed files: `README.md`, `AGENTS.md`, `docs/00_PROJECT_OVERVIEW.md`, `docs/06_CURRENT_STATE.md`, `docs/07_HANDOFF.md`.
-
-**Local sync: required, not performed here.** The current Windows path/branch/cleanliness remains unknown until inventory and safe pull.
-
-**Project Sources refresh:** replace `00_PROJECT_OVERVIEW.md`, `06_CURRENT_STATE.md`, `07_HANDOFF.md` after local sync. Refresh README/AGENTS too if they are uploaded Sources. Project freshness could not be verified; Library management cannot substitute for updating Project Sources.
-
-If no usable baseline Sources are present, restore the repository's existing Project Instructions, `01_PROJECT_DEFINITION.md`, `05_DECISION_LOG.md` and Frozen `08_AI_INTERACTION_CONTRACT.md` v0.1.1 too. The Instructions text file and the Project's instruction settings are separate surfaces.
-
-Decision Log/Contract change: **No**. Current State/Handoff: **Yes**. New specialist/Contract review: **not needed for this docs-only checkpoint**. No runtime/test/schema/paid-setting change, merge to main or historical-branch deletion.
-
-## Audit limit
-
-GitHub was read directly. The user's disk and Project Sources were inaccessible. No full-suite rerun, live-model call, paid request, local pull or Project refresh occurred in the 2026-09-19 Chat audit. Never report all copies as synchronised without new evidence.
+本次更新文件：README、AGENTS、06、07、`ChatGPT Project Instructions v1.1.txt`。本轮只核验 GitHub 并更新文档，没有执行 runtime 测试、模型请求或 Windows 本地同步。Project Sources 在下一次跨环境交接时刷新 06/07；README/AGENTS 如已上传也刷新，并同步项目中的 Instructions 设置。未实际完成的同步保持待办，不阻塞独立的仓库工作。
