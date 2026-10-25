@@ -10,7 +10,7 @@ Windows入口：`Builds/BTL-Internal-0.4.0-Windows/BTL.exe`；分发包`Builds/B
 
 U5b真人观察尚未执行，[记录表](planning/2026-10-25-sol/FIRST_READER_NOTES.md)已备好；实际时长、乐趣、IME组合和其他电脑仍待证。GitHub公开已完成：[BenCCCCCCCCC/BTL-AI](https://github.com/BenCCCCCCCCC/BTL-AI)，2026-10-26 03:12（Australia/Sydney；UTC 2026-10-25 16:12:43）连接器get_repo回读`visibility: public`。用户登录内置浏览器后，按已记录授权在Settings执行可见性修改，[页面凭据](planning/2026-10-25-sol/verification/u5a/github-public.jpg)已保存。没有公开失败遗留。
 
-活动分支/HEAD从本地Git文件核对为`prototype/technical-prototype-01` / `10c969a78bfbe889f5f8c15e923620e821c23ef2`；公开前浏览器核对远端五分支及实施分支同一HEAD。定向读取本地可达历史342个blob版本及3个归档，未发现所查高置信凭据签名/私密配置文件名，结论范围限此；不是安全认证。没有commit/push/pull或Sources刷新，本地0.4.0交付尚未同步远端。下一步是首次读者观察和明确范围的源码同步，复制范围见07。
+2026-10-26用户明确要求push，现已提交并推送到活动分支`prototype/technical-prototype-01`。源码交付提交为[`4cddf5f`](https://github.com/BenCCCCCCCCC/BTL-AI/commit/4cddf5fb1fbd6bc8b89b33d39b6d5d4156038e35)，209文件包含0.4.0与其此前未同步的脚本、作者数据、Unity底座、资源和文档依赖；远端由`10c969a`正常推进到该提交。此后文档提交记录同步回执，当前HEAD以Git为准。提交前核对209路径及3个来源归档，无所查高置信凭据签名；Builds、缓存、logs及本机配置未入库。未pull、合并main或刷新Project Sources；未新增运行测试或模型调用。下一步为U5b首次读者观察，已有工作副本按07同步。
 
 ## 上一规划：U5首案体验定型长任务（已进入实施）
 

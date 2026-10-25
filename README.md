@@ -8,7 +8,7 @@ A PC-first, 2D narrative journalism game: investigate, question NPCs in free tex
 
 **Unity U5a experience build 0.4.0 is delivered locally:** [Play and rebuild](unity/README.md). Character stakes now carry from first meetings to publication aftermath; the final investigation slot shows the actual opportunity cost. Full scripted expression cards, complete intent review, concrete character scenes and a shorter reading flow connect to the current-run recap. Independent chapter1.1/presentation1.2 preserve the old content and deterministic evidence rules. [Actual checks and screenshots](docs/planning/2026-10-25-sol/verification/u5a/README.md) distinguish the full native route from final focused UI inspection. No model calls or unrelated historical suites were added.
 
-The Windows package is `Builds/BTL-Internal-0.4.0-Windows.zip`; 0.3.0 remains available locally. U5b first-reader observation is pending; use the [reader notes](docs/planning/2026-10-25-sol/FIRST_READER_NOTES.md). The [GitHub repository](https://github.com/BenCCCCCCCCC/BTL-AI) is now **public**, confirmed by the connector on 2026-10-26 (Australia/Sydney). Local 0.4.0 delivery has not been committed or pushed; see [handoff](docs/07_HANDOFF.md) for the sync scope.
+The Windows package is `Builds/BTL-Internal-0.4.0-Windows.zip`; 0.3.0 remains available locally. U5b first-reader observation is pending; use the [reader notes](docs/planning/2026-10-25-sol/FIRST_READER_NOTES.md). The [GitHub repository](https://github.com/BenCCCCCCCCC/BTL-AI) is **public**. The complete 0.4.0 source delivery was committed and pushed to `prototype/technical-prototype-01` on 2026-10-26; see [handoff](docs/07_HANDOFF.md) for the sync scope. Windows packages remain local and are not included in Git.
 
 **Unity U3–U4 internal playtest 0.3.0 is available:** [Unity project and Windows launch instructions](unity/README.md) connect the complete first case, both main investigations and follow-ups, Chinese interview confirmation, five evidence items, 12 authored headlines, publication/withholding, character consequences and a current-run recap. Three original pixel scenes, three portraits and a licensed Chinese font ship in `Builds/BTL-Internal-Windows/`. A standalone B→S-B→H10 route was played through publication, recap and restart; new presentation checks passed. No new model calls or unrelated historical suites were run. See [current state](docs/06_CURRENT_STATE.md) and [handoff](docs/07_HANDOFF.md).
 
@@ -20,7 +20,7 @@ A **scripted playable first chapter v1.0** now connects the existing original ut
 
 Current Unity authoring uses [chapter1.1](ai/content/railyard_chapter.v1.1.json) and [presentation1.2](ai/content/railyard_presentation.v1.2.json). The [prior chapter](ai/content/railyard_chapter.v1.0.json), [old fixture](tests/fixtures/railyard_story.experimental.v0.1.json) and their rules are retained. Python remains Experimental; Unity owns its runtime state and Frozen v0.1.1 is unchanged.
 
-Recorded branch: `prototype/technical-prototype-01`, HEAD `10c969a78bfbe889f5f8c15e923620e821c23ef2`. This checkpoint did not retry the previously declined Git queries, commit, push or pull; existing local work is preserved.
+Active branch: `prototype/technical-prototype-01`. Source delivery commit: [`4cddf5f`](https://github.com/BenCCCCCCCCC/BTL-AI/commit/4cddf5fb1fbd6bc8b89b33d39b6d5d4156038e35); subsequent documentation records the sync receipt. No pull or main-branch merge was performed.
 
 ## Play the local story
 

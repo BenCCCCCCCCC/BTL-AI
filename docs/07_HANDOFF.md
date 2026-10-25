@@ -12,9 +12,9 @@
 
 **GitHub公开：** 已完成[BenCCCCCCCCC/BTL-AI](https://github.com/BenCCCCCCCCC/BTL-AI)的public变更。用户登录内置浏览器后，按既有授权在Settings完成可见性确认；连接器get_repo于2026-10-26 03:12（Australia/Sydney；UTC 2026-10-25 16:12:43）回读`visibility: public`。凭据为[设置截图](planning/2026-10-25-sol/verification/u5a/github-public.jpg)。公开前核对五个远端分支、实施分支HEAD与本地一致；扫描本地可达342个blob版本/3个归档，无所查凭据签名/私密配置文件名发现。连接器无可见性工具、CLI无非交互凭据及Edge授权超时均已通过用户登录内置浏览器解决；没有获取账号凭据或改历史。
 
-**版本与同步：** 本地Git文件核对活动分支`prototype/technical-prototype-01`、HEAD `10c969a78bfbe889f5f8c15e923620e821c23ef2`，浏览器确认远端实施分支同一HEAD，未重试status命令。没有commit/push/pull或Sources刷新，当前0.4.0新内容仅本地；公开的是既有远端内容。下一动作是用0.4.0做U5b首次读者观察；源码同步按下方清单单独处理，不批量提交此前全部本地工作。
+**版本与同步：** 2026-10-26用户明确要求push后，核对实际分支、HEAD及本地改动，提交[`4cddf5f`](https://github.com/BenCCCCCCCCC/BTL-AI/commit/4cddf5fb1fbd6bc8b89b33d39b6d5d4156038e35)并成功推送到`origin/prototype/technical-prototype-01`，远端由`10c969a`正常推进。209文件覆盖0.4.0和此前未同步的必要脚本、作者数据、Unity底座/资源、证据及文档，已逐项核对范围；本段回执随后单独提交，当前HEAD以Git为准。提交前检查209路径、3个来源归档，无所查高置信凭据签名；Git空白检查仅报告序列化资源尾随空格及C#文件末尾空行，未为此改动运行文件。实际push使用现有Git凭据管理器成功；未pull、强推、合并main、上传Builds、发布Release或刷新Project Sources，也未重跑游戏测试/新增模型请求。下一动作仍为0.4.0的U5b首次读者观察。
 
-**复制清单：** 新`ai/content/railyard_chapter.v1.1.json`、`railyard_presentation.v1.2.json`，对应Generated及.meta；修改Core、Presentation、USS、BtlProductionTools，新增BtlExperienceChecks及.meta；Main、ProjectSettings；README、unity/README、06/07、主规划/制作计划/规划索引、作者稿第18节、FIRST_READER_NOTES及verification/u5a。保留旧数据、fixtures、资产与本地工作。Builds和logs不入Git；试玩zip单独传递。临时制作/打包/公开核对脚本在忽略的logs，不作为运行依赖。
+**复制清单：** 以上源码已在远端实施分支；其他工作副本同步该分支及后续回执文档提交，保留各自本地工作，不再依赖逐份复制。首次取用需完整保留`ai/`、`tests/`、`tools/`、Unity的Assets及.meta、Packages、ProjectSettings与配套文档。Builds和logs不入Git；试玩zip仍须单独传递。临时制作/打包/公开核对脚本在忽略的logs，不作为运行依赖；本机MCP环境另行准备。云端Project Sources如需跟进仍要单独刷新。
 
 交付收尾已核对10份相关文档的174个本地链接目标，无缺失；两份新源与Generated逐字节一致、新资源/检查脚本均有.meta，zip散列与交付记录一致。最终编译未发现C#错误。没有为此重跑行为套件。
 
