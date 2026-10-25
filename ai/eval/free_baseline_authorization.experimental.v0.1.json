@@ -1,0 +1,40 @@
+{
+  "batch_id": "groq-p0-20261025-01",
+  "authorization_status": "COMPLETED",
+  "execution_authorized": false,
+  "authorization_evidence": "User approved this exact batch on 2026-10-25 and confirmed Free tier in the launcher; the batch completed with 8 HTTP requests.",
+  "free_tier_confirmed": true,
+  "provider": "Groq",
+  "model": "openai/gpt-oss-20b",
+  "base_url": "https://api.groq.com/openai/v1",
+  "case_ids": [
+    "dialogue-d18-valid",
+    "headline-t01-four-claims",
+    "headline-t02-zero-claims",
+    "headline-t10-single-claim",
+    "npc-n01-valid-answer"
+  ],
+  "max_generation_requests": 10,
+  "max_completion_tokens_per_request": 2048,
+  "minimum_request_interval_seconds": 30,
+  "budget_usd": 0,
+  "paid_fallback_allowed": false,
+  "output_path": "ai/eval/output/groq-p0-20261025-01.jsonl",
+  "notes": [
+    "Five initial requests; at most one existing runner retry per case. All HTTP attempts count, including errors.",
+    "No SDK retries, token-count, search, tools or separate connectivity requests.",
+    "Completed: never rerun this batch or treat the unused request allowance as a new approval.",
+    "Evidence and matching source snapshot preserved in ai/eval/evidence/.",
+    "The story fixture is offline and is not included in this five-case live batch."
+  ],
+  "official_sources_checked": "2026-10-25 Australia/Sydney",
+  "sources": [
+    "https://console.groq.com/docs/structured-outputs",
+    "https://console.groq.com/docs/rate-limits",
+    "https://console.groq.com/docs/billing-faqs",
+    "https://console.groq.com/docs/your-data"
+  ],
+  "free_tier_confirmation_source": "User typed FREE in the local launcher",
+  "actual_generation_requests": 8,
+  "result_sha256": "95a7e34fec0205e0127541f2caddbed70eaabf12f93b0d67d81c4c934217049b"
+}

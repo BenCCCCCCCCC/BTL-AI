@@ -1,0 +1,28 @@
+{
+  "provider": "Groq",
+  "model": "openai/gpt-oss-20b",
+  "base_url": "https://api.groq.com/openai/v1",
+  "max_completion_tokens_per_request": 2048,
+  "minimum_request_interval_seconds": 30,
+  "budget_usd": 0,
+  "paid_fallback_allowed": false,
+  "batch_id": "groq-d18-20261025-03",
+  "authorization_status": "COMPLETED",
+  "execution_authorized": false,
+  "authorization_evidence": "User explicitly approved D18 only, Groq Free tier openai/gpt-oss-20b, at most 2 requests, 2048 completion tokens each and USD 0 on 2026-10-25.",
+  "free_tier_confirmed": true,
+  "free_tier_confirmation_source": "Same Free tier explicitly confirmed earlier today in the user-run launcher; user again specified Free tier for this batch.",
+  "case_ids": [
+    "dialogue-d18-valid"
+  ],
+  "max_generation_requests": 2,
+  "output_path": "ai/eval/output/groq-d18-20261025-03.jsonl",
+  "notes": [
+    "Dialogue prompt/context v0.3 only. No successful Headline or NPC reruns.",
+    "At most one normal runtime-failure retry; semantic fidelity is evaluation-only and never triggers retry.",
+    "No paid fallback, probes, token-count or tool calls. No story/model calls beyond this D18 authorization.",
+    "Completed: one first attempt, runtime PASS and semantic fidelity PASS, all three tactics and PHOTO_01 retained. No retry or fallback. Unused allowance does not authorize another request."
+  ],
+  "actual_generation_requests": 1,
+  "result_sha256": "8de084cbccea36fdfddea911e3a0fbab1b4c895df461ebd0c05e33a0c83c941d"
+}

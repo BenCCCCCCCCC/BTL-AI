@@ -1,0 +1,102 @@
+{
+  "version": "0.1",
+  "status": "Experimental / Validation-only / Non-canonical",
+  "title": "截稿前的货场",
+  "event_id": "EVENT_RAILYARD_CLASH",
+  "source_fixtures": ["02A_SEMANTIC_TARGET_CATALOGUE_FIXTURE.md", "02B_EVIDENCE_CLAIM_RULES_FIXTURE.md", "02C_NPC_STATE_CHARACTER_CARD_SCHEMA_FIXTURE.md"],
+  "premise": "货场冲突后，你必须决定晚报如何报道。目击者坚持安保先开火，但另一段录像可能推翻他的说法。截稿前只来得及追加一项调查：核查录像，或追查资金。",
+  "author_only_oracle": {"PROP_FIRE_FIRST": "MILITIA", "PROP_FUNDED_OPERATION": "COMPANY_A"},
+  "characters": {
+    "NPC_WITNESS_A": {"label": "目击者 A", "role": "货场冲突目击者", "voice": "简短、谨慎，坚持自己的观察。", "authorised_statement": "安保先开火。", "knowledge_limit": "只讲自己声称看到的开火经过，不知道资金来源。"},
+    "NPC_CLERK_A": {"label": "账房 A", "role": "保管付款账簿的文员", "voice": "正式、克制，担心交出账簿。", "knowledge_limit": "知道账簿记录，不知道谁先开火。"}
+  },
+  "evidence": {
+    "EV_AUDIO_A": "采访录音：目击者 A 称安保先开火。录音能证明他说过什么，不自动证明他说的是真的。",
+    "EV_VIDEO_A": "现场录像：画面呈现民兵先开火。",
+    "EV_LEDGER_A": "付款账簿：含 Company A 为行动付款的记录。"
+  },
+  "initial_money": 600,
+  "nodes": {
+    "interview": {
+      "text": "目击者 A：『我看到安保先开火。你们会把我的话登出来吗？』",
+      "choices": [
+        {"id": "record", "label": "说明采访用途，记录他的原话。", "next": "followup", "grant_evidence": ["EV_AUDIO_A"], "grant_sources": ["SRC_WITNESS_A"]},
+        {"id": "pressure", "label": "施压：『我会把你的名字写出来，你最好说清楚。』", "next": "followup", "grant_evidence": ["EV_AUDIO_A"], "grant_sources": ["SRC_WITNESS_A"], "event": "PRESSURE_SOURCE", "response": "『我说的就是这些。别再来找我。』他停止配合，但没有改变开火说法。"},
+        {"id": "leave", "label": "不采用这次采访，直接追加调查。", "next": "followup"}
+      ]
+    },
+    "followup": {
+      "text": "编辑提醒：只剩最后一段调查时间。核查开火顺序，还是追查行动资金？",
+      "choices": [
+        {"id": "video", "label": "核查现场录像。", "next": "publication", "grant_evidence": ["EV_VIDEO_A"], "response": "录像显示民兵先开火；它与目击者说法冲突。"},
+        {"id": "clerk", "label": "去找保管付款账簿的文员。", "next": "clerk"},
+        {"id": "desk", "label": "立即回编辑台，按当前材料写标题。", "next": "publication"}
+      ]
+    },
+    "clerk": {
+      "text": "账房 A 把账簿压在手下：『我不能随便把它交给你。』",
+      "choices": [
+        {"id": "request", "label": "请求交出账簿。", "next": "publication", "response": "『不行。』他拒绝交付；你没有取得账簿。"},
+        {"id": "offer500", "label": "提出已设计的交易：支付 500 取得账簿。", "next": "deal", "response": "他接受这项交易条件，等你确认付款。"},
+        {"id": "walk_away", "label": "放弃账簿，返回编辑台。", "next": "publication"}
+      ]
+    },
+    "deal": {
+      "text": "待确认交易 PENDING_LEDGER_500：支付 500，取得账簿。300 或其他自由条件未开放。",
+      "choices": [
+        {"id": "accept", "label": "确认付款。", "next": "publication", "grant_evidence": ["EV_LEDGER_A"], "event": "BUY_LEDGER"},
+        {"id": "refuse", "label": "拒绝交易。", "next": "publication"}
+      ]
+    },
+    "publication": {
+      "text": "整理标题。此版本用预写标题映射测试分支；真实自由输入随后接入，当前不调用模型。",
+      "choices": [
+        {"id": "militia", "label": "民兵在货场率先开火", "headline_id": "militia", "next": "confirm"},
+        {"id": "security", "label": "安保在货场率先开火", "headline_id": "security", "next": "confirm"},
+        {"id": "attributed", "label": "目击者称安保率先开火", "headline_id": "attributed", "requires_evidence": ["EV_AUDIO_A"], "next": "confirm"},
+        {"id": "funding", "label": "Company A 为货场行动提供资金", "headline_id": "funding", "next": "confirm"},
+        {"id": "neutral", "label": "城市等待答案", "headline_id": "neutral", "next": "confirm"},
+        {"id": "hold", "label": "暂缓刊发，继续调查。", "ending": "HELD"}
+      ]
+    },
+    "confirm": {
+      "text": "请复核标题：直接陈述责任与引用他人说法承担不同的报道责任。你可以修改，也可以照常发布。",
+      "choices": [
+        {"id": "edit", "label": "返回修改。", "next": "publication"},
+        {"id": "publish", "label": "照常发布。", "publish": true}
+      ]
+    }
+  },
+  "headlines": {
+    "militia": {"text": "民兵在货场率先开火", "claims": [{"target_id": "PROP_FIRE_FIRST", "value_id": "MILITIA", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"}]},
+    "security": {"text": "安保在货场率先开火", "claims": [{"target_id": "PROP_FIRE_FIRST", "value_id": "SECURITY_FORCES", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"}]},
+    "attributed": {"text": "目击者称安保率先开火", "claims": [{"target_id": "PROP_FIRE_FIRST", "value_id": "SECURITY_FORCES", "polarity": "AFFIRM", "commitment_mode": "ASSERTED", "source_ref_id": "SRC_WITNESS_A"}]},
+    "funding": {"text": "Company A 为货场行动提供资金", "claims": [{"target_id": "PROP_FUNDED_OPERATION", "value_id": "COMPANY_A", "polarity": "AFFIRM", "commitment_mode": "ASSERTED"}]},
+    "neutral": {"text": "城市等待答案", "claims": []}
+  },
+  "relationships": [
+    {"id": "R-A01", "evidence": "EV_AUDIO_A", "dimension": "ATTRIBUTION", "target_id": "PROP_FIRE_FIRST", "value_id": "SECURITY_FORCES", "source_ref_id": "SRC_WITNESS_A", "effect": "SUPPORTS"},
+    {"id": "R-U01", "evidence": "EV_AUDIO_A", "dimension": "UNDERLYING", "target_id": "PROP_FIRE_FIRST", "value_id": "SECURITY_FORCES", "effect": "SUPPORTS"},
+    {"id": "R-U02", "evidence": "EV_VIDEO_A", "dimension": "UNDERLYING", "target_id": "PROP_FIRE_FIRST", "value_id": "SECURITY_FORCES", "effect": "CONTRADICTS"},
+    {"id": "R-U03", "evidence": "EV_VIDEO_A", "dimension": "UNDERLYING", "target_id": "PROP_FIRE_FIRST", "value_id": "MILITIA", "effect": "SUPPORTS"},
+    {"id": "R-U04", "evidence": "EV_LEDGER_A", "dimension": "UNDERLYING", "target_id": "PROP_FUNDED_OPERATION", "value_id": "COMPANY_A", "effect": "SUPPORTS"}
+  ],
+  "events": {
+    "PRESSURE_SOURCE": {"Threat Level": 1},
+    "BUY_LEDGER": {"Money": -500},
+    "SUPPORTED_REPORT": {"Reputation": 1, "Public Opinion": 1},
+    "UNSUPPORTED_REPORT": {"Reputation": -1},
+    "CONTESTED_ATTRIBUTION": {},
+    "NO_CLAIM": {},
+    "HELD": {}
+  },
+  "endings": {
+    "SUPPORTED_REPORT": "报道按发布时的材料获得支持。编辑保留证据出处；这不代表报道已被证明为永远正确。",
+    "UNSUPPORTED_REPORT": "报道发布后，编辑要求说明依据并准备补充或更正。直接断言的责任由你承担。",
+    "CONTESTED_ATTRIBUTION": "你准确记录了目击者的说法，但录像提出相反证据。编辑要求后续报道说明争议；来源说过，不等于事实成立。",
+    "NO_CLAIM": "标题没有提出具体责任主张。没有发生实质报道后果，调查仍待继续。",
+    "HELD": "你错过这一版的刊发，但保留了调查空间。本测试不自动扣钱或改变其他变量。"
+  },
+  "later_update": "若你仅凭录音发布了安保先开火的标题，次日出现的录像会迫使你跟进，但不得重写原来的发布时证据评估。",
+  "limits": "固定短故事、固定 ASSERTED/AFFIRM 标题。R-U01 继承 02B 的实验性单目击者支持规则，不是最终新闻学政策。所有数值仅为占位。"
+}

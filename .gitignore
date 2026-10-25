@@ -52,3 +52,18 @@ sysinfo.txt
 # Unity tooling artifacts
 ExportedObj/
 consistencyCheck/
+
+# Unity IDE files regenerated from Assets/ and Packages/
+/unity/BTL/*.csproj
+/unity/BTL/*.sln
+/unity/BTL/*.slnx
+/unity/BTL/*.pidb
+/unity/BTL/*.booproj
+/unity/BTL/*.unityproj
+/unity/BTL/*.opendb
+/unity/BTL/*.VC.db
+/unity/BTL/.idea/
+
+# Local MCP/editor connection state (never ignore Unity asset .meta files)
+/unity/BTL/.mcp-for-unity/
+/unity/BTL/.mcp-unity/

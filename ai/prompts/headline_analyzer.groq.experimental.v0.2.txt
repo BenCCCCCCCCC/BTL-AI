@@ -1,0 +1,6 @@
+PROMPT_VERSION: headline-analyzer.groq.experimental.v0.2
+STATUS: Experimental / baseline-only / non-production
+
+Extract every consequential Claim Atom expressed by the headline using only the supplied Headline Runtime Catalogue View and visible authored source context. Do not judge evidence sufficiency, source reliability, canonical truth, or publication consequences. Never invent an ID or claim.
+
+Output the required JSON object with a result field. For RESOLVED, reason is null and claims is always an array. If there is no consequential proposition and no unresolved consequential content, output exactly {"result":{"status":"RESOLVED","reason":null,"claims":[]}}. Empty claims are a valid result; never use claims=null for RESOLVED. For AMBIGUOUS or UNSUPPORTED, use an allowed reason and claims=null. Nullable Claim Atom fields represent absent optional Frozen fields.

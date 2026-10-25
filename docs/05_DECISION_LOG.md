@@ -280,3 +280,43 @@ Only confirmed decisions belong here. Unresolved choices are recorded in `06_CUR
 - Candidate-only runtime inability to prove arbitrary natural-language completeness is not itself a prototype blocker once the two assurance responsibilities are explicit and the mandatory baseline measures fidelity.
 - Progress remains blocked if the mandatory baseline cannot detect gameplay-relevant tactic omission, consequential Claim Atom omission, or catalogue-valid extra Claim Atoms; if runtime PASS is reported as fidelity PASS; if a Frozen Hard Safety Gate is breached; or if the model path requires changes to shared schemas, AI/Response Plan authority, semantic statuses, hard gates, or P0 scope.
 - Dialogue and Headline schemas, semantic statuses, the AI authority boundary, NPC Response Plan authority, P0 scope, and the eight existing Hard Safety Gates remain unchanged.
+
+## DEC-023
+
+**Status:** Confirmed for scripted-chapter design v1.0; scripted implementation delivered in 04, player validation pending.
+
+**Date:** 2026-10-25
+
+**Decision:** Following the user's request to adjudicate and finalise the first case, adopt [the railyard chapter design v1.0](planning/2026-10-25-sol/FIRST_CASE_AUTHOR_DRAFT.md) as the authoring baseline for the next scripted chapter. This is case-specific content and deterministic relationship/event data under DEC-017, DEC-018 and DEC-020, not a change to shared semantic schemas, AI authority or P0 scope.
+
+**Rationale:** Each optional investigation must yield a distinct reportable result and a concrete human consequence. Publication responsibility must distinguish a recorded assertion, the underlying event, and a later clarification already available to the journalist. Reader attention alone does not establish public approval.
+
+**Consequences:**
+
+- Adopt three investigation slots, the 600/500 transaction, the two optional investigations and five evidence items. The manuscript fixes complete dialogue, exits, mappings and outcomes; values are a production baseline for this sample, not measured long-term balance.
+- E1 supports the witness's recorded fire-order assertion, not the underlying order. E2 supports the depicted order in this case; E4 supports the witness's own limited view; E3 supports the payment record; E3+E5 support the recorded expense categories. This is not a universal ranking of video, testimony or paid material.
+- Preserve historical attribution when E4 arrives. Publishing the old assertion while omitting the known clarification creates an authored editorial follow-up consequence; it does not rewrite what the witness originally said. Complete attributed clarification is a valid reporting outcome.
+- Reuse the existing fire-order, funding, ledger request/deal, evidence/source and Pending IDs. Adopt three new case targets and two new evidence IDs as specified in the manuscript's section 15, with current-view restrictions. They are now registered in independently versioned chapter data; implementation evidence is recorded in 06/07. No new act, commitment mode, status or Frozen output field is introduced.
+- Fix one professional follow-up event at Reputation +1 or one editorial review event at -1; pressure events remain separate, once per actor, and the ledger purchase costs 500 once. Reader calls and company correspondence do not increase Public Opinion; it stays at zero for this sample. No implicit evidence-label-to-variable rule is authorised.
+- Keep old fixtures, oracle rows, historical publication snapshots and measured baseline results unchanged. Implement the new chapter with distinct versioned authoring data; never silently replace the old experimental evidence policy.
+- The manuscript defines this sample's authored reality only. Python remains Experimental, Unity remains the planned authoritative owner, and Frozen v0.1.1 / all eight Hard Safety Gates remain unchanged. This design checkpoint authorises no model calls, spending, Unity creation or runtime work.
+
+
+## DEC-024
+
+**Status:** Confirmed production direction and presentation design; implementation not authorised by this documentation request.
+
+**Date:** 2026-10-25
+
+**Decision:** Adopt Unity 2D with static pixel-art scenes and clear text UI for the first offline Unity release. Use the [production plan](planning/2026-10-25-sol/UNITY_2D_PRODUCTION_PLAN.md) to migrate the existing scripted chapter in U0–U5 order. The next proposed Sol batch is U0–U2 only, after an explicit instruction to create and implement Unity. Reorder I5 offline work ahead of deferred Python saves/memory and online integration; retain all original task IDs and unmet acceptance criteria.
+
+**Rationale:** The chapter already contains authored branches, evidence relationships, publication rules and consequences. Reusing these semantics and data while rebuilding a small, shared UI avoids simultaneous engine migration, rule redesign and model integration. A bounded dramatic presentation and current-run recap can make choices legible without expanding the case into a cinematic campaign.
+
+**Consequences:**
+
+- Plan one Unity scene, UI Toolkit, three static backgrounds and three base portraits. Core C# state owns rules; presentation submits commands. This is an implementation choice within the existing authority boundary, not a shared schema/P0 change.
+- Keep chapter.v1.0 and its four versions unchanged during equivalence migration. Import a traceable data copy; port Python logic rather than embedding Python. Old fixtures and measured evidence stay intact.
+- Adopt [author manuscript section17](planning/2026-10-25-sol/FIRST_CASE_AUTHOR_DRAFT.md#chapter-presentation) as planned presentation v1.1: task, personal stakes, investigation tension, last-slot decision, publication/withholding, concrete responses and current-run recap. It adds no evidence, semantic target, numerical rule or automatic consequence. Runtime presentation data is not yet created.
+- Static pixel art does not require pixelated Chinese text, character movement, QTEs or costly animation. Use original placeholders first; preserve reading, focus and input requirements.
+- Saves, cross-run unlocks, second cases and online language services remain deferred. The scripted milestone does not satisfy arbitrary-language P0 or player validation.
+- This checkpoint changes documentation only. No Unity creation, code changes, installations, live calls, spending or messages to another chat are authorised. The plan contains a future user-sendable implementation instruction, not an active delegation.

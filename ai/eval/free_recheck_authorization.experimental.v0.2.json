@@ -1,0 +1,31 @@
+{
+  "provider": "Groq",
+  "model": "openai/gpt-oss-20b",
+  "base_url": "https://api.groq.com/openai/v1",
+  "max_completion_tokens_per_request": 2048,
+  "minimum_request_interval_seconds": 30,
+  "budget_usd": 0,
+  "paid_fallback_allowed": false,
+  "batch_id": "groq-p0-20261025-02",
+  "authorization_status": "COMPLETED",
+  "execution_authorized": false,
+  "authorization_evidence": "User explicitly approved the three-case recheck on 2026-10-25, maximum 6 requests and USD 0.",
+  "free_tier_confirmed": true,
+  "case_ids": [
+    "dialogue-d18-valid",
+    "headline-t02-zero-claims",
+    "npc-n01-valid-answer"
+  ],
+  "max_generation_requests": 6,
+  "output_path": "ai/eval/output/groq-p0-20261025-02.jsonl",
+  "notes": [
+    "Only the three failed cases from groq-p0-20261025-01; new v0.2 Groq prompts/wire schemas/NPC context.",
+    "Three initial requests; at most one existing runner retry per case; SDK retries disabled.",
+    "USD 0, confirmed Free tier only; no paid fallback, probes, tools or token-count calls.",
+    "Explicitly approved as a separate three-case batch; keep original groq-p0-20261025-01 closed.",
+    "Completed with three first attempts; no runtime retry. Dialogue runtime PASS but fidelity FAIL. Unused allowance is not a new batch approval."
+  ],
+  "free_tier_confirmation_source": "Same Groq Free tier confirmed by user in the local launcher for groq-p0-20261025-01 earlier in this session.",
+  "actual_generation_requests": 3,
+  "result_sha256": "01ac998c7bb16c3f5ff6782a10330eb524a0988a88c12e4717bc11484e0b6fc2"
+}

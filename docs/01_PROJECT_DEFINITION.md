@@ -22,7 +22,7 @@ Create a polished, AI-assisted narrative journalism game that combines authored 
 4. Make authored narrative choices.
 5. Resolve deterministic consequences in the game state.
 
-Specific story content and day-by-day structure remain to be authored.
+The first railyard case now has a versioned authored design and an Experimental scripted implementation under DEC-023. Later cases and the full day-by-day structure remain to be authored. The Unity presentation plan adds authored dramatic beats and a current-run recap without changing the existing case rules.
 
 ## Vertical slice scope
 
@@ -70,6 +70,8 @@ AI headline analysis is a P0 feature. It supports the player’s interpretation 
 ## Technology direction
 
 - Unity is planned as the game client and authoritative owner of state/rules.
+- The first Unity release uses static pixel-art scenes with clear, high-resolution Chinese text and interface-driven choices, following [DEC-024](05_DECISION_LOG.md#dec-024) and the [production plan](planning/2026-10-25-sol/UNITY_2D_PRODUCTION_PLAN.md). It is an offline scripted milestone; arbitrary-text AI/P0 goals remain later work, not completed or removed.
+- The first migration uses one scene and reusable UI, preserving the existing case data and deterministic policies. Multi-protagonist cinematics, free movement, QTEs and a full campaign are outside that release.
 - Dify is planned as an AI orchestration and prototyping layer.
 - Dify implementation and integration have not yet been validated.
 - Backend/API architecture remains undecided.

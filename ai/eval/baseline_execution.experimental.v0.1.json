@@ -1,0 +1,32 @@
+{
+  "version": "0.1",
+  "status": "Experimental / Validation-only / Non-canonical",
+  "description": "Authored execution context and fallback text; never send fallback/example/oracle text to a model.",
+  "catalogue_context": {
+    "DIALOGUE_01A_D18": {
+      "target_descriptions": {"REVEAL_PAYMENT_PAYER": "Ask the recipient to reveal who paid them."},
+      "visible_evidence": [{"evidence_id": "PHOTO_01", "description": "The photo explicitly referenced by the player; contents are not supplied."}]
+    },
+    "HEADLINE_01B": {
+      "target_descriptions": {
+        "FIRE_FIRST": "Which force fired first in the operation.",
+        "ORDERED_OPERATION": "Who ordered the operation.",
+        "FUNDED_OPERATION": "Who funded the operation.",
+        "CIVILIAN_DEATH_CAUSE": "Which force caused the civilian deaths."
+      },
+      "visible_sources": [
+        {"source_ref_id": "SRC_WITNESS_A", "label": "Witness A"},
+        {"source_ref_id": "SRC_POLICE", "label": "Police"},
+        {"source_ref_id": "SRC_MAYOR", "label": "Mayor"}
+      ]
+    }
+  },
+  "npc_fallbacks": {
+    "NPC_N01": "Company A paid me.",
+    "NPC_N12": "I saw a vehicle. The vehicle left the warehouse.",
+    "NPC_N13": "I saw a vehicle.",
+    "NPC_N11": "Company A contacted me.",
+    "NPC_E06": "I have nothing further to add.",
+    "NPC_N14": "I have nothing further to add."
+  }
+}

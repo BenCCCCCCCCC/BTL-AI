@@ -1,0 +1,872 @@
+{
+  "version": "RAILYARD_CHAPTER_1.0",
+  "catalogue_version": "RAILYARD_CHAPTER_CATALOGUE_1.0",
+  "support_version": "RAILYARD_CHAPTER_SUPPORT_1.0",
+  "consequences_version": "RAILYARD_CHAPTER_CONSEQUENCES_1.0",
+  "status": "Experimental / scripted chapter / no model calls",
+  "initial_money": 600,
+  "investigation_slots": 3,
+  "scripts": {
+    "N10": [
+      {
+        "id": "record",
+        "label": "如实询问",
+        "text": "我会记录你的原话，但现在不能保证怎么刊。你看到谁先开火？",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "QUESTION",
+          "tactics": [],
+          "evidence_ref_ids": [],
+          "target_id": "PROP_FIRE_FIRST"
+        },
+        "response": "阿岑：我看到安保先开火。我看见他们举枪，跟着就响了。我能讲我看见的，别替我添别的。",
+        "grant": "EV_AUDIO_A",
+        "finish": true
+      },
+      {
+        "id": "pressure",
+        "label": "身份施压",
+        "text": "你最好把顺序说清楚，否则我会把你的名字写出来。",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "QUESTION",
+          "tactics": [
+            "THREAT"
+          ],
+          "evidence_ref_ids": [],
+          "target_id": "PROP_FIRE_FIRST"
+        },
+        "response": "阿岑：我说安保先开火。你记下就行。别再来问我，我也不会再跟你说。",
+        "grant": "EV_AUDIO_A",
+        "variant": "pressure",
+        "pressure": "witness",
+        "finish": true
+      },
+      {
+        "id": "compound",
+        "label": "复合策略",
+        "text": "你似乎在隐瞒，你在误导我。是谁先开火？不说清楚我就公开你的名字。",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "QUESTION",
+          "tactics": [
+            "INDIRECT_PROBE",
+            "ACCUSATION",
+            "THREAT"
+          ],
+          "evidence_ref_ids": [],
+          "target_id": "PROP_FIRE_FIRST"
+        },
+        "response": "阿岑：我说安保先开火。你记下就行。别再来问我，我也不会再跟你说。",
+        "grant": "EV_AUDIO_A",
+        "variant": "pressure",
+        "pressure": "witness",
+        "finish": true
+      },
+      {
+        "id": "ask_payer",
+        "label": "询问资金",
+        "text": "你知道谁付了行动的钱吗？",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "QUESTION",
+          "tactics": [],
+          "evidence_ref_ids": [],
+          "target_id": "PROP_FUNDED_OPERATION"
+        },
+        "response": "阿岑：不知道。我没看账，也没参加他们的安排。"
+      },
+      {
+        "id": "ambiguous",
+        "label": "含糊表达",
+        "text": "他说的那个呢？",
+        "candidate": {
+          "status": "AMBIGUOUS",
+          "reason": "AMBIGUOUS_REFERENCE"
+        }
+      }
+    ],
+    "N40": [
+      {
+        "id": "position",
+        "label": "核对位置",
+        "text": "第一声响的时候，你站在哪里，面前有什么？",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "QUESTION",
+          "tactics": [],
+          "evidence_ref_ids": [],
+          "target_id": "PROP_WITNESS_FIRST_SHOT_VIEW"
+        },
+        "response": "阿岑：就在这里。那辆货车还没开走。我先听见响，转过头，才看见安保开枪。民兵那一边被车挡住了。\n\n阿岑：你保留前面那段吧。我当时确实那么说了。现在这段也记上：我没有看见第一声枪响从哪边出来。\n\n别把我写成看到了每一秒的人。",
+        "grant": "EV_WITNESS_CLARIFICATION_A",
+        "finish": true
+      },
+      {
+        "id": "contradiction",
+        "label": "指出矛盾",
+        "text": "你说安保先开火，但这段画面顺序不同。你愿意说明你实际看到的范围吗？",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "QUESTION",
+          "tactics": [],
+          "evidence_ref_ids": [
+            "EV_VIDEO_A"
+          ],
+          "target_id": "PROP_WITNESS_FIRST_SHOT_VIEW"
+        },
+        "response": "阿岑：我不能拿看不见的那一边作保证。我先看见的是安保，不一定就是最先开的那一枪。\n\n阿岑：你保留前面那段吧。我当时确实那么说了。现在这段也记上：我没有看见第一声枪响从哪边出来。\n\n别把我写成看到了每一秒的人。",
+        "grant": "EV_WITNESS_CLARIFICATION_A",
+        "variant": "contradiction",
+        "finish": true
+      },
+      {
+        "id": "pressure",
+        "label": "身份施压",
+        "text": "你当时到底看没看见首枪来自哪边？不说清楚，我就公开你的名字。",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "QUESTION",
+          "tactics": [
+            "THREAT"
+          ],
+          "evidence_ref_ids": [],
+          "target_id": "PROP_WITNESS_FIRST_SHOT_VIEW"
+        },
+        "response": "阿岑：你用名字逼我，我不会继续说了。今天到这儿。",
+        "pressure": "witness",
+        "finish": true
+      },
+      {
+        "id": "ambiguous",
+        "label": "含糊表达",
+        "text": "他说的那个呢？",
+        "candidate": {
+          "status": "AMBIGUOUS",
+          "reason": "AMBIGUOUS_REFERENCE"
+        }
+      }
+    ],
+    "N50": [
+      {
+        "id": "request",
+        "label": "请求账页",
+        "text": "能给我本次行动的付款记录吗？",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "REQUEST",
+          "tactics": [],
+          "evidence_ref_ids": [],
+          "target_id": "REQ_HAND_OVER_LEDGER"
+        },
+        "response": "许先生：不能白拿走。我可以交一份副本，但不会把整本账交给你。"
+      },
+      {
+        "id": "ask_payer",
+        "label": "询问付款方",
+        "text": "这次是谁付款？",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "QUESTION",
+          "tactics": [],
+          "evidence_ref_ids": [],
+          "target_id": "PROP_FUNDED_OPERATION"
+        },
+        "response": "许先生：我不会让一句口头回答替代记录。你决定要不要拿副本。"
+      },
+      {
+        "id": "offer500",
+        "label": "提出500交易",
+        "text": "我支付 500，取得本次行动付款账页副本。",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "OFFER",
+          "tactics": [],
+          "evidence_ref_ids": [],
+          "target_id": "DEAL_LEDGER_FOR_500"
+        },
+        "response": "许先生：500，交这页副本。只交纸上已有的记录。你确认，我再交。",
+        "next": "N51"
+      },
+      {
+        "id": "pressure",
+        "label": "身份施压",
+        "text": "不给我就把你的名字写出来。",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "REQUEST",
+          "tactics": [
+            "THREAT"
+          ],
+          "evidence_ref_ids": [],
+          "target_id": "REQ_HAND_OVER_LEDGER"
+        },
+        "response": "许先生：那今天没什么可谈的。请出去。",
+        "pressure": "clerk",
+        "finish": true
+      },
+      {
+        "id": "ambiguous",
+        "label": "含糊表达",
+        "text": "他说的那个呢？",
+        "candidate": {
+          "status": "AMBIGUOUS",
+          "reason": "AMBIGUOUS_REFERENCE"
+        }
+      }
+    ],
+    "N51": [
+      {
+        "id": "accept",
+        "label": "确认支付",
+        "text": "我确认支付 500，取得账页副本。",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "ACCEPT",
+          "tactics": [],
+          "evidence_ref_ids": []
+        },
+        "response": "许先生：副本给你。页脚的小字也留下，别只拍付款方那一行。",
+        "grant": "EV_LEDGER_A",
+        "event": "ledger_purchase",
+        "finish": true
+      },
+      {
+        "id": "refuse",
+        "label": "拒绝并结束",
+        "text": "我拒绝这笔交易，结束本次访问。",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "REFUSE",
+          "tactics": [],
+          "evidence_ref_ids": []
+        },
+        "response": "许先生：那这页留在我这里。",
+        "finish": true
+      },
+      {
+        "id": "ambiguous",
+        "label": "含糊表达",
+        "text": "他说的那个呢？",
+        "candidate": {
+          "status": "AMBIGUOUS",
+          "reason": "AMBIGUOUS_REFERENCE"
+        }
+      }
+    ],
+    "N60": [
+      {
+        "id": "codes",
+        "label": "查科目",
+        "text": "V、L、T 分别记的什么？有对应说明吗？",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "QUESTION",
+          "tactics": [],
+          "evidence_ref_ids": [],
+          "target_id": "PROP_R17_RECORDED_USES"
+        },
+        "response": "许先生：V 是车辆，L 是照明，T 是临时劳务。这份附页和副本用同一个凭单号。你可以把两页对着看。\n\n许先生：这些是我经手登记的费用项目。账上没有开火命令；我也不知道谁下的令。这不是所有可能交易的总目录。\n\n这一页解释的是钱怎么记。它不替谁洗清，也不替谁认罪。",
+        "grant": "EV_LEDGER_CONTEXT_A",
+        "finish": true
+      },
+      {
+        "id": "scope",
+        "label": "查责任边界",
+        "text": "这里的付款能说明谁下令开火吗？",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "QUESTION",
+          "tactics": [],
+          "evidence_ref_ids": [
+            "EV_LEDGER_A"
+          ],
+          "target_id": "PROP_R17_RECORDS_FIRE_ORDER"
+        },
+        "response": "许先生：不能。这是费用科目，不是命令。你看：车辆、照明、临时劳务。下令的事，我没在场，也没记录。\n\n许先生：这些是我经手登记的费用项目。账上没有开火命令；我也不知道谁下的令。这不是所有可能交易的总目录。\n\n这一页解释的是钱怎么记。它不替谁洗清，也不替谁认罪。",
+        "grant": "EV_LEDGER_CONTEXT_A",
+        "finish": true
+      },
+      {
+        "id": "pressure",
+        "label": "身份施压",
+        "text": "V、L、T 到底记的什么？不说明，我就公开你的名字。",
+        "candidate": {
+          "status": "RESOLVED",
+          "act": "QUESTION",
+          "tactics": [
+            "THREAT"
+          ],
+          "evidence_ref_ids": [],
+          "target_id": "PROP_R17_RECORDED_USES"
+        },
+        "response": "许先生：你用名字逼我，这次就到这里。已经交付的纸不会因此改变。",
+        "pressure": "clerk",
+        "finish": true
+      },
+      {
+        "id": "ambiguous",
+        "label": "含糊表达",
+        "text": "他说的那个呢？",
+        "candidate": {
+          "status": "AMBIGUOUS",
+          "reason": "AMBIGUOUS_REFERENCE"
+        }
+      }
+    ]
+  },
+  "nodes": {
+    "N00": {
+      "title": "截稿前，先决定怎样调查",
+      "text": "货场的灯已经亮了。值班室桌上留着一张空白版样，标题位置被铅笔框起来。\n\n编辑：今晚货场发生了冲突。我们收到说法，还没有拿到能交给读者看的经过。\n\n先去听那位目击者。之后还来得及做三段调查。现场影像和付款记录是两个方向，每深入一次都占一段时间。",
+      "background": {
+        "两边都要查完吗？": "编辑：你决定把时间用在哪里。回来时告诉我，你写了什么，还有什么没查到。",
+        "资金从哪里查？": "编辑：货场设备上有 Company A 的标识，账房保管行动账目。标识只能给你一个查问的方向，不能说明是谁付款。",
+        "如果什么也写不实呢？": "编辑：可以暂缓。那也是这一版的决定，要把没做完的事留下来。"
+      }
+    },
+    "N10": {
+      "title": "阿岑的第一句话",
+      "text": "阿岑坐在西侧棚口的矮凳上，双手捏着一只空纸杯。\n\n阿岑：我看到了开枪的人。你们会把我的话登出来吗？",
+      "background": {
+        "你希望我们怎么写？": "阿岑：把发生的事情弄清楚。别为了有一句标题，把我没说的也算到我头上。"
+      }
+    },
+    "N20": {
+      "title": "把时间用在哪里",
+      "text": "编辑：还有 {slots} 段。影像能让你看见一段经过，账目能让你追到钱。你也可以把时间留给已经发现的问题。"
+    },
+    "N30": {
+      "title": "货场主通道的记录",
+      "text": "值班室的一台旧显示器停在货场主通道。文件列表只有一个标注为本次冲突的连续片段。\n\n这一段画面可以暂停、回看。调出并保存后收入材料册，本场用一段；回看不再耗时。"
+    },
+    "N40": {
+      "title": "再见阿岑",
+      "text": "阿岑仍坐在棚口。你把影像停在第一声枪响前，他先看看屏幕，又朝通道望了一眼。\n\n阿岑：你们找到那时候的画面了？"
+    },
+    "N50": {
+      "title": "账房的门口",
+      "text": "许先生把一本账簿压在桌角。他没有翻开，只把旁边散着的纸收齐。\n\n许先生：你想问账，还是想要一份能带走的记录？这两件事不一样。副本的交付条件是 500。你买不到我改账，也买不到我替记录以外的话背书。",
+      "background": {
+        "副本能看见什么？": "许先生：这一页的付款方、金额和记账项目。别人的命令不写在这里。"
+      }
+    },
+    "N51": {
+      "title": "明确付款",
+      "text": "交付本次行动付款账页副本；支付 500。当前 {money}，付款后 {after_money}。\n\n此处没有购买改口或保证材料真实的附加承诺。返回交涉会取消待确认报价，本次访问仍未结束；拒绝并结束会用掉本场一段时间。"
+    },
+    "N60": {
+      "title": "副本之外的说明",
+      "text": "你把副本放回桌上，指向末尾的三个字母。许先生把纸转正，沿着页脚读了一遍。\n\n许先生：我说过，别只拍付款方。你想核对哪一行？",
+      "background": {
+        "能保证没有其他账吗？": "许先生：我只能解释我经手的这份。别让我替没见过的东西作保证。"
+      }
+    },
+    "N70": {
+      "title": "回到版样前",
+      "text": "编辑把铅笔从标题框里拿出来：材料摊开。现在选这一版要讲什么。你仍然可以改，也可以不刊。"
+    },
+    "N80": {
+      "title": "复核标题的完整含义",
+      "text": "请与原句核对。返回修改会作废这版理解；现在还没有刊发。"
+    },
+    "N81": {
+      "title": "明确签发",
+      "text": "确认这一版表达的是你的意思。标题不会被自动润色；你可以返回修改，也可以照此刊发。"
+    },
+    "N82": {
+      "title": "本版暂缓？",
+      "text": "编辑：这意味着这一版不刊这项报道。材料和没查完的问题会留下来，但今天的调查到这里结束。"
+    },
+    "N90": {
+      "title": "印刷之后",
+      "text": "版样被从桌上抽走。过了一会儿，机器的声音穿过走廊。你在第一份样报上看见自己的标题。"
+    },
+    "N99": {
+      "title": "这一版结束了",
+      "text": "编辑关掉桌边的灯：这一版结束了。留下来的，是你做过的选择和当时拿得出的材料。"
+    }
+  },
+  "evidence": {
+    "EV_AUDIO_A": {
+      "title": "目击者原始录音",
+      "text": "现场采访记录\n\n说话人：目击者 A。采访者保留原始录音。\n\n“我看到安保先开火。我看见他们举枪，跟着就响了。我能讲我看见的，别替我添别的。”\n\n本记录保存受访者的原话；没有附带影像或第三方核对材料。",
+      "origin": "现场采访 · 阿岑",
+      "variants": {
+        "pressure": "现场采访记录\n\n说话人：目击者 A。采访者保留原始录音。\n\n“我说安保先开火。你记下就行。别再来问我，我也不会再跟你说。”\n\n本记录保存受访者的原话；没有附带影像或第三方核对材料。"
+      }
+    },
+    "EV_VIDEO_A": {
+      "title": "货场主通道影像记录",
+      "text": "文件标注：货场主通道固定摄像机，事件当日 16:39:50 至 16:40:20。\n\n16:39:50 至 16:40:07：民兵在通道东侧，安保在西侧；双方都在连续画面内。\n\n16:40:08：民兵一侧有人举枪，枪口出现闪光，同步音轨响起枪声。安保一侧随后开始移动。\n\n16:40:11：安保一侧出现枪口闪光，随后有第二组枪声。\n\n16:40:20：片段结束。上述区间没有切镜。\n\n镜头覆盖主通道，不显示西侧棚口内部，也不能说明谁发出命令或谁支付费用。",
+      "origin": "固定摄像机 · 连续区间记录"
+    },
+    "EV_LEDGER_A": {
+      "title": "本次行动付款账页副本",
+      "text": "凭单号：R17。事项：货场行动保障。\n\n付款方：Company A。\n\n入账金额：12,000。入账时间：事件当日 09:15。\n\n记账项目：V 7,000；L 3,000；T 2,000。\n\n附注：项目名称见同号用途说明页。此页登记费用，不列现场指挥人员。\n\n来源：本次访问账房取得的账页副本。取得副本支付 500；这笔费用不是账上 12,000 的一部分。",
+      "origin": "账房交付 · 支付500取得副本"
+    },
+    "EV_WITNESS_CLARIFICATION_A": {
+      "title": "目击者补充录音",
+      "text": "原采访的后续核对。采访者出示了货场主通道影像记录。\n\n“就在这里。那辆货车还没开走。我先听见响，转过头，才看见安保开枪。民兵那一边被车挡住了。”\n\n“你保留前面那段吧。我当时确实那么说了。现在这段也记上：我没有看见第一声枪响从哪边出来。”\n\n“别把我写成看到了每一秒的人。”",
+      "origin": "影像取得后的后续采访",
+      "variants": {
+        "contradiction": "原采访的后续核对。采访者出示了货场主通道影像记录。\n\n“我不能拿看不见的那一边作保证。我先看见的是安保，不一定就是最先开的那一枪。”\n\n“你保留前面那段吧。我当时确实那么说了。现在这段也记上：我没有看见第一声枪响从哪边出来。”\n\n“别把我写成看到了每一秒的人。”"
+      }
+    },
+    "EV_LEDGER_CONTEXT_A": {
+      "title": "R17 用途说明页与核对记录",
+      "text": "凭单号：R17，与付款账页相同。\n\nV：车辆调配，7,000。\n\nL：照明设备，3,000。\n\nT：临时劳务，2,000。\n\n合计：12,000。事项：货场行动保障。\n\n账房核对原话：“这些是我经手登记的费用项目。账上没有开火命令；我也不知道谁下的令。这不是所有可能交易的总目录。”",
+      "origin": "账房核对 · 与付款页同号R17"
+    }
+  },
+  "headlines": {
+    "H1": {
+      "text": "民兵在货场率先开火",
+      "claims": [
+        {
+          "target_id": "PROP_FIRE_FIRST",
+          "value_id": "MILITIA",
+          "polarity": "AFFIRM",
+          "commitment_mode": "ASSERTED"
+        }
+      ],
+      "requires_evidence": [],
+      "group": "现场"
+    },
+    "H2": {
+      "text": "安保在货场率先开火",
+      "claims": [
+        {
+          "target_id": "PROP_FIRE_FIRST",
+          "value_id": "SECURITY_FORCES",
+          "polarity": "AFFIRM",
+          "commitment_mode": "ASSERTED"
+        }
+      ],
+      "requires_evidence": [],
+      "group": "现场"
+    },
+    "H3": {
+      "text": "目击者称安保率先开火",
+      "claims": [
+        {
+          "target_id": "PROP_FIRE_FIRST",
+          "value_id": "SECURITY_FORCES",
+          "polarity": "AFFIRM",
+          "commitment_mode": "ASSERTED",
+          "source_ref_id": "SRC_WITNESS_A"
+        }
+      ],
+      "requires_evidence": [
+        "EV_AUDIO_A"
+      ],
+      "group": "现场"
+    },
+    "H4": {
+      "text": "Company A 为货场行动提供资金",
+      "claims": [
+        {
+          "target_id": "PROP_FUNDED_OPERATION",
+          "value_id": "COMPANY_A",
+          "polarity": "AFFIRM",
+          "commitment_mode": "ASSERTED"
+        }
+      ],
+      "requires_evidence": [],
+      "group": "资金"
+    },
+    "H5": {
+      "text": "民兵在货场率先开火，Company A 为行动提供资金",
+      "claims": [
+        {
+          "target_id": "PROP_FIRE_FIRST",
+          "value_id": "MILITIA",
+          "polarity": "AFFIRM",
+          "commitment_mode": "ASSERTED"
+        },
+        {
+          "target_id": "PROP_FUNDED_OPERATION",
+          "value_id": "COMPANY_A",
+          "polarity": "AFFIRM",
+          "commitment_mode": "ASSERTED"
+        }
+      ],
+      "requires_evidence": [],
+      "group": "现场"
+    },
+    "H6": {
+      "text": "Company A 为货场行动提供资金吗？",
+      "claims": [
+        {
+          "target_id": "PROP_FUNDED_OPERATION",
+          "value_id": "COMPANY_A",
+          "polarity": "AFFIRM",
+          "commitment_mode": "QUESTIONED"
+        }
+      ],
+      "requires_evidence": [],
+      "group": "资金"
+    },
+    "H7": {
+      "text": "Company A 可能为货场行动提供资金",
+      "claims": [
+        {
+          "target_id": "PROP_FUNDED_OPERATION",
+          "value_id": "COMPANY_A",
+          "polarity": "AFFIRM",
+          "commitment_mode": "SPECULATIVE"
+        }
+      ],
+      "requires_evidence": [],
+      "group": "资金"
+    },
+    "H8": {
+      "text": "城市等待答案",
+      "claims": [],
+      "requires_evidence": [],
+      "group": "其他"
+    },
+    "H9": {
+      "text": "目击者补充：未看见首枪来自哪一方",
+      "claims": [
+        {
+          "target_id": "PROP_WITNESS_FIRST_SHOT_VIEW",
+          "value_id": "FIRST_SHOT_VISIBLE",
+          "polarity": "DENY",
+          "commitment_mode": "ASSERTED",
+          "source_ref_id": "SRC_WITNESS_A"
+        }
+      ],
+      "requires_evidence": [
+        "EV_WITNESS_CLARIFICATION_A"
+      ],
+      "group": "现场"
+    },
+    "H10": {
+      "text": "Company A 付款账目列明车辆、照明与临时劳务",
+      "claims": [
+        {
+          "target_id": "PROP_FUNDED_OPERATION",
+          "value_id": "COMPANY_A",
+          "polarity": "AFFIRM",
+          "commitment_mode": "ASSERTED"
+        },
+        {
+          "target_id": "PROP_R17_RECORDED_USES",
+          "value_id": "VEHICLES_LIGHTING_TEMP_LABOUR",
+          "polarity": "AFFIRM",
+          "commitment_mode": "ASSERTED"
+        }
+      ],
+      "requires_evidence": [
+        "EV_LEDGER_CONTEXT_A"
+      ],
+      "group": "资金"
+    },
+    "H11": {
+      "text": "民兵在货场率先开火，目击者称未看见首枪来源",
+      "claims": [
+        {
+          "target_id": "PROP_FIRE_FIRST",
+          "value_id": "MILITIA",
+          "polarity": "AFFIRM",
+          "commitment_mode": "ASSERTED"
+        },
+        {
+          "target_id": "PROP_WITNESS_FIRST_SHOT_VIEW",
+          "value_id": "FIRST_SHOT_VISIBLE",
+          "polarity": "DENY",
+          "commitment_mode": "ASSERTED",
+          "source_ref_id": "SRC_WITNESS_A"
+        }
+      ],
+      "requires_evidence": [
+        "EV_WITNESS_CLARIFICATION_A"
+      ],
+      "group": "现场"
+    },
+    "H12": {
+      "text": "目击者曾称安保先开火，后补充未看见首枪来源",
+      "claims": [
+        {
+          "target_id": "PROP_FIRE_FIRST",
+          "value_id": "SECURITY_FORCES",
+          "polarity": "AFFIRM",
+          "commitment_mode": "ASSERTED",
+          "source_ref_id": "SRC_WITNESS_A"
+        },
+        {
+          "target_id": "PROP_WITNESS_FIRST_SHOT_VIEW",
+          "value_id": "FIRST_SHOT_VISIBLE",
+          "polarity": "DENY",
+          "commitment_mode": "ASSERTED",
+          "source_ref_id": "SRC_WITNESS_A"
+        }
+      ],
+      "requires_evidence": [
+        "EV_WITNESS_CLARIFICATION_A"
+      ],
+      "group": "现场"
+    },
+    "SOURCE_ERROR": {
+      "text": "目击者称民兵率先开火",
+      "claims": [
+        {
+          "target_id": "PROP_FIRE_FIRST",
+          "value_id": "MILITIA",
+          "polarity": "AFFIRM",
+          "commitment_mode": "ASSERTED",
+          "source_ref_id": "SRC_WITNESS_A"
+        }
+      ],
+      "requires_evidence": [
+        "EV_AUDIO_A"
+      ],
+      "boundary_only": true
+    },
+    "UNSUPPORTED_ORDER": {
+      "text": "民兵先开火，Company A 下令开枪",
+      "candidate": {
+        "status": "UNSUPPORTED",
+        "reason": "OUT_OF_CATALOGUE"
+      },
+      "boundary_only": true
+    }
+  },
+  "relationships": [
+    {
+      "id": "CH10_VIDEO_MILITIA",
+      "requires_evidence": [
+        "EV_VIDEO_A"
+      ],
+      "target_id": "PROP_FIRE_FIRST",
+      "value_id": "MILITIA",
+      "polarity": "AFFIRM",
+      "dimension": "UNDERLYING"
+    },
+    {
+      "id": "CH10_VIDEO_NOT_SECURITY",
+      "requires_evidence": [
+        "EV_VIDEO_A"
+      ],
+      "target_id": "PROP_FIRE_FIRST",
+      "value_id": "SECURITY_FORCES",
+      "polarity": "DENY",
+      "dimension": "UNDERLYING"
+    },
+    {
+      "id": "CH10_LEDGER_PAYMENT",
+      "requires_evidence": [
+        "EV_LEDGER_A"
+      ],
+      "target_id": "PROP_FUNDED_OPERATION",
+      "value_id": "COMPANY_A",
+      "polarity": "AFFIRM",
+      "dimension": "UNDERLYING"
+    },
+    {
+      "id": "CH10_VIEW_LIMIT",
+      "requires_evidence": [
+        "EV_WITNESS_CLARIFICATION_A"
+      ],
+      "target_id": "PROP_WITNESS_FIRST_SHOT_VIEW",
+      "value_id": "FIRST_SHOT_VISIBLE",
+      "polarity": "DENY",
+      "dimension": "UNDERLYING"
+    },
+    {
+      "id": "CH10_LEDGER_USES",
+      "requires_evidence": [
+        "EV_LEDGER_A",
+        "EV_LEDGER_CONTEXT_A"
+      ],
+      "target_id": "PROP_R17_RECORDED_USES",
+      "value_id": "VEHICLES_LIGHTING_TEMP_LABOUR",
+      "polarity": "AFFIRM",
+      "dimension": "UNDERLYING"
+    },
+    {
+      "id": "CH10_WITNESS_ORIGINAL",
+      "requires_evidence": [
+        "EV_AUDIO_A"
+      ],
+      "target_id": "PROP_FIRE_FIRST",
+      "value_id": "SECURITY_FORCES",
+      "polarity": "AFFIRM",
+      "dimension": "ATTRIBUTION",
+      "source_ref_id": "SRC_WITNESS_A"
+    },
+    {
+      "id": "CH10_WITNESS_CLARIFICATION",
+      "requires_evidence": [
+        "EV_WITNESS_CLARIFICATION_A"
+      ],
+      "target_id": "PROP_WITNESS_FIRST_SHOT_VIEW",
+      "value_id": "FIRST_SHOT_VISIBLE",
+      "polarity": "DENY",
+      "dimension": "ATTRIBUTION",
+      "source_ref_id": "SRC_WITNESS_A"
+    }
+  ],
+  "copy": {
+    "supported_fire": "编辑把影像记录和版样放在一起：这一项有你带回的连续画面。原片保留，别只留挑出来的那一秒。",
+    "supported_view": "编辑把两次录音标上先后：这次你写清了他后来说明的观察范围。我们保存原话，也保存补充，不把他写成另一个方向的目击证人。",
+    "historical_quote": "编辑：读者能看见他说法的变化。旧话仍是旧话，不因为登在这里就变成现场结论。",
+    "supported_payment": "编辑把付款副本装入资料袋：付款方、事项和金额能对到同一页。把取到副本的过程也留着。\n\n编辑补记：交付费用 500 也入采访记录。付费经过需要说明，不能靠买到的纸替来源所有说法背书。",
+    "supported_uses": "编辑将 R17 两页放在一起：你交代了账上具体列什么。它说明记录范围，不是审计结论，也不是开火命令。",
+    "reader_fire": "读者来电：我们之前听到的说法不一样。请把记录的先后和各自能看见的范围讲清楚。",
+    "reader_payment": "Company A 来信：请说明报道所指付款及记录范围。\n\n读者问：你们已经查到哪一步，还有什么没核对？",
+    "professional_followup": "编辑把本版记录归档：这一版的表达有对应依据。把没核完的边界留下，下一版的跟进由你继续做。",
+    "contested_without_video": "编辑把录音抄件放在标题下面：他确实这样说过。这一版把话留给了来源。我们还没有取得另一种现场记录，下一次先核查顺序。\n\n读者留言：目击者之外，还有谁能说明经过？\n\n编辑没有把留言写成结论，只在下一版的工作单上留下“核查”。",
+    "contested_with_video": "编辑把录音与影像分别摊开：标题准确记下了他说过的话，可我们手里的画面提出相反顺序。这件事要在后续说明，不能让“他说过”替我们回答全部问题。\n\n读者问报馆：你们自己的判断是什么？\n\n编辑：先把冲突讲明白，再决定下一版怎么写。",
+    "question_without_record": "编辑圈出标题中的问号或不确定措辞：你没有把这件事写成已经查实。但名字与问题一起出现在报纸上，读者仍会记住它。\n\n值班电话问：为什么要问这个对象？\n\n编辑：下次调查要回答这一点。今晚不要把提出问题写成已经取得了记录。",
+    "question_with_record": "编辑：你带回了相应记录，最后仍选择保留这个问题。可以。我们把记录存好，也把为什么保留措辞记下来。\n\n读者来信：这是一条线索，还是你们已经核过的结果？\n\n编辑：下一版需要把表达的层次说明白。",
+    "review_open": "编辑没有把样报收进归档袋。他先写下标题，再逐项列出需要处理的地方。",
+    "wrong_attribution": "这项不是他的原话。我们先撤回这项归属，再说明采访实际记录了什么。",
+    "contradicted_assertion": "我们手里的记录与这一项相反。请为下一版准备更正说明，把所依据的记录列清。",
+    "contradicted_question": "我们有相反记录，仍将这个猜测或问题推给读者。先说明提出它的依据和已有反证，不能当成已经核实的事实，也不能假装问号消除了责任。",
+    "insufficient_assertion": "我们把这一项写作事实，却没有取得本案相应依据。这一版已经出去，下一版要说明依据未建立，不能等到碰巧猜中再补理由。",
+    "omitted_clarification": "他确实说过旧话，后来也作了补充。我们手里已有补充却省掉了它。下一版要补全这段变化，而不是说他从没说过旧话。",
+    "keep_supported": "编辑：另一项已经取得的材料照常保留。需要改正的这一项，不能连同有依据的部分一起糊掉。",
+    "review_close": "编辑把事项标为“本版复核，由原采访者跟进”，并将你下一次独立签发改为编辑复核：现在开始补救，不重写我们刊发时手里有什么。",
+    "source_correction": "阿岑给报馆留话：那句话不是我说的。把我的录音听完，再用我的名义。",
+    "funding_review": "Company A 来信要求报馆说明付款记录出处；报馆不能自动回寄一份本局没有取得的账页。",
+    "fire_review": "读者来电要求报馆说明采用哪份现场记录；电话本身不提供新证据。",
+    "keep_other_claims": "编辑：这一项直接判断的材料单独留好，另一项的归属或问题继续说明。",
+    "no_claim": "编辑：这一版没有写谁先开火，也没有写谁付款。它表达了等待，却没替读者回答这两个问题。\n\n一条读者留言被放到桌角：下一版能告诉我们更多吗？",
+    "held": "编辑把标题框划掉，在旁边写下“留待核查”。报纸照常排版，这件事没有占据原先留给它的位置。\n\n编辑：这一次我们没赶上。把已经取得的材料存好，把没查到的写在前面，下一次不要把记忆当记录。",
+    "pressure_record": "对方随后向报馆值班室登记了这次身份施压经过，拒绝再与你私下接触。",
+    "witness_closed": "阿岑给值班室留话：稿子归你们。我不会再接受你的采访。",
+    "witness_omitted": "阿岑来信：你来问过第二次，也录下了。为什么报纸上还是只有最早那一句？请把后面的也说明。",
+    "witness_clarified": "阿岑给值班室留话：这次你把我看不到的也写清楚了。我愿意再把当时的位置说明，但别替我认定另一边。",
+    "witness_kept": "阿岑来信：两次记录都留好。以后用到我的话，把当时站的位置也算进去。",
+    "witness_open": "阿岑问值班室：你们还需要我说明哪一段？这是继续合作的意愿，不是新增证言。",
+    "clerk_closed_with_ledger": "许先生托值班室转话：你拿到的纸可以按记录说。我不会再替你解释。",
+    "clerk_closed_no_ledger": "许先生托值班室转话：你没有从我这里取得那张纸。别替我作保证。",
+    "uses_published": "编辑向 Company A 回复：本版所述为 R17 所列车辆、照明与临时劳务，依据是同号两页记录。我们没有声称这些科目等于开火命令。\n\n许先生回复：这几项是我解释过的范围。答复只说明已刊内容，不自动公开来源身份或寄出原件。",
+    "uses_known": "编辑打开两页记录：我们已经查到科目，下一次说明可以从车辆、照明与临时劳务开始；这一版还没把它们写进去。\n\n许先生回复：这几项是我解释过的范围。",
+    "uses_unknown": "Company A 追问费用项目。编辑把 V、L、T 三个代码圈出：付款这件事有记录，具体项目我们没在这次查清。不能现在把字母猜成用途。许先生没有自动补寄说明。",
+    "company_question": "Company A 来信询问报道所指付款。"
+  },
+  "targets": {
+    "PROP_FIRE_FIRST": {
+      "values": [
+        "MILITIA",
+        "SECURITY_FORCES"
+      ],
+      "dialogue_nodes": [
+        "N10"
+      ],
+      "acts": [
+        "QUESTION"
+      ],
+      "headline": true
+    },
+    "PROP_FUNDED_OPERATION": {
+      "values": [
+        "COMPANY_A"
+      ],
+      "dialogue_nodes": [
+        "N10",
+        "N50"
+      ],
+      "acts": [
+        "QUESTION"
+      ],
+      "headline": true
+    },
+    "REQ_HAND_OVER_LEDGER": {
+      "values": [],
+      "dialogue_nodes": [
+        "N50"
+      ],
+      "acts": [
+        "REQUEST"
+      ],
+      "kind": "REQUEST"
+    },
+    "DEAL_LEDGER_FOR_500": {
+      "values": [],
+      "dialogue_nodes": [
+        "N50"
+      ],
+      "acts": [
+        "OFFER"
+      ],
+      "kind": "DEAL"
+    },
+    "PROP_WITNESS_FIRST_SHOT_VIEW": {
+      "values": [
+        "FIRST_SHOT_VISIBLE"
+      ],
+      "dialogue_nodes": [
+        "N40"
+      ],
+      "acts": [
+        "QUESTION"
+      ],
+      "headline": true,
+      "headline_requires": [
+        "EV_AUDIO_A"
+      ]
+    },
+    "PROP_R17_RECORDED_USES": {
+      "values": [
+        "VEHICLES_LIGHTING_TEMP_LABOUR"
+      ],
+      "dialogue_nodes": [
+        "N60"
+      ],
+      "acts": [
+        "QUESTION"
+      ],
+      "headline": true,
+      "headline_requires": [
+        "EV_LEDGER_A",
+        "EV_LEDGER_CONTEXT_A"
+      ]
+    },
+    "PROP_R17_RECORDS_FIRE_ORDER": {
+      "values": [],
+      "dialogue_nodes": [
+        "N60"
+      ],
+      "acts": [
+        "QUESTION"
+      ]
+    }
+  },
+  "events": {
+    "ledger_purchase": {
+      "label": "付费取得账页副本",
+      "effects": {
+        "Money": -500
+      }
+    },
+    "pressure_witness": {
+      "label": "向阿岑以公开身份施压，合作终止并登记异议",
+      "effects": {
+        "Threat Level": 1
+      }
+    },
+    "pressure_clerk": {
+      "label": "向许先生以公开身份施压，合作终止并登记异议",
+      "effects": {
+        "Threat Level": 1
+      }
+    },
+    "professional_followup": {
+      "label": "编辑接纳本版并开放专业跟进",
+      "effects": {
+        "Reputation": 1
+      }
+    },
+    "editorial_review": {
+      "label": "编辑建立本版复核，后续签发需编辑复核",
+      "effects": {
+        "Reputation": -1
+      }
+    }
+  }
+}

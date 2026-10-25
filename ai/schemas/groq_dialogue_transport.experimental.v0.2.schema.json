@@ -1,0 +1,103 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://btl-ai.invalid/schemas/groq_dialogue_transport.experimental.v0.2.schema.json",
+  "title": "Experimental Groq Dialogue Transport v0.2",
+  "description": "Provider wire format only. This is not a Frozen semantic schema.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "status",
+    "reason",
+    "act",
+    "target_id",
+    "value_id",
+    "polarity",
+    "tactics",
+    "evidence_ref_ids"
+  ],
+  "properties": {
+    "status": {
+      "enum": [
+        "RESOLVED",
+        "AMBIGUOUS",
+        "UNSUPPORTED"
+      ],
+      "type": "string"
+    },
+    "reason": {
+      "enum": [
+        "AMBIGUOUS_REFERENCE",
+        "INSUFFICIENT_CONTEXT",
+        "MULTIPLE_ACTIONS",
+        "OUT_OF_CATALOGUE",
+        "UNSUPPORTED_ACTION",
+        null
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "act": {
+      "enum": [
+        "QUESTION",
+        "ASSERTION",
+        "REQUEST",
+        "OFFER",
+        "ACCEPT",
+        "REFUSE",
+        null
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "target_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "value_id": {
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "polarity": {
+      "enum": [
+        "AFFIRM",
+        "DENY",
+        null
+      ],
+      "type": [
+        "string",
+        "null"
+      ]
+    },
+    "tactics": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "enum": [
+          "THREAT",
+          "ACCUSATION",
+          "INDIRECT_PROBE"
+        ],
+        "type": "string"
+      }
+    },
+    "evidence_ref_ids": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "items": {
+        "type": "string"
+      }
+    }
+  }
+}
